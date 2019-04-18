@@ -1,1 +1,0 @@
-# SmartAg Client
