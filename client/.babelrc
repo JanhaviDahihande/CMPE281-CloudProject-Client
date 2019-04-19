@@ -1,0 +1,38 @@
+{
+  "presets": [
+    ["@babel/preset-env", {
+      "modules": false,
+      "targets": "> 0.25%, not dead"
+    }],
+    "@babel/preset-react",
+    "@babel/preset-flow"
+  ],
+  "plugins": [
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-proposal-object-rest-spread",
+    "@babel/plugin-transform-regenerator",
+    "@babel/plugin-transform-async-to-generator",
+    "@babel/plugin-transform-runtime"
+  ],
+  "env": {
+    "test": {
+      "presets": [
+        "@babel/preset-env",
+        "@babel/preset-react",
+        "@babel/preset-flow"
+      ],
+      "plugins": [
+        "@babel/plugin-transform-modules-commonjs",
+        "@babel/plugin-proposal-class-properties",
+        "@babel/plugin-proposal-object-rest-spread",
+        "@babel/plugin-transform-regenerator",
+        "@babel/plugin-transform-async-to-generator",
+        "@babel/plugin-transform-runtime"
+      ]
+    },
+    "production": {
+      "plugins": ["transform-remove-console"],
+      "comments": false
+    }
+  }
+}
