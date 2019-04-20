@@ -3,6 +3,8 @@
 import React, {
   PureComponent
 }                         from 'react';
+import GoogleMapReact from 'google-map-react';
+
 import PropTypes          from 'prop-types';
 import {
   AnimatedView,
@@ -13,161 +15,42 @@ import {
 import Highlight          from 'react-highlight';
 
 
+const AnyReactComponent = ({ text }) => <div>{text}</div>;
+
 class Notifications extends PureComponent {
-  static propTypes= {
-    actions: PropTypes.shape({
-      enterNotifications: PropTypes.func.isRequired,
-      leaveNotifications: PropTypes.func.isRequired
-    })
+  static defaultProps = {
+    center: {
+      lat: 59.95,
+      lng: 30.33
+    },
+    zoom: 11
   };
-
-  componentWillMount() {
-    const { actions: { enterNotifications } } = this.props;
-    enterNotifications();
+  renderMarkers(map, maps) {
+    let marker = new maps.Marker({
+      position: myLatLng,
+      map,
+      title: 'Hello World!'
+    });
   }
-
-  componentWillUnmount() {
-    const { actions: { leaveNotifications } } = this.props;
-    leaveNotifications();
-  }
-
+ 
   render() {
-    const source = `
-      // import
-      import { NotificationPanel, Notification } from './_SOMEWHERE_/components';
-
-      // in render():
-      <div className="row">
-        <div className="col-md-4 col-md-offset-4">
-          <NotificationPanel title="notifications">
-              <Notification type={'danger'}>
-                <span>
-                  <strong>
-                    Oh snap!
-                  </strong>
-                  Change a few things up and try submitting again.
-                </span>
-              </Notification>
-
-              <Notification type={'success'}>
-                <span>
-                  <strong>
-                    Well done!
-                  </strong>
-                  You successfully read this important alert message.
-                </span>
-              </Notification>
-
-              <Notification type={'info'}>
-                <span>
-                  <strong>
-                    Heads up!
-                  </strong>
-                  This alert needs your attention, but it's not super important.
-                </span>
-              </Notification>
-
-              <Notification type={'warning'}>
-                <span>
-                  <strong>
-                    Warning!
-                  </strong>
-                  Best check yo self, you're not looking too good.
-                </span>
-              </Notification>
-
-              <Notification type={'danger'}>
-                <span>
-                  <strong>
-                    Oh snap!
-                  </strong>
-                  Change a few things up and try submitting again.
-                </span>
-              </Notification>
-
-          </NotificationPanel>
-        </div>
+    return (
+      // Important! Always set the container height explicitly
+      
+      <div style={{ height: '50vh', width: '50%' }}>
+        <GoogleMapReact
+        onGoogleApiLoaded={({map, maps}) => this.renderMarkers(map, maps)}
+          bootstrapURLKeys={{ key: "AIzaSyC7v62nZ5JExkxD3KOkJByZ9SZVjPb9YE8" }}
+          defaultCenter={this.props.center}
+          defaultZoom={this.props.zoom}
+        >
+          <AnyReactComponent
+            lat={59.955413}
+            lng={30.337844}
+            text="My Marker"
+          />
+        </GoogleMapReact>
       </div>
-      `;
-
-    return(
-      <AnimatedView>
-        {/* preview: */}
-        <div className="row">
-          <div className="col-xs-12">
-            <Panel
-              title="Notifications"
-              hasTitle={true}
-              bodyBackGndColor={'#F4F5F6'}>
-              <div className="row">
-                <div className="col-md-4 col-md-offset-4">
-
-                  <NotificationPanel title="notifications">
-                      <Notification type={'danger'}>
-                        <span>
-                          <strong>
-                            Oh snap!
-                          </strong>
-                          Change a few things up and try submitting again.
-                        </span>
-                      </Notification>
-
-                      <Notification type={'success'}>
-                        <span>
-                          <strong>
-                            Well done!
-                          </strong>
-                          You successfully read this important alert message.
-                        </span>
-                      </Notification>
-
-                      <Notification type={'info'}>
-                        <span>
-                          <strong>
-                            Heads up!
-                          </strong>
-                          This alert needs your attention, but it's not super important.
-                        </span>
-                      </Notification>
-
-                      <Notification type={'warning'}>
-                        <span>
-                          <strong>
-                            Warning!
-                          </strong>
-                          Best check yo self, you're not looking too good.
-                        </span>
-                      </Notification>
-
-                      <Notification type={'danger'}>
-                        <span>
-                          <strong>
-                            Oh snap!
-                          </strong>
-                          Change a few things up and try submitting again.
-                        </span>
-                      </Notification>
-
-                  </NotificationPanel>
-
-                </div>
-              </div>
-            </Panel>
-          </div>
-        </div>
-        {/* source: */}
-        <div className="row">
-          <div className="col-xs-12">
-            <Panel
-              title="Source"
-              hasTitle={true}>
-              <Highlight className="javascript">
-                {source}
-              </Highlight>
-            </Panel>
-          </div>
-        </div>
-      </AnimatedView>
     );
   }
 }
