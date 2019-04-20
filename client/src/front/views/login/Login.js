@@ -220,15 +220,11 @@ class Login extends PureComponent<Props, State> {
           });
           if(json["role"] == "admin"){
             console.log("admin");
-            console.log("Path: " + this.props.location.pathname);
             history.push({ pathname: '/' });
-            console.log("Path: " + this.props.location.pathname);
           }
           else{
             console.log("user");
-            console.log("Path: " + this.props.location.pathname);
             history.push({ pathname: '/' });
-            console.log("Path: " + this.props.location.pathname);
           }
             
         } else {
