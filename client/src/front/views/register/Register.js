@@ -192,8 +192,8 @@ class Register extends PureComponent<Props, State> {
                     />
                   </div>
                 </div>
-
-                <div className="form-group">
+                {/* Role section */}
+                {/* <div className="form-group">
                   <label
                     htmlFor="role"
                     className="col-lg-2 control-label"
@@ -225,7 +225,7 @@ class Register extends PureComponent<Props, State> {
                     <br/>
                     </div>
                   </div>
-                </div>
+                </div> */}
 
                 <div className="form-group register_button">
                   <Col lg={10} lgOffset={2}>
@@ -308,7 +308,7 @@ class Register extends PureComponent<Props, State> {
       email,
       password,
       confirm_password,
-      role,
+      // role,
     } = this.state;
     const { history } = this.props;
     // Post request to backend
@@ -322,7 +322,7 @@ class Register extends PureComponent<Props, State> {
         email: email,
         password: password,
         confirm_password: confirm_password,
-        role: role,
+        role: 'user',
       }),
     }).then(res => res.json())
       .then(json => {
