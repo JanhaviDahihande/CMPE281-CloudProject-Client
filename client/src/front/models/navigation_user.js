@@ -21,11 +21,21 @@ export const navigation = Object.freeze({
     // group menu #1
     {
       id: 1,
-      group: 'Dashboard  ',
+      group: 'Home  ',
       menus: [
         {
           name: 'Data View',
-          linkTo: '/',
+          linkTo: '/Dashboard/data_view',
+          faIconName: 'fa-bar-chart',
+        },
+        {
+          name: 'Request Nodes',
+          linkTo: '/Dashboard/request_nodes',
+          faIconName: 'fa-eye',
+        },
+        {
+          name: 'My Requests',
+          linkTo: '/Dashboard/my_requests',
           faIconName: 'fa-eye',
         },
       ],

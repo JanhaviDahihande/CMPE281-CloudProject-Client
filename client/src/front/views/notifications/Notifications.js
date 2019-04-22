@@ -2,10 +2,10 @@
 
 import React, {
   PureComponent,
-  Component
+  Component, ReactDOM
 }                         from 'react';
 // import GoogleMapReact from 'google-map-react';
-import {InfoWindow, Marker, Map, GoogleApiWrapper} from 'google-maps-react'
+import {InfoWindow, Marker, Map, GoogleApiWrapper, Polygon} from 'google-maps-react'
 import PropTypes          from 'prop-types';
 import {
   AnimatedView,
@@ -25,7 +25,16 @@ class Notifications extends React.Component {
 			showingInfoWindow: false,
 			activeMarker: {},
       selectedPlace: {},
-      fields: {}
+      fields: {},
+      visi_0:false,
+      visi_1:false,
+      visi_2:false,
+      visi_3:false,
+      position_1: {},
+      position_2: {},
+      position_3: {},
+      position_4: {},
+
     };
     this.addFields = this.addFields.bind(this);
 	}
@@ -81,30 +90,38 @@ class Notifications extends React.Component {
         break;
       }
     }
-    console.log(node_selected);
+    console.log("here: " + selected_node_number);
     document.getElementById("node_lat_" + selected_node_number).value = location.lat();
     document.getElementById("node_lng_" + selected_node_number).value = location.lng();
-
-    var number = document.getElementById("node_value").value;
-    console.log(number);
+    
+    var elem = this.refs.map_holder.props.children;
+    for(var i=0; i< elem.length;i++){
+      if(elem[i].ref == "marker_" + selected_node_number){
+        console.log(elem[i]);
+        if(selected_node_number==0){
+          console.log("0000000");
+          this.setState({ visi_0: true, position_1:{lat:location.lat(), lng: location.lng()}});
+        }
+        else if(selected_node_number==1){
+          console.log("1111111");
+          this.setState({ visi_1: true,  position_2:{lat:location.lat(), lng: location.lng()}});
+        }
+        else if(selected_node_number==2){
+          console.log("2222222");
+          this.setState({ visi_2: true,  position_3:{lat:location.lat(), lng: location.lng()}});
+        }
+        else if(selected_node_number==3){
+          console.log("3333333");
+          this.setState({ visi_3: true,  position_4:{lat:location.lat(), lng: location.lng()}});
+        }
+        
+      }
+    }
+   
+    //console.log( this.refs..marker.visible);
     var container = document.getElementsByClassName("map");
     console.log(container);
-    for (var i=0;i<number;i++){
-      var mark = document.createElement("Marker");
-      console.log(location.lat());
-      mark.position="{{lat: " + location.lat() + ", lng:" + location.lng() + "}}";
-      container[0].appendChild(mark);
-      // Append a line break 
-      container[0].appendChild(document.createElement("br"));
-  }
-
-    this.setState(prev => ({
-      fields: {
-        ...prev.fields,
-        location
-      }
-    }));
-    map.panTo(location);
+   
   };
 
 	onMarkerClick = (props, marker, e) => {
@@ -183,11 +200,16 @@ class Notifications extends React.Component {
   }
 }
 
-  
-  
 
 	render() {
+    const triangleCoords = [
+      {lat: 25.774, lng: -80.190},
+      {lat: 18.466, lng: -66.118},
+      {lat: 32.321, lng: -64.757},
+      {lat: 25.774, lng: -80.190}
+    ];
 		return (
+      
       <div>
         <h1>Farmer Request Page</h1>
         <form>
@@ -225,20 +247,48 @@ class Notifications extends React.Component {
 			<div id="google-map-holder" style={{float: 'left'}}>
         <Map google={this.props.google}
             id="map_holder"
+            ref="map_holder"
 						style={{width: '80%', height: '70%', position: 'inherit', marginLeft:'3%'}}
 						className={'map'}
 						zoom={14}
 						onClick={(t, map, c) => this.addMarker(c.latLng, map)}>
+             <Polygon
+          paths={triangleCoords}
+          strokeColor="#0000FF"
+          strokeOpacity={0.8}
+          strokeWeight={2}
+          fillColor="#0000FF"
+          fillOpacity={0.35} />
 					<Marker
-						mapCenter="aarr"
+            id="marker_0"
+            className={'markers'}
+            mapCenter="aarr"
+            visible={this.state.visi_0}
+            ref="marker_0"
+						onClick={this.onMarkerClick}
+						position={this.state.position_1}/>
+					<Marker
+            id="marker_1"
+						onClick={this.onMarkerClick}
+            name={'Dolores park'}
+            ref="marker_1"
+            visible={this.state.visi_1}
+						position={this.state.position_2} />
+            <Marker
+            id="marker_2"
+            mapCenter="aarr"
+            ref="marker_2"
 						onClick={this.onMarkerClick}
             name={'SOMA'}
-						position={{lat: 37.778519, lng: -122.405640}} />
+            visible={this.state.visi_2}
+						position={this.state.position_3} />
 					<Marker
-						onClick={this.onMarkerClick}
-						name={'Dolores park'}
-						position={{lat: 37.759703, lng: -122.428093}} />
-          <Marker className="newMarker" position={this.state.fields.location} />
+            id="marker_3"
+            onClick={this.onMarkerClick}
+            ref="marker_3"
+            name={'Dolores park'}
+            visible={this.state.visi_3}
+					  position={this.state.position_4}	 />
 					<InfoWindow
 						marker={this.state.activeMarker}
 						visible={this.state.showingInfoWindow}
