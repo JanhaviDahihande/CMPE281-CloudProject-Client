@@ -49,6 +49,16 @@ export const navigation = Object.freeze({
           faIconName: 'fa-twitter',
         },
         {
+          name: 'Billing',
+          linkTo: '/Dashboard/billinguser',
+          faIconName: 'fa-dollar',
+        },
+        {
+          name: 'Earnings',
+          linkTo: '/Dashboard/billingadmin',
+          faIconName: 'fa-dollar',
+        },
+        {
           name: 'Team Mates',
           linkTo: '/Dashboard/teamMates',
           faIconName: 'fa-user',
@@ -58,11 +68,38 @@ export const navigation = Object.freeze({
           linkTo: '/Dashboard/todoList',
           faIconName: 'fa-check',
         },
+        {
+          name: 'Intelligent Clusters',
+          linkTo: '/Dashboard/managecluster',
+          faIconName: 'fa-eye',
+        },
+      ],
+    },
+    // Manage Infrastructure
+    {
+      id: 2,
+      group: 'Manage Infrastructure',
+      menus: [
+        {
+          name: 'Intelligent Clusters',
+          linkTo: '/managecluster',
+          faIconName: 'fa-eye',
+        },
+        {
+          name: 'Intelligent Nodes',
+          linkTo: '/managenode',
+          faIconName: 'fa-eye',
+        },
+        {
+          name: 'Intelligent Sensors',
+          linkTo: '/managesensor',
+          faIconName: 'fa-eye',
+        },
       ],
     },
     // group menu #2
     {
-      id: 2,
+      id: 3,
       group: 'General',
       menus: [
         {
@@ -114,7 +151,7 @@ export const navigation = Object.freeze({
     },
     // group menu #3
     {
-      id: 3,
+      id: 4,
       group: 'BasicElements',
       menus: [
         {
@@ -124,17 +161,17 @@ export const navigation = Object.freeze({
         },
       ],
     },
-    // // group menu #4
-    // {
-    //   id: 4,
-    //   group: 'SimpleTables',
-    //   menus: [
-    //     {
-    //       name: 'Simple tables preview',
-    //       linkTo: '/simpleTables',
-    //       faIconName: 'fa-eye',
-    //     },
-    //   ],
-    // },
+    // group menu #4
+    {
+      id: 5,
+      group: 'SimpleTables',
+      menus: [
+        {
+          name: 'Simple tables preview',
+          linkTo: '/simpleTables',
+          faIconName: 'fa-eye',
+        },
+      ],
+    },
   ],
 });

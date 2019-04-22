@@ -23,10 +23,17 @@ import TodoListViewConnected from '../views/todoList';
 import TwitterFeedConnected from '../views/twitterFeed';
 import WorkProgressConnected from '../views/workProgress';
 import ProtectedConnected from '../views/protected';
+import BillingUserConnected from '../views/billinguser';
+import BillingAdminConnected from '../views/billingadmin';
+import ManageClusterConnected from '../views/managecluster';
+import ManageNodeConnected from '../views/managenode';
+import ManageSensorConnected from '../views/managesensor';
+import HomeUserConnected from '../views/homeuser';
 
 export const MainRoutes = () => (
   <Switch>
     <Route exact path="/" component={HomeConnected} />
+    <Route exact path="/home" component={HomeUserConnected} />
 
     <Route path="/Dashboard/statsCard" component={StatsCardConnected} />
     <Route path="/Dashboard/earningGraph" component={EarningGraphConnected} />
@@ -35,6 +42,12 @@ export const MainRoutes = () => (
     <Route path="/Dashboard/twitterFeed" component={TwitterFeedConnected} />
     <Route path="/Dashboard/teamMates" component={TeamMatesViewConnected} />
     <Route path="/Dashboard/todoList" component={TodoListViewConnected} />
+    <Route path="/Dashboard/billinguser" component={BillingUserConnected} />
+    <Route path="/Dashboard/billingadmin" component={BillingAdminConnected} />
+
+    <Route path="/managecluster" component={ManageClusterConnected} />
+    <Route path="/managenode" component={ManageNodeConnected} />
+    <Route path="/managesensor" component={ManageSensorConnected} />
 
     <Route exact path="/simpleTables" component={SimpleTablesConnected} />
 

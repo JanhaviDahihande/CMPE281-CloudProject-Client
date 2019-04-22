@@ -6,10 +6,7 @@ import PropTypes from 'prop-types';
 import { Row, Col, Button } from 'react-bootstrap';
 import auth from '../../services/auth';
 import '../../style/login.css';
-import {
-  getFromStorage,
-  setInStorage,
-} from '../storage';
+import { getFromStorage, setInStorage } from '../storage';
 // #endregion
 
 // #region flow types
@@ -161,8 +158,10 @@ class Login extends PureComponent<Props, State> {
             </form>
           </Col>
         </Row>
-        <Row >
-          <p class="register_href">Not an existing user? <a href="/register">Register</a></p>
+        <Row>
+          <p class="register_href">
+            Not an existing user? <a href="/register">Register</a>
+          </p>
         </Row>
       </div>
     );
@@ -188,29 +187,27 @@ class Login extends PureComponent<Props, State> {
   // #endregion
 
   // #region on login button click callback
-  handlesOnLogin = (event: SyntheticEvent<>) =>{
-    const {
-      email,
-      password,
-    } = this.state;
+  handlesOnLogin = (event: SyntheticEvent<>) => {
+    const { email, password } = this.state;
     const { history } = this.props;
     // Post request to backend
     fetch('http://localhost:3002/api/account/signin', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         email: email,
         password: password,
       }),
-    }).then(res => res.json())
+    })
+      .then(res => res.json())
       .then(json => {
         console.log('json', json);
-        console.log("json role: " + json["role"]);
+        console.log('json role: ' + json['role']);
         if (json.success) {
           setInStorage('my_key', { token: json.token });
-         
+
           this.setState({
             signInError: json.message,
             isLoading: false,
@@ -218,22 +215,19 @@ class Login extends PureComponent<Props, State> {
             signInEmail: '',
             token: json.token,
           });
-          if(json["role"] == "admin"){
-            console.log("admin");
+          if (json['role'] == 'admin') {
+            console.log('admin');
             history.push({ pathname: '/' });
+          } else {
+            console.log('user');
+            history.push({ pathname: '/home' });
           }
-          else{
-            console.log("user");
-            history.push({ pathname: '/' });
-          }
-            
         } else {
           this.setState({
             signInError: json.message,
             isLoading: false,
           });
         }
-        
       });
   };
   // #endregion

@@ -6,7 +6,7 @@ export const navigation = Object.freeze({
   rightLinks: [
     {
       label: 'Home',
-      link: '/',
+      link: '/home',
       view: 'home',
       isRouteBtn: true,
     },
@@ -25,17 +25,7 @@ export const navigation = Object.freeze({
       menus: [
         {
           name: 'Data View',
-          linkTo: '/Dashboard/data_view',
-          faIconName: 'fa-bar-chart',
-        },
-        {
-          name: 'Request Nodes',
-          linkTo: '/Dashboard/request_nodes',
-          faIconName: 'fa-eye',
-        },
-        {
-          name: 'My Requests',
-          linkTo: '/Dashboard/my_requests',
+          linkTo: '/home',
           faIconName: 'fa-eye',
         },
       ],
