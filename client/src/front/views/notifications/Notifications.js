@@ -17,7 +17,12 @@ import Highlight          from 'react-highlight';
 import '../../style/map_view.css';
 
 // const AnyReactComponent = ({ text }) => <div>{text}</div>;
-
+type State = {
+  zip_code: string,
+  new_cluster: boolean,
+  no_of_nodes: number,
+  latlong: Array
+};
 class Notifications extends React.Component {
   constructor(props){
 		super(props);
@@ -35,6 +40,10 @@ class Notifications extends React.Component {
       position_3: {},
       position_4: {},
 
+      zip_code: '',
+      new_cluster: false,
+      no_of_nodes: 0,
+      latlong: []
     };
     this.addFields = this.addFields.bind(this);
 	}
@@ -100,19 +109,44 @@ class Notifications extends React.Component {
         console.log(elem[i]);
         if(selected_node_number==0){
           console.log("0000000");
-          this.setState({ visi_0: true, position_1:{lat:location.lat(), lng: location.lng()}});
+          var lat = location.lat();
+          var long = location.lng();
+          this.setState(
+            { visi_0: true, 
+              position_1:{lat:location.lat(), lng: location.lng()}, 
+              latlong:[...this.state.latlong, {lat, long}]
+            }
+          );
         }
         else if(selected_node_number==1){
           console.log("1111111");
-          this.setState({ visi_1: true,  position_2:{lat:location.lat(), lng: location.lng()}});
+          var lat = location.lat();
+          var long = location.lng();
+          this.setState(
+            { visi_1: true,  
+              position_2:{lat:location.lat(), lng: location.lng()}, 
+              latlong:[...this.state.latlong, {lat, long}]}
+            );
         }
         else if(selected_node_number==2){
           console.log("2222222");
-          this.setState({ visi_2: true,  position_3:{lat:location.lat(), lng: location.lng()}});
+          var lat = location.lat();
+          var long = location.lng();
+          this.setState(
+            { visi_2: true,  
+              position_3:{lat:location.lat(), lng: location.lng()},
+              latlong:[...this.state.latlong, {lat, long}]
+            });
         }
         else if(selected_node_number==3){
           console.log("3333333");
-          this.setState({ visi_3: true,  position_4:{lat:location.lat(), lng: location.lng()}});
+          var lat = location.lat();
+          var long = location.lng();
+          this.setState(
+            { visi_3: true,  
+              position_4:{lat:location.lat(), lng: location.lng()},
+              latlong:[...this.state.latlong,{lat, long}]
+            });
         }
         
       }
@@ -156,7 +190,10 @@ class Notifications extends React.Component {
 		}
   };
 
-  addFields = () => {
+  addFields = (changeEvent) => {
+    this.setState({
+      no_of_nodes: changeEvent.target.value
+    });
     // Number of inputs to create
     var number = document.getElementById("node_value").value;
     console.log(number);
@@ -200,6 +237,55 @@ class Notifications extends React.Component {
   }
 }
 
+handlesOnZipCodeChange = (event: SyntheticEvent<>) => {
+  if (event) {
+    event.preventDefault();
+    // should add some validator before setState in real use cases
+    this.setState({ zip_code: event.target.value.trim() });
+  }
+};
+
+handleOptionChange = (changeEvent) => {
+  this.setState({
+    new_cluster: changeEvent.target.value
+  });
+};
+
+handleOnSubmit = (event: SyntheticEvent<>) => {
+  const {
+    zip_code,
+    no_of_nodes,
+    latlong,
+  } = this.state;
+
+  fetch('http://localhost:3002/api/request/newRequest', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        zip_code: zip_code,
+        no_of_nodes: no_of_nodes,
+        latlong: latlong,
+      }),
+    }).then(res => res.json())
+      .then(json => {
+        console.log('json', json);
+        if (json.success) {
+          // setInStorage('my_key', { token: json.token });
+         
+          this.setState({
+            zip_code: '',
+            no_of_nodes: '',
+            latlong: '',
+          });
+          
+            
+        } 
+        
+      });
+
+};
 
 	render() {
     const triangleCoords = [
@@ -208,22 +294,24 @@ class Notifications extends React.Component {
       {lat: 32.321, lng: -64.757},
       {lat: 25.774, lng: -80.190}
     ];
+
+    const {zip_code, new_cluster, no_of_nodes, latLng} = this.state
 		return (
       
       <div>
         <h1>Farmer Request Page</h1>
         <form>
           <label for="zip_code">Zip Code</label>
-          <input id="zip_code" type="text" /><br/>
+          <input id="zip_code" type="text" onChange={this.handlesOnZipCodeChange}/><br/>
 
           <label htmlFor="new_cluster">New Cluster?</label>
           <div>
-            <input id="new_cluster_yes" type="radio" name="new_cluster" />Yes <br/>
-            <input id="new_cluster_no" type="radio" name="new_cluster" />No
+            <input id="new_cluster_yes" type="radio" name="new_cluster" onChange={this.handleOptionChange} />Yes <br/>
+            <input id="new_cluster_no" type="radio" name="new_cluster" onChange={this.handleOptionChange} />No
           </div>
           <div>
           <label>Number of nodes</label>
-            <select id="node_value" onChange={this.addFields}>
+            <select id="node_value" onChange={this.addFields} >
               <option value="0">0</option>
               <option value="1">1</option>
               <option value="2">2</option>
@@ -233,16 +321,8 @@ class Notifications extends React.Component {
             <div id="node_container"></div>
           </div>
           <div>
-          <label>Zone</label>
-            <select>
-              <option value="zone_one">1</option>
-              <option value="zone_two">2</option>
-              <option value="zone_three">3</option>
-              <option value="zone_four">4</option>
-              <option value="zone_five">5</option>
-            </select>
           </div>
-          <input type="submit" value="Submit"></input>
+          <input type="submit" value="Submit" onClick={this.handleOnSubmit}></input>
         </form>
 			<div id="google-map-holder" style={{float: 'left'}}>
         <Map google={this.props.google}
