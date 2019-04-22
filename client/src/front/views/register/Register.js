@@ -7,10 +7,7 @@ import { Row, Col, Button } from 'react-bootstrap';
 import auth from '../../services/auth';
 import '../../style/login.css';
 
-import {
-  getFromStorage,
-  setInStorage,
-} from '../storage';
+import { getFromStorage, setInStorage } from '../storage';
 import { AsideRight } from '../../components';
 
 // #endregion
@@ -37,6 +34,7 @@ type Props = {
 
 type State = {
   name: string,
+  lanme: string,
   email: string,
   password: string,
   confirm_password: string,
@@ -73,10 +71,11 @@ class Register extends PureComponent<Props, State> {
 
   state = {
     name: '',
+    lname: '',
     email: '',
     password: '',
-    confirm_password:'',
-    role:'',
+    confirm_password: '',
+    role: '',
     isLoading: true,
     token: '',
     signUpError: '',
@@ -88,7 +87,7 @@ class Register extends PureComponent<Props, State> {
     const { enterRegister, disconnectUser } = this.props;
 
     disconnectUser(); // diconnect user: remove token and user info
-   // enterRegister();
+    // enterRegister();
   }
 
   componentWillUnmount() {
@@ -97,7 +96,7 @@ class Register extends PureComponent<Props, State> {
   }
 
   render() {
-    const { name, email, password, confirm_password } = this.state;
+    const { name, lname, email, password, confirm_password } = this.state;
 
     const { isLogging } = this.props;
 
@@ -114,20 +113,28 @@ class Register extends PureComponent<Props, State> {
                   <h2>Register</h2>
                 </legend>
                 <div className="form-group input_fields">
-                  <label
-                    htmlFor="name"
-                    className="col-lg-2 control-label"
-                  >
+                  <label htmlFor="name" className="col-lg-2 control-label">
                     Name
                   </label>
-                  <div className="col-lg-10">
+                  <div className="col-lg-5">
                     <input
                       type="text"
                       className="form-control"
                       id="name"
-                      placeholder="Name"
+                      placeholder="First Name"
                       value={name}
                       onChange={this.handlesOnNameChange}
+                      required
+                    />
+                  </div>
+                  <div className="col-lg-5">
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="lname"
+                      placeholder="Last Name"
+                      value={lname}
+                      onChange={this.handlesOnLastNameChange}
                       required
                     />
                   </div>
@@ -251,7 +258,9 @@ class Register extends PureComponent<Props, State> {
           </Col>
         </Row>
         <Row>
-        <p class="login_href">Already registered? <a href="/login">Login</a></p>
+          <p class="login_href">
+            Already registered? <a href="/login">Login</a>
+          </p>
         </Row>
       </div>
     );
@@ -264,6 +273,14 @@ class Register extends PureComponent<Props, State> {
       //event.preventDefault();
       // should add some validator before setState in real use cases
       this.setState({ name: event.target.value.trim() });
+    }
+  };
+
+  handlesOnLastNameChange = (event: SyntheticEvent<>) => {
+    if (event) {
+      //event.preventDefault();
+      // should add some validator before setState in real use cases
+      this.setState({ lname: event.target.value.trim() });
     }
   };
 
@@ -294,7 +311,7 @@ class Register extends PureComponent<Props, State> {
   handlesOnRoleChange = (event: SyntheticEvent<>) => {
     if (event) {
       //event.preventDefault();
-      console.log("ROle: " + event.target.value.trim());
+      console.log('ROle: ' + event.target.value.trim());
       // should add some validator before setState in real use cases
       this.setState({ role: event.target.value.trim() });
     }
@@ -302,9 +319,10 @@ class Register extends PureComponent<Props, State> {
   // #endregion
 
   // #region on login button click callback
-  handlesOnRegister = (event: SyntheticEvent<>) =>{
+  handlesOnRegister = (event: SyntheticEvent<>) => {
     const {
       name,
+      lname,
       email,
       password,
       confirm_password,
@@ -315,16 +333,18 @@ class Register extends PureComponent<Props, State> {
     fetch('http://localhost:3002/api/account/signup', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         name: name,
+        lname: lname,
         email: email,
         password: password,
         confirm_password: confirm_password,
         role: 'user',
       }),
-    }).then(res => res.json())
+    })
+      .then(res => res.json())
       .then(json => {
         console.log('json', json);
         if (json.success) {
@@ -336,11 +356,11 @@ class Register extends PureComponent<Props, State> {
             password: '',
             email: '',
             name: '',
+            lname: '',
             confirm_password: '',
             role: '',
             token: json.token,
           });
-          
         } else {
           this.setState({
             signInError: json.message,
