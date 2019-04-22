@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { Header, AsideLeft, AsideRight } from '../../components';
 import { Modals } from '../../views';
 import { appConfig } from '../../config';
-import { navigation } from '../../models';
+import { navigation, navigation2 } from '../../models';
 import MainRoutes from '../../routes/MainRoutes';
 import auth from '../../services/auth';
 import UserIMG from '../../img/user.jpg';
@@ -61,6 +61,15 @@ function App({
     [history],
   );
 
+  let role = JSON.parse(localStorage.getItem('role'));
+  console.log(role);
+  let sideMenuType = navigation.sideMenu;
+  if (role == 'admin') {
+    sideMenuType = navigation2.sideMenu;
+  } else {
+    sideMenuType = navigation.sideMenu;
+  }
+
   return (
     <div>
       <Header
@@ -77,7 +86,7 @@ function App({
       <div className="wrapper row-offcanvas row-offcanvas-left">
         <AsideLeft
           isAnimated={true}
-          sideMenu={navigation.sideMenu}
+          sideMenu={temp2}
           currentView={currentView}
           isCollapsed={sideMenuIsCollapsed}
           helloWord={helloWord}

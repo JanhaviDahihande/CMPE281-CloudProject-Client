@@ -1,6 +1,6 @@
 // @flow
 
-export const navigation = Object.freeze({
+export const navigation2 = Object.freeze({
   brand: 'reactDirectorAdmin',
   leftLinks: [],
   rightLinks: [
