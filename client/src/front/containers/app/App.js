@@ -86,7 +86,7 @@ function App({
       <div className="wrapper row-offcanvas row-offcanvas-left">
         <AsideLeft
           isAnimated={true}
-          sideMenu={temp2}
+          sideMenu={sideMenuType}
           currentView={currentView}
           isCollapsed={sideMenuIsCollapsed}
           helloWord={helloWord}

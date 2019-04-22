@@ -37,7 +37,7 @@ export const MainRoutes = () => (
 
     <Route path="/Dashboard/statsCard" component={StatsCardConnected} />
     <Route path="/Dashboard/earningGraph" component={EarningGraphConnected} />
-    <Route path="/Dashboard/notifications" component={NotificationsConnected} />
+    <Route path="/Dashboard/request" component={NotificationsConnected} />
     <Route path="/Dashboard/workProgress" component={WorkProgressConnected} />
     <Route path="/Dashboard/twitterFeed" component={TwitterFeedConnected} />
     <Route path="/Dashboard/teamMates" component={TeamMatesViewConnected} />
@@ -45,9 +45,15 @@ export const MainRoutes = () => (
     <Route path="/Dashboard/billinguser" component={BillingUserConnected} />
     <Route path="/Dashboard/billingadmin" component={BillingAdminConnected} />
 
-    <Route path="/managecluster" component={ManageClusterConnected} />
-    <Route path="/managenode" component={ManageNodeConnected} />
-    <Route path="/managesensor" component={ManageSensorConnected} />
+    <Route
+      path="/Infrastructure/managecluster"
+      component={ManageClusterConnected}
+    />
+    <Route path="/Infrastructure/managenode" component={ManageNodeConnected} />
+    <Route
+      path="/Infrastructure/managesensor"
+      component={ManageSensorConnected}
+    />
 
     <Route exact path="/simpleTables" component={SimpleTablesConnected} />
 

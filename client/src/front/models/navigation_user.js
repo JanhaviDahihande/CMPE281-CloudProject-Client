@@ -24,9 +24,30 @@ export const navigation = Object.freeze({
       group: 'Home  ',
       menus: [
         {
+          name: 'Home',
+          linkTo: '/home',
+          faIconName: 'fa-eye',
+        },
+        {
           name: 'Data View',
           linkTo: '/home',
           faIconName: 'fa-eye',
+        },
+        {
+          name: 'Request Nodes',
+          linkTo: '/Dashboard/request',
+          faIconName: 'fa-bell',
+        },
+        {
+          name: 'Billing',
+          linkTo: '/Dashboard/billinguser',
+          faIconName: 'fa-dollar',
+        },
+
+        {
+          name: 'My Requests',
+          linkTo: '/Dashboard/billinguser',
+          faIconName: 'fa-dollar',
         },
       ],
     },
