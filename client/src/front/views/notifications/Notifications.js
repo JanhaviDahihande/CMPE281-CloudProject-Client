@@ -21,7 +21,8 @@ type State = {
   zip_code: string,
   new_cluster: boolean,
   no_of_nodes: number,
-  latlong: Array
+  latlong: Array,
+  new_cluster: string,
 };
 class Notifications extends React.Component {
   constructor(props){
@@ -41,9 +42,9 @@ class Notifications extends React.Component {
       position_4: {},
 
       zip_code: '',
-      new_cluster: false,
+      new_cluster: '',
       no_of_nodes: 0,
-      latlong: []
+      latlong: [],
     };
     this.addFields = this.addFields.bind(this);
 	}
@@ -246,6 +247,7 @@ handlesOnZipCodeChange = (event: SyntheticEvent<>) => {
 };
 
 handleOptionChange = (changeEvent) => {
+  console.log("Radio : " + changeEvent.target.value);
   this.setState({
     new_cluster: changeEvent.target.value
   });
@@ -256,8 +258,10 @@ handleOnSubmit = (event: SyntheticEvent<>) => {
     zip_code,
     no_of_nodes,
     latlong,
+    new_cluster
   } = this.state;
-
+  let user_id = JSON.parse(localStorage.getItem('user_id'));
+  console.log(user_id);
   fetch('http://localhost:3002/api/request/newRequest', {
       method: 'POST',
       headers: {
@@ -267,6 +271,8 @@ handleOnSubmit = (event: SyntheticEvent<>) => {
         zip_code: zip_code,
         no_of_nodes: no_of_nodes,
         latlong: latlong,
+        user_id: user_id,
+        new_cluster: new_cluster,
       }),
     }).then(res => res.json())
       .then(json => {
@@ -278,6 +284,7 @@ handleOnSubmit = (event: SyntheticEvent<>) => {
             zip_code: '',
             no_of_nodes: '',
             latlong: '',
+            new_cluster: ''
           });
           
             
@@ -287,7 +294,10 @@ handleOnSubmit = (event: SyntheticEvent<>) => {
 
 };
 
+
 	render() {
+    
+
     const triangleCoords = [
       {lat: 25.774, lng: -80.190},
       {lat: 18.466, lng: -66.118},
@@ -306,8 +316,8 @@ handleOnSubmit = (event: SyntheticEvent<>) => {
 
           <label htmlFor="new_cluster">New Cluster?</label>
           <div>
-            <input id="new_cluster_yes" type="radio" name="new_cluster" onChange={this.handleOptionChange} />Yes <br/>
-            <input id="new_cluster_no" type="radio" name="new_cluster" onChange={this.handleOptionChange} />No
+            <input id="new_cluster_yes" type="radio" name="new_cluster" value="yes" onChange={this.handleOptionChange} />Yes <br/>
+            <input id="new_cluster_no" type="radio" name="new_cluster" value="no"  onChange={this.handleOptionChange} />No
           </div>
           <div>
           <label>Number of nodes</label>

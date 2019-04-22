@@ -208,6 +208,7 @@ class Login extends PureComponent<Props, State> {
         if (json.success) {
           setInStorage('my_key', { token: json.token });
           setInStorage('role', json['role']);
+          setInStorage('user_id', json['user_id']);
           this.setState({
             signInError: json.message,
             isLoading: false,
