@@ -21,12 +21,12 @@ export const navigation2 = Object.freeze({
     // group menu #1
     {
       id: 1,
-      group: 'Dashboard  ',
+      group: 'Dashboard',
       menus: [
         {
           name: 'Home',
           linkTo: '/',
-          faIconName: 'fa-eye',
+          faIconName: 'fa-home',
         },
         {
           name: 'Farmer Requests',

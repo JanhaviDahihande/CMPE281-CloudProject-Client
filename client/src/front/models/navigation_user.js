@@ -26,7 +26,7 @@ export const navigation = Object.freeze({
         {
           name: 'Home',
           linkTo: '/home',
-          faIconName: 'fa-eye',
+          faIconName: 'fa-home',
         },
         {
           name: 'Data View',

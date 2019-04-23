@@ -209,6 +209,9 @@ class Login extends PureComponent<Props, State> {
           setInStorage('my_key', { token: json.token });
           setInStorage('role', json['role']);
           setInStorage('user_id', json['user_id']);
+          setInStorage('name', json['name']);
+          setInStorage('lname', json['lname']);
+
           this.setState({
             signInError: json.message,
             isLoading: false,
@@ -216,6 +219,7 @@ class Login extends PureComponent<Props, State> {
             signInEmail: '',
             token: json.token,
           });
+
           if (json['role'] == 'admin') {
             console.log('admin');
             history.push({ pathname: '/' });

@@ -62,24 +62,24 @@ const UserMenu = ({ firstname, lastname, onLogout, login, picture }: Props) => (
       <li>
         <a href="#">
           <i className="fa fa-clock-o fa-fw pull-right" />
-          <span className="badge badge-success pull-right">10</span>
+          <span className="badge badge-success pull-right">0</span>
           Updates
         </a>
         <a href="#">
           <i className="fa fa-envelope-o fa-fw pull-right" />
-          <span className="badge badge-danger pull-right">5</span>
+          <span className="badge badge-danger pull-right">0</span>
           Messages
         </a>
         <a href="#">
           <i className="fa fa-magnet fa-fw pull-right" />
-          <span className="badge badge-info pull-right">3</span>
+          <span className="badge badge-info pull-right">0</span>
           Subscriptions
         </a>
-        <a href="#">
+        {/* <a href="#">
           <i className="fa fa-question fa-fw pull-right" />
-          <span className="badge pull-right">11</span>
+          <span className="badge pull-right">0</span>
           FAQ
-        </a>
+        </a> */}
       </li>
       <li className="divider" />
       <li>

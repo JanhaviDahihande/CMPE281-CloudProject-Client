@@ -37,9 +37,7 @@ function App({
   }, []);
   /* elsin-enable */
 
-  const userFullName = `${
-    userInfos.firstname
-  } ${userInfos.lastname.toUpperCase()}`;
+  const userFullName = `${userInfos.firstname} ${userInfos.lastname}`;
 
   const handlesMenuButtonClick = useCallback(
     (event?: SyntheticEvent<>) => {

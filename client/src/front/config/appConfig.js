@@ -1,7 +1,7 @@
 // @flow
 
 export const appConfig = Object.freeze({
-  APP_NAME: 'SmartAgriculture',
+  APP_NAME: 'SmartAg Cloud',
   // dev mode to mock async data for instance
   DEV_MODE: true,
   // When you need some kind "console spam" to debug
