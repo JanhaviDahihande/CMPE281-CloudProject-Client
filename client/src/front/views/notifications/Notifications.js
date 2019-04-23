@@ -26,6 +26,7 @@ type State = {
   no_of_nodes: number,
   latlong: Array,
   new_cluster: string,
+  status: string,
 };
 class Notifications extends React.Component {
   constructor(props) {
@@ -48,6 +49,7 @@ class Notifications extends React.Component {
       new_cluster: '',
       no_of_nodes: 0,
       latlong: [],
+      status: 'Pending',
     };
     this.addFields = this.addFields.bind(this);
   }
@@ -263,7 +265,7 @@ class Notifications extends React.Component {
   };
 
   handleOnSubmit = (event: SyntheticEvent<>) => {
-    const { zip_code, no_of_nodes, latlong, new_cluster } = this.state;
+    const { zip_code, no_of_nodes, latlong, new_cluster, status } = this.state;
     let user_id = JSON.parse(localStorage.getItem('user_id'));
     console.log(user_id + ' & ' + zip_code + ' ' + no_of_nodes);
     fetch('http://localhost:3002/api/request/newRequest', {
@@ -277,6 +279,7 @@ class Notifications extends React.Component {
         latlong: latlong,
         user_id: user_id,
         new_cluster: new_cluster,
+        status: status,
       }),
     })
       .then(res => res.json())
@@ -290,6 +293,7 @@ class Notifications extends React.Component {
             no_of_nodes: '',
             latlong: '',
             new_cluster: '',
+            status: 'Pending',
           });
         }
       });
@@ -303,7 +307,7 @@ class Notifications extends React.Component {
       { lat: 25.774, lng: -80.19 },
     ];
 
-    const { zip_code, new_cluster, no_of_nodes, latLng } = this.state;
+    const { zip_code, new_cluster, no_of_nodes, latLng, status } = this.state;
     return (
       <AnimatedView>
         <div>

@@ -53,7 +53,7 @@ const UserMenu = ({ firstname, lastname, onLogout, login, picture }: Props) => (
     <a href="#" className="dropdown-toggle" data-toggle="dropdown">
       <i className="fa fa-user" />
       <span>
-        {firstname} {lastname}
+        {/* {firstname} {lastname} */}
         <i className="caret" />
       </span>
     </a>
