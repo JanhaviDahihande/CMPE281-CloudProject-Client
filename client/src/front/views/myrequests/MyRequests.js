@@ -10,131 +10,60 @@ class MyRequests extends PureComponent {
   constructor() {
     super();
     this.state = {
-      data: [{
-        user_id: "123456",
-        user_name: "A",
-        zip_code: 1,
-        number_of_nodes: 3,
-        new_cluster: "yes",
-        location: "lat lng",
-        created_at: "1234",
-      }, {
-        user_id: "123456",
-        user_name: "A",
-        zip_code: 1,
-        number_of_nodes: 3,
-        new_cluster: "yes",
-        location: "lat lng",
-        created_at: "1234",
-      }, {
-        user_id: "123456",
-        user_name: "A",
-        zip_code: 1,
-        number_of_nodes: 3,
-        new_cluster: "yes",
-        location: "lat lng",
-        created_at: "1234",
-      }, {
-        user_id: "123456",
-        user_name: "A",
-        zip_code: 1,
-        number_of_nodes: 3,
-        new_cluster: "yes",
-        location: "lat lng",
-        created_at: "1234",
-      }, {
-        user_id: "123456",
-        user_name: "A",
-        zip_code: 1,
-        number_of_nodes: 3,
-        new_cluster: "yes",
-        location: "lat lng",
-        created_at: "1234",
-      }, {
-        user_id: "123456",
-        user_name: "A",
-        zip_code: 1,
-        number_of_nodes: 3,
-        new_cluster: "yes",
-        location: "lat lng",
-        created_at: "1234",
-      }, {
-        user_id: "123456",
-        user_name: "A",
-        zip_code: 1,
-        number_of_nodes: 3,
-        new_cluster: "yes",
-        location: "lat lng",
-        created_at: "1234",
-      }, {
-        user_id: "123456",
-        user_name: "A",
-        zip_code: 1,
-        number_of_nodes: 3,
-        new_cluster: "yes",
-        location: "lat lng",
-        created_at: "1234",
-      }, {
-        user_id: "123456",
-        user_name: "A",
-        zip_code: 1,
-        number_of_nodes: 3,
-        new_cluster: "yes",
-        location: "lat lng",
-        created_at: "1234",
-      }, {
-        user_id: "123456",
-        user_name: "A",
-        zip_code: 1,
-        number_of_nodes: 3,
-        new_cluster: "yes",
-        location: "lat lng",
-        created_at: "1234",
-      }, {
-        user_id: "123456",
-        user_name: "A",
-        zip_code: 1,
-        number_of_nodes: 3,
-        new_cluster: "yes",
-        location: "lat lng",
-        created_at: "1234",
-      }, {
-        user_id: "123456",
-        user_name: "A",
-        zip_code: 1,
-        number_of_nodes: 3,
-        new_cluster: "yes",
-        location: "lat lng",
-        created_at: "1234",
-      }, {
-        user_id: "123456",
-        user_name: "A",
-        zip_code: 1,
-        number_of_nodes: 3,
-        new_cluster: "yes",
-        location: "lat lng",
-        created_at: "1234",
-      }, {
-        user_id: "123456",
-        user_name: "A",
-        zip_code: 1,
-        number_of_nodes: 3,
-        new_cluster: "yes",
-        location: "lat lng",
-        created_at: "1234",
-      }, {
-        user_id: "123456",
-        user_name: "A",
-        zip_code: 1,
-        number_of_nodes: 3,
-        new_cluster: "yes",
-        location: "lat lng",
-        created_at: "1234",
-      }]
+      data:[]
+    };
+    //this.handleCLick = this.handleCLick.bind(this);
+  }
+
+  async componentDidMount() {
+    // const response = await fetch(`http://localhost:3002/api/myrequests/5cbd62b6a090d8249f70a016`);
+    // const json = await response.json();
+    // this.setState({ data: json });
+    console.log("Heyy");
+    let user_id = JSON.parse(localStorage.getItem('user_id'));
+    console.log("User_id" + user_id);
+    try {
+      var url = "http://localhost:3002/api/myrequests/" + user_id;
+      await fetch(url)
+      .then(res => res.json())
+      .then(json => { 
+        console.log(json.message);
+        var data = json.message; //gets data in string
+        // console.log(typeof data); 
+        data = JSON.parse(data);
+        // console.log(typeof data);
+        this.setState({ data:  data});
+      })
+      
+    } catch (error) {
+      console.log(error);
     }
   }
 
+// To get data on button click
+  // async handleCLick ()  {
+  //   console.log("Heyy");
+  //   let user_id = JSON.parse(localStorage.getItem('user_id'));
+  //   console.log("User_id" + user_id);
+  //   try {
+  //     var url = "http://localhost:3002/api/myrequests/" + user_id;
+  //     await fetch(url)
+  //     .then(res => res.json())
+  //     .then(json => { 
+  //       console.log(json.message);
+  //       var data = json.message; //gets data in string
+  //       // console.log(typeof data); 
+  //       data = JSON.parse(data);
+  //       // console.log(typeof data);
+  //       this.setState({ data:  data});
+  //     })
+      
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
   render() {
+    
     let rows = this.state.data.map(request => {
       return <RequestRow key = {
         request.user_id
@@ -162,12 +91,15 @@ class MyRequests extends PureComponent {
                     placeholder="Search"
                   />
                   <div className="input-group-btn">
-                    <button className="btn btn-sm btn-default">
+                    <button className="btn btn-sm btn-default" >
                       <i className="fa fa-search" />
                     </button>
                   </div>
                 </div>
               </div>
+              {/* <button className="btn btn-sm btn-default" onClick={this.handleCLick} >
+                      <i className="fa fa-search" />Get data
+                    </button> */}
               <table className="table table-hover">
                 <thead>
                   <tr>
@@ -194,22 +126,24 @@ class MyRequests extends PureComponent {
 }
 
 const RequestRow = (props) => {
+  console.log("Here");
+  console.log(props);
   return (
     <tr>
       <td>
         { props.data.zip_code }
       </td>
       <td>
-        { props.data.number_of_nodes }
+        { props.data.no_of_nodes }
       </td>
       <td>
         { props.data.new_cluster }
       </td>
       <td>
-        { props.data.location }
+        { props.data.updatedAt }
       </td>
       <td>
-        { props.data.created_at }
+        { props.data.updatedAt }
       </td>
     </tr>
   );
