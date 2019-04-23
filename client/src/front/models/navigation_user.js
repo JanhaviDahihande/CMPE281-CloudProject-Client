@@ -46,7 +46,7 @@ export const navigation = Object.freeze({
 
         {
           name: 'My Requests',
-          linkTo: '/Dashboard/billinguser',
+          linkTo: '/Dashboard/myrequests',
           faIconName: 'fa-dollar',
         },
       ],

@@ -30,7 +30,7 @@ export const navigation2 = Object.freeze({
         },
         {
           name: 'Farmer Requests',
-          linkTo: '/Dashboard/todoList',
+          linkTo: '/Dashboard/farmerrequests',
           faIconName: 'fa-check',
         },
         {
@@ -40,7 +40,7 @@ export const navigation2 = Object.freeze({
         },
         {
           name: 'Users',
-          linkTo: '/Dashboard/earningGraph',
+          linkTo: '/Dashboard/userlist',
           faIconName: 'fa-area-chart',
         },
 
@@ -149,16 +149,16 @@ export const navigation2 = Object.freeze({
     //   ],
     // },
     // // group menu #4
-    // {
-    //   id: 5,
-    //   group: 'SimpleTables',
-    //   menus: [
-    //     {
-    //       name: 'Simple tables preview',
-    //       linkTo: '/simpleTables',
-    //       faIconName: 'fa-eye',
-    //     },
-    //   ],
-    // },
+    {
+      id: 5,
+      group: 'SimpleTables',
+      menus: [
+        {
+          name: 'Simple tables preview',
+          linkTo: '/simpleTables',
+          faIconName: 'fa-eye',
+        },
+      ],
+    },
   ],
 });
