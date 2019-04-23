@@ -21,6 +21,9 @@ class ManageCluster extends PureComponent {
       { name: 'Update Cluster', tablink: 'update', isActive: false },
       { name: 'Delete Cluster', tablink: 'delete', isActive: false },
     ],
+    areaCode:'', 
+    ipAddr:'', 
+    cluster_name:'',
   };
 
   componentWillMount() {
@@ -38,7 +41,7 @@ class ManageCluster extends PureComponent {
   }
 
   render() {
-    const { mockHeader } = this.state;
+    const { mockHeader, areaCode, ipAddr,  cluster_name} = this.state;
 
     return (
       <AnimatedView>
@@ -105,7 +108,10 @@ class ManageCluster extends PureComponent {
                             Area Code:
                           </label>
                           <div className="col-md-6">
-                            <input type="text" className="form-control" />
+                            <input type="text" className="form-control" 
+                            id="area_code"
+                            value={areaCode}
+                            onChange={this.handlesOnCodeChange}/>
                           </div>
                         </div>
                         <div className="form-group">
@@ -113,7 +119,10 @@ class ManageCluster extends PureComponent {
                             IP Address:
                           </label>
                           <div className="col-md-6">
-                            <input type="text" className="form-control" />
+                            <input type="text" className="form-control" 
+                            id="area_code"
+                            value={ipAddr}
+                            onChange={this.handlesOnIPChange}/>
                           </div>
                         </div>
                         <div className="form-group">
@@ -121,12 +130,16 @@ class ManageCluster extends PureComponent {
                             Name:
                           </label>
                           <div className="col-md-6">
-                            <input type="text" className="form-control" />
+                            <input type="text" className="form-control" 
+                            id="name"
+                            value={cluster_name}
+                            onChange={this.handlesOnNameChange}/>
                           </div>
                         </div>
                         <div className="form-group">
                           <div className="col-lg-offset-2 col-lg-10">
-                            <button type="submit" className="btn btn-success">
+                            <button type="submit" className="btn btn-success"
+                            onClick={this.handlesAddCluster}>
                               Add
                             </button>
                             <button type="reset" className="btn btn-danger">
@@ -206,8 +219,62 @@ class ManageCluster extends PureComponent {
       </AnimatedView>
     );
   }
-}
 
+
+// #region form inputs change callbacks
+handlesOnCodeChange = (event: SyntheticEvent<>) => {
+  if (event) {
+    event.preventDefault();
+    // should add some validator before setState in real use cases
+    this.setState({ areaCode: event.target.value.trim() });
+  }
+};
+
+handlesOnIPChange = (event: SyntheticEvent<>) => {
+  if (event) {
+    event.preventDefault();
+    // should add some validator before setState in real use cases
+    this.setState({ ipAddr: event.target.value.trim() });
+  }
+};
+
+handlesOnNameChange = (event: SyntheticEvent<>) => {
+  if (event) {
+    event.preventDefault();
+    // should add some validator before setState in real use cases
+    this.setState({ cluster_name: event.target.value.trim() });
+  }
+};
+
+handlesAddCluster = (event: SyntheticEvent<>) => {
+  const { areaCode, ipAddr, cluster_name } = this.state;
+  // Post request to backend
+  fetch('http://localhost:3002/api/manageinfrastruture/cluster/add', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      areaCode: areaCode,
+      ipAddr: ipAddr,
+      cluster_name: cluster_name
+    }),
+  })
+    .then(res => res.json())
+    .then(json => {
+      console.log('json', json);
+      console.log('json role: ' + json['role']);
+      if (json.success) {
+
+        this.setState({
+          code: '',
+          ipAddr: '',
+          name: '',
+        });
+      } 
+    });
+};
+}
 ManageCluster.propTypes = {
   actions: PropTypes.shape({
     enterTabPanel: PropTypes.func.isRequired,

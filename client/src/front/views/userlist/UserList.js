@@ -18,11 +18,8 @@ class UserList extends PureComponent {
     // const response = await fetch(`http://localhost:3002/api/myrequests/5cbd62b6a090d8249f70a016`);
     // const json = await response.json();
     // this.setState({ data: json });
-    console.log("Heyy");
-    let user_id = JSON.parse(localStorage.getItem('user_id'));
-    console.log("User_id" + user_id);
     try {
-      var url = "http://localhost:3002/api/myrequests/" + user_id;
+      var url = "http://localhost:3002/api/users/";
       await fetch(url)
       .then(res => res.json())
       .then(json => { 
@@ -80,7 +77,7 @@ class UserList extends PureComponent {
                       <th>Last Name</th>
                       <th>Email</th>
                       <th>Role</th>
-                      <th>Is Deleted</th>
+                      {/* <th>Is Deleted</th> */}
                       <th>Sign up date</th>
                   </tr>
                 </thead>
@@ -100,13 +97,14 @@ class UserList extends PureComponent {
 }
 
 const UserRow = (props) => {
+  console.log(props.data.isDeleted);
   return (
     <tr>
       <td>
-        { props.data.first_name }
+        { props.data.name }
       </td>
       <td>
-        { props.data.last_name }
+        { props.data.lname }
       </td>
       <td>
         { props.data.email }
@@ -114,11 +112,11 @@ const UserRow = (props) => {
       <td>
         { props.data.role }
       </td>
-      <td>
+      {/* <td>
         { props.data.isDeleted }
-      </td>
+      </td> */}
       <td>
-        { props.data.sign_up_date }
+        { props.data.signUpDate }
       </td>
     </tr>
   );
