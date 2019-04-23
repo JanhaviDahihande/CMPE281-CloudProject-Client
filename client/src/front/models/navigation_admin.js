@@ -31,7 +31,7 @@ export const navigation2 = Object.freeze({
         {
           name: 'Farmer Requests',
           linkTo: '/Dashboard/farmerrequests',
-          faIconName: 'fa-check',
+          faIconName: 'fa-clock-o',
         },
         {
           name: 'Earnings',
@@ -41,7 +41,7 @@ export const navigation2 = Object.freeze({
         {
           name: 'Users',
           linkTo: '/Dashboard/userlist',
-          faIconName: 'fa-area-chart',
+          faIconName: 'fa-users',
         },
 
         // {
@@ -70,17 +70,17 @@ export const navigation2 = Object.freeze({
         {
           name: 'Intelligent Clusters',
           linkTo: '/Infrastructure/managecluster',
-          faIconName: 'fa-eye',
+          faIconName: 'fa-wifi',
         },
         {
           name: 'Intelligent Nodes',
           linkTo: '/Infrastructure/managenode',
-          faIconName: 'fa-eye',
+          faIconName: 'fa-map-marker',
         },
         {
           name: 'Intelligent Sensors',
           linkTo: '/Infrastructure/managesensor',
-          faIconName: 'fa-eye',
+          faIconName: 'fa-dot-circle-o',
         },
       ],
     },

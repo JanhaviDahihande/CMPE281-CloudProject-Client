@@ -31,12 +31,12 @@ export const navigation = Object.freeze({
         {
           name: 'Data View',
           linkTo: '/home',
-          faIconName: 'fa-eye',
+          faIconName: 'fa-database',
         },
         {
           name: 'Request Nodes',
           linkTo: '/Dashboard/request',
-          faIconName: 'fa-bell',
+          faIconName: 'fa-map-marker',
         },
         {
           name: 'Billing',
@@ -47,7 +47,7 @@ export const navigation = Object.freeze({
         {
           name: 'My Requests',
           linkTo: '/Dashboard/myrequests',
-          faIconName: 'fa-dollar',
+          faIconName: 'fa-clock-o',
         },
       ],
     },
