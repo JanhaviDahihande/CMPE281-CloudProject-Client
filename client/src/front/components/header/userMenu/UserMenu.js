@@ -59,7 +59,7 @@ const UserMenu = ({ firstname, lastname, onLogout, login, picture }: Props) => (
     </a>
     <ul className="dropdown-menu dropdown-custom dropdown-menu-right">
       <li className="dropdown-header text-center">Account</li>
-      <li>
+      {/* <li>
         <a href="#">
           <i className="fa fa-clock-o fa-fw pull-right" />
           <span className="badge badge-success pull-right">0</span>
@@ -75,12 +75,12 @@ const UserMenu = ({ firstname, lastname, onLogout, login, picture }: Props) => (
           <span className="badge badge-info pull-right">0</span>
           Subscriptions
         </a>
-        {/* <a href="#">
+        <a href="#">
           <i className="fa fa-question fa-fw pull-right" />
           <span className="badge pull-right">0</span>
           FAQ
-        </a> */}
-      </li>
+        </a>
+      </li> */}
       <li className="divider" />
       <li>
         <a href="#">
