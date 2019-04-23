@@ -37,7 +37,9 @@ function App({
   }, []);
   /* elsin-enable */
 
-  const userFullName = `${userInfos.firstname} ${userInfos.lastname}`;
+  let name = JSON.parse(localStorage.getItem('name'));
+  let lname = JSON.parse(localStorage.getItem('lname'));
+  const userFullName = name + ' ' + lname;
 
   const handlesMenuButtonClick = useCallback(
     (event?: SyntheticEvent<>) => {
