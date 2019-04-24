@@ -33,11 +33,13 @@ import ManageClusterConnected from '../views/managecluster';
 import ManageNodeConnected from '../views/managenode';
 import ManageSensorConnected from '../views/managesensor';
 import HomeUserConnected from '../views/homeuser';
+import HomeIOTConnected from '../views/homeiot';
 
 export const MainRoutes = () => (
   <Switch>
     <Route exact path="/" component={HomeConnected} />
     <Route exact path="/home" component={HomeUserConnected} />
+    <Route exact path="/homeiot" component={HomeIOTConnected} />
 
     <Route path="/Dashboard/statsCard" component={StatsCardConnected} />
     <Route path="/Dashboard/earningGraph" component={EarningGraphConnected} />
@@ -45,7 +47,10 @@ export const MainRoutes = () => (
     <Route path="/Dashboard/workProgress" component={WorkProgressConnected} />
     <Route path="/Dashboard/twitterFeed" component={TwitterFeedConnected} />
     <Route path="/Dashboard/teamMates" component={TeamMatesViewConnected} />
-    <Route path="/Dashboard/farmerrequests" component={FarmerRequestsViewConnected} />
+    <Route
+      path="/Dashboard/farmerrequests"
+      component={FarmerRequestsViewConnected}
+    />
     <Route path="/Dashboard/userlist" component={UserListViewConnected} />
     <Route path="/Dashboard/dataView" component={DataViewConnected} />
     <Route path="/Dashboard/dataViewUser" component={DataViewUserConnected} />

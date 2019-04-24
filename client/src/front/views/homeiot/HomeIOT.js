@@ -13,7 +13,7 @@ import {
   TeamMatesDemo,
 } from '../../components';
 
-class Home extends PureComponent {
+class HomeIOT extends PureComponent {
   static propTypes = {
     earningGraphLabels: PropTypes.array,
     earningGraphDatasets: PropTypes.array,
@@ -138,4 +138,4 @@ class Home extends PureComponent {
   }
 }
 
-export default Home;
+export default HomeIOT;

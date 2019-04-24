@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { Header, AsideLeft, AsideRight } from '../../components';
 import { Modals } from '../../views';
 import { appConfig } from '../../config';
-import { navigation, navigation2 } from '../../models';
+import { navigation, navigation2, navigation3 } from '../../models';
 import MainRoutes from '../../routes/MainRoutes';
 import auth from '../../services/auth';
 import UserIMG from '../../img/user.jpg';
@@ -66,8 +66,11 @@ function App({
   let sideMenuType = navigation.sideMenu;
   if (role == 'admin') {
     sideMenuType = navigation2.sideMenu;
-  } else {
+  } else if (role == 'user') {
     sideMenuType = navigation.sideMenu;
+  } else if (role == 'iot') {
+    console.log('In iot role');
+    sideMenuType = navigation3.sideMenu;
   }
 
   return (

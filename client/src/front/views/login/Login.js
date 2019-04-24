@@ -221,11 +221,14 @@ class Login extends PureComponent<Props, State> {
           });
 
           if (json['role'] == 'admin') {
-            console.log('admin');
+            // console.log('admin');
             history.push({ pathname: '/' });
-          } else {
-            console.log('user');
+          } else if (json['role'] == 'user') {
+            // console.log('user');
             history.push({ pathname: '/home' });
+          } else if (json['role'] == 'iot') {
+            // console.log('iot user');
+            history.push({ pathname: '/homeiot' });
           }
         } else {
           this.setState({

@@ -69,33 +69,33 @@ class HomeUser extends PureComponent {
         <div className="row" style={{ marginBottom: '5px' }}>
           <div className="col-md-3">
             <StatsCard
-              statValue={'3200'}
-              statLabel={'Total Nodes'}
-              icon={<i className="fa fa-check-square-o" />}
+              statValue={'6'}
+              statLabel={'Total Clusters  '}
+              icon={<i className="fa fa-wifi" />}
               backColor={'red'}
             />
           </div>
           <div className="col-md-3">
             <StatsCard
-              statValue={'2200'}
-              statLabel={'Active Nodes'}
-              icon={<i className="fa fa-envelope-o" />}
+              statValue={'23'}
+              statLabel={'Total Nodes'}
+              icon={<i className="fa fa-map-marker" />}
               backColor={'violet'}
             />
           </div>
           <div className="col-md-3">
             <StatsCard
-              statValue={'100,320'}
-              statLabel={'Total Clusters'}
-              icon={<i className="fa fa-dollar" />}
+              statValue={'88'}
+              statLabel={'Total Sensors'}
+              icon={<i className="fa fa-dot-circle-o" />}
               backColor={'blue'}
             />
           </div>
           <div className="col-md-3">
             <StatsCard
-              statValue={'4567'}
-              statLabel={'Number of Farms'}
-              icon={<i className="fa fa-paperclip" />}
+              statValue={'23'}
+              statLabel={'Registered Farmers'}
+              icon={<i className="fa fa-users" />}
               backColor={'green'}
             />
           </div>
