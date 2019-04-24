@@ -43,6 +43,11 @@ export const navigation2 = Object.freeze({
           linkTo: '/Dashboard/userlist',
           faIconName: 'fa-users',
         },
+        {
+          name: 'Data View',
+          linkTo: '/Dashboard/dataView',
+          faIconName: 'fa-clock-o',
+        },
 
         // {
         //   name: 'Sensor View',

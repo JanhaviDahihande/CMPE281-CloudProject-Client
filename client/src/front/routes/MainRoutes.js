@@ -21,6 +21,8 @@ import TabPanelConnected from '../views/tabPanel';
 import TeamMatesViewConnected from '../views/teamMates';
 import FarmerRequestsViewConnected from '../views/farmerrequests';
 import UserListViewConnected from '../views/userlist';
+import DataViewConnected from '../views/dataView';
+import DataViewUserConnected from '../views/dataViewUser';
 import TwitterFeedConnected from '../views/twitterFeed';
 import WorkProgressConnected from '../views/workProgress';
 import ProtectedConnected from '../views/protected';
@@ -45,6 +47,8 @@ export const MainRoutes = () => (
     <Route path="/Dashboard/teamMates" component={TeamMatesViewConnected} />
     <Route path="/Dashboard/farmerrequests" component={FarmerRequestsViewConnected} />
     <Route path="/Dashboard/userlist" component={UserListViewConnected} />
+    <Route path="/Dashboard/dataView" component={DataViewConnected} />
+    <Route path="/Dashboard/dataViewUser" component={DataViewUserConnected} />
     <Route path="/Dashboard/billinguser" component={BillingUserConnected} />
     <Route path="/Dashboard/billingadmin" component={BillingAdminConnected} />
     <Route path="/Dashboard/myrequests" component={MyRequestsConnected} />
