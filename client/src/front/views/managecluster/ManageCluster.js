@@ -24,16 +24,35 @@ class ManageCluster extends PureComponent {
     areaCode:'', 
     ipAddr:'', 
     cluster_name:'',
+    cluster_id: '',
+    current_cluster_id: '',
+    data:[],
   };
 
-  componentWillMount() {
+  async componentWillMount() {
     const {
       actions: { enterTabPanel },
     } = this.props;
     enterTabPanel();
+    console.log('Heyy');
+    try {
+      var url = 'http://localhost:3002/api/manageinfrastruture/cluster/view';
+      await fetch(url)
+        .then(res => res.json())
+        .then(json => {
+          console.log(json.message);
+          var data = json.message; //gets data in string
+          // console.log(typeof data);
+          data = JSON.parse(data);
+          // console.log(typeof data);
+          this.setState({ data: data });
+        });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  componentWillUnmount() {
+  async componentWillUnmount() {
     const {
       actions: { leaveTabPanel },
     } = this.props;
@@ -41,8 +60,10 @@ class ManageCluster extends PureComponent {
   }
 
   render() {
-    const { mockHeader, areaCode, ipAddr,  cluster_name} = this.state;
-
+    const { mockHeader, areaCode, ipAddr,  cluster_name, cluster_id, current_cluster_id} = this.state;
+    let rows = this.state.data.map(request => {
+      return <RequestRow key={request.cluster_id} data={request} />;
+    });
     return (
       <AnimatedView>
         <div className="row">
@@ -152,30 +173,84 @@ class ManageCluster extends PureComponent {
                   </TabPanelBodyContentComponent>
                   <TabPanelBodyContentComponent id="view">
                     <h3>View</h3>
+                    <AnimatedView>
+                      <div className="row">
+                        <div className="col-xs-12">
+                          <div className="panel">
+                            <header className="panel-heading">Clusters</header>
+                            <div className="panel-body table-responsive">
+                              <div className="box-tools m-b-15">
+                                <div className="input-group">
+                                  <input
+                                    type="text"
+                                    name="table_search"
+                                    className="form-control input-sm pull-right"
+                                    style={{ width: '150px' }}
+                                    placeholder="Search"
+                                  />
+                                  <div className="input-group-btn">
+                                    <button className="btn btn-sm btn-default">
+                                      <i className="fa fa-search" />
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                              <table className="table table-hover">
+                                <thead>
+                                  <tr>
+                                    <th>Cluster ID</th>
+                                    <th>IP address</th>
+                                    <th>Area Code</th>
+                                    <th>Cluster Name</th>
+                                    <th>Status</th>
+                                  </tr>
+                                </thead>
+                                <tbody>{rows}</tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </AnimatedView>
                   </TabPanelBodyContentComponent>
                   <TabPanelBodyContentComponent id="update">
                     <div>
                       <br />
                       <form className="form-horizontal tasi-form" method="get">
-                        <div className="form-group">
+                      <div className="form-group">
                           <label className="col-sm-2 col-sm-2 control-label">
-                            Cluster Id:
+                            Current Cluster Id:
                           </label>
                           <div className="col-md-6">
-                            <input type="text" className="form-control" />
+                            <input type="text" className="form-control" 
+                            value={current_cluster_id}
+                            onChange={this.handlesOnUpdate_CurrentIDChange}/>
                           </div>
                         </div>
                         <div className="form-group">
                           <label className="col-sm-2 col-sm-2 control-label">
-                            Name:
+                            New Cluster Id:
                           </label>
                           <div className="col-md-6">
-                            <input type="text" className="form-control" />
+                            <input type="text" className="form-control" 
+                            value={cluster_id}
+                            onChange={this.handlesOnUpdate_IDChange}/>
+                          </div>
+                        </div>
+                        <div className="form-group">
+                          <label className="col-sm-2 col-sm-2 control-label">
+                            New Cluster Name:
+                          </label>
+                          <div className="col-md-6">
+                            <input type="text" className="form-control" 
+                            value={cluster_name}
+                            onChange={this.handlesOnUpdate_NameChange}/>
                           </div>
                         </div>
                         <div className="form-group">
                           <div className="col-lg-offset-2 col-lg-10">
-                            <button type="submit" className="btn btn-success">
+                            <button type="submit" className="btn btn-success"
+                            onClick={this.handlesUpdateCluster}>
                               Update
                             </button>
                             <button type="reset" className="btn btn-danger">
@@ -195,12 +270,15 @@ class ManageCluster extends PureComponent {
                             Cluster Id:
                           </label>
                           <div className="col-md-6">
-                            <input type="text" className="form-control" />
+                            <input type="text" className="form-control" 
+                            value={cluster_id}
+                            onChange={this.handlesOnDelete_ID}/>
                           </div>
                         </div>
                         <div className="form-group">
                           <div className="col-lg-offset-2 col-lg-10">
-                            <button type="submit" className="btn btn-success">
+                            <button type="submit" className="btn btn-success"
+                            onClick={this.handlesDeleteCluster}>
                               Delete
                             </button>
                             <button type="reset" className="btn btn-danger">
@@ -246,7 +324,40 @@ handlesOnNameChange = (event: SyntheticEvent<>) => {
   }
 };
 
+handlesOnUpdate_CurrentIDChange = (event: SyntheticEvent<>) => {
+  if (event) {
+    event.preventDefault();
+    // should add some validator before setState in real use cases
+    this.setState({ current_cluster_id: event.target.value.trim() });
+  }
+};
+
+handlesOnUpdate_IDChange = (event: SyntheticEvent<>) => {
+  if (event) {
+    event.preventDefault();
+    // should add some validator before setState in real use cases
+    this.setState({ cluster_id: event.target.value.trim() });
+  }
+};
+
+handlesOnUpdate_NameChange = (event: SyntheticEvent<>) => {
+  if (event) {
+    event.preventDefault();
+    // should add some validator before setState in real use cases
+    this.setState({ cluster_name: event.target.value.trim() });
+  }
+};
+
+handlesOnDelete_ID = (event: SyntheticEvent<>) => {
+  if (event) {
+    event.preventDefault();
+    // should add some validator before setState in real use cases
+    this.setState({ cluster_id: event.target.value.trim() });
+  }
+};
+
 handlesAddCluster = (event: SyntheticEvent<>) => {
+  console.log("Inside on code change");
   const { areaCode, ipAddr, cluster_name } = this.state;
   // Post request to backend
   fetch('http://localhost:3002/api/manageinfrastruture/cluster/add', {
@@ -274,12 +385,76 @@ handlesAddCluster = (event: SyntheticEvent<>) => {
       } 
     });
 };
+
+handlesUpdateCluster = (event: SyntheticEvent<>) => {
+  const { current_cluster_id, cluster_id, cluster_name } = this.state;
+  // Post request to backend
+  fetch('http://localhost:3002/api/manageinfrastruture/cluster/update', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      current_cluster_id: current_cluster_id,
+      cluster_id: cluster_id,
+      cluster_name: cluster_name,
+    }),
+  })
+    .then(res => res.json())
+    .then(json => {
+      if (json.success) {
+
+        this.setState({
+          current_cluster_id: '',
+          cluster_id: '',
+          cluster_name: '',
+        });
+      } 
+    });
+};
+
+handlesDeleteCluster = (event: SyntheticEvent<>) => {
+  const { cluster_id} = this.state;
+  // Post request to backend
+  fetch('http://localhost:3002/api/manageinfrastruture/cluster/delete', {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      cluster_id: cluster_id,
+    }),
+  })
+    .then(res => res.json())
+    .then(json => {
+      if (json.success) {
+
+        this.setState({
+          cluster_id: '',
+        });
+      } 
+    });
+};
+
 }
 ManageCluster.propTypes = {
   actions: PropTypes.shape({
     enterTabPanel: PropTypes.func.isRequired,
     leaveTabPanel: PropTypes.func.isRequired,
   }),
+};
+
+
+const RequestRow = props => {
+  return (
+    <tr>
+      <td>{props.data.cluster_id}</td>
+      <td>{props.data.ipAddr}</td>
+      <td>{props.data.areaCode}</td>
+      <td>{props.data.cluster_name}</td>
+      <td>{props.data.status? "Active" : "Inactive"}</td>
+    </tr>
+  );
 };
 
 export default ManageCluster;
