@@ -260,7 +260,7 @@ class ManageSensor extends PureComponent {
                           <div className="col-lg-offset-2 col-lg-10">
                             <button
                               type="submit"
-                              onChange={this.handlesOnDeleteClick}
+                              onClick={this.handlesOnDeleteClick}
                               className="btn btn-success"
                             >
                               Delete

@@ -12,7 +12,8 @@ class DataView extends PureComponent {
     this.state = {
       data:[],
       userNames: [],
-
+      clusterNames: [],
+      nodeNames: [],
     };
     this.handleOnZipCodeChange = this.handleOnZipCodeChange.bind(this);
     this.handleOnClusterNameChange = this.handleOnClusterNameChange.bind(this);
@@ -44,10 +45,11 @@ class DataView extends PureComponent {
 
 async handleOnZipCodeChange (event: SyntheticEvent<>) {
     let user_name = document.getElementById('user_name').value;
-    let zip_code = document.getElementById('zip_code').value;
+    let zipcode = document.getElementById('zip_code').value;
 
     try {
-      var url = 'http://localhost:3002/api/users/:user_name/zip/:zip_code';
+      var url = 'http://localhost:3002/api/users/'+ user_name +'/zip/' + zipcode;
+      console.log(url);
       await fetch(url)
         .then(res => res.json())
         .then(json => {
@@ -56,7 +58,7 @@ async handleOnZipCodeChange (event: SyntheticEvent<>) {
           // console.log(typeof data);
           data = JSON.parse(data);
           // console.log(typeof data);
-          this.setState({ userNames: data });
+          this.setState({ clusterNames: data });
         });
     } catch (error) {
       // console.log(error);
@@ -67,7 +69,7 @@ async handleOnZipCodeChange (event: SyntheticEvent<>) {
     let cluster_name = document.getElementById('cluster_name').value;
 
     try {
-      var url = 'http://localhost:3002/api/cluster/:cluster_name';
+      var url = 'http://localhost:3002/api/cluster/' + cluster_name;
       await fetch(url)
         .then(res => res.json())
         .then(json => {
@@ -76,7 +78,7 @@ async handleOnZipCodeChange (event: SyntheticEvent<>) {
           // console.log(typeof data);
           data = JSON.parse(data);
           // console.log(typeof data);
-          this.setState({ userNames: data });
+          this.setState({ nodeNames: data });
         });
     } catch (error) {
       // console.log(error);
@@ -108,9 +110,13 @@ async handleOnZipCodeChange (event: SyntheticEvent<>) {
   };
 
   render() {
-    // let rows = this.state.data.map(request => {
-    //   return <RequestRow key={request.user_id} data={request} />;
-    // });
+    let rows = this.state.clusterNames.map(request => {
+      return <RequestClusterNames key={request.user_id} clusterNames={request} />;
+    });
+
+    let nodes = this.state.nodeNames.map(request => {
+      return <RequestNodeNames key={request.user_id} nodeNames={request} />;
+    });
 
     return (
       <AnimatedView>
@@ -132,7 +138,7 @@ async handleOnZipCodeChange (event: SyntheticEvent<>) {
               <div className="form-group">
                 <label className="col-sm-2 control-label">Zip Code:</label>
                 <div className="col-md-2">
-                  <input type="text" id="zip_code" className="form-control" onChange={this.handleOnZipCodeChange}/>
+                  <input type="text" id="zip_code" className="form-control"/>
                 </div>
               </div>
               <div className="form-group">
@@ -142,8 +148,8 @@ async handleOnZipCodeChange (event: SyntheticEvent<>) {
                 <div className="col-md-2">
                   <select id="cluster_name" className="form-control m-b-10" 
                   value={this.state.clusterNames}
-                  onChange={this.handleOnClusterNameChange}>
-                    <option value="Approved">Approve</option>
+                  onClick = {this.handleOnZipCodeChange}>
+                    {rows}
                   </select>
                 </div>
               </div>
@@ -154,8 +160,9 @@ async handleOnZipCodeChange (event: SyntheticEvent<>) {
                 <div className="col-md-2">
                   <select id="node" className="form-control m-b-10" 
                   value={this.state.nodes}
+                  onClick = {this.handleOnClusterNameChange}
                   onChange={this.handleOnNodeChange}>
-                    <option value="Approved">Approve</option>
+                    {nodes}
                   </select>
                 </div>
               </div>
@@ -194,23 +201,16 @@ async handleOnZipCodeChange (event: SyntheticEvent<>) {
   }
 }
 
-const RequestRow = props => {
+const RequestClusterNames = props => {
   return (
-    <tr>
-      <td>{props.data._id}</td>
-      <td>{props.data.user_id}</td>
-      <td>{props.data.user_name}</td>
-      <td>{props.data.zip_code}</td>
-      <td id="node_row">{props.data.no_of_nodes}</td>
-      <td>{props.data.new_cluster}</td>
-      <td>
-        <pre>
-          {props.data.latlong[0].lat},{props.data.latlong[0].long}
-        </pre>
-      </td>
-      {/* <td>{props.data.updatedAt}</td> */}
-      <td>{props.data.status}</td>
-    </tr>
+    <option key={props.clusterNames.cluster_name}>{props.clusterNames.cluster_name}</option>
+  );
+};
+
+
+const RequestNodeNames = props => {
+  return (
+    <option key={props.nodeNames.node_id}>{props.nodeNames.node_id}</option>
   );
 };
 

@@ -13,7 +13,7 @@ export class UserComponent extends React.Component {
 
         return (
          <div>
-             <select className="form-control m-b-10">
+             <select id="user_name" className="form-control m-b-10">
                 {optionItems}
              </select>
          </div>

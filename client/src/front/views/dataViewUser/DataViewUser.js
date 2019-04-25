@@ -10,7 +10,10 @@ class DataViewUser extends PureComponent {
     super();
     this.state = {
       data: [],
+      clusterNames: [],
     };
+    this.handleOnZipCodeChange = this.handleOnZipCodeChange.bind(this);
+    this.handleOnClusterNameChange = this.handleOnClusterNameChange.bind(this);
   }
 
   async componentDidMount() {
@@ -18,19 +21,59 @@ class DataViewUser extends PureComponent {
     // const json = await response.json();
     // this.setState({ data: json });
     //console.log('Heyy');
+    // let user_id = JSON.parse(localStorage.getItem('user_id'));
+    // // console.log('User_id' + user_id);
+    // try {
+    //   var url = 'http://localhost:3002/api/farmerrequests/';
+    //   await fetch(url)
+    //     .then(res => res.json())
+    //     .then(json => {
+    //       // console.log(json.message);
+    //       var data = json.message; //gets data in string
+    //       // console.log(typeof data);
+    //       data = JSON.parse(data);
+    //       // console.log(typeof data);
+    //       this.setState({ data: data });
+    //     });
+    // } catch (error) {
+    //   // console.log(error);
+    // }
+  }
+
+  async handleOnZipCodeChange (event: SyntheticEvent<>) {
+    let zipcode = document.getElementById('zip_code').value;
     let user_id = JSON.parse(localStorage.getItem('user_id'));
-    // console.log('User_id' + user_id);
     try {
-      var url = 'http://localhost:3002/api/farmerrequests/';
+      var url = 'http://localhost:3002/api/users/:user_id/zip/:zipcode';
       await fetch(url)
         .then(res => res.json())
         .then(json => {
-          // console.log(json.message);
+          console.log(json.message);
           var data = json.message; //gets data in string
           // console.log(typeof data);
           data = JSON.parse(data);
           // console.log(typeof data);
-          this.setState({ data: data });
+          this.setState({ clusterNames: data });
+        });
+    } catch (error) {
+      // console.log(error);
+    }
+  }
+
+  async handleOnClusterNameChange (event: SyntheticEvent<>) {
+    let cluster_name = document.getElementById('cluster_name').value;
+
+    try {
+      var url = 'http://localhost:3002/api/cluster/:cluster_name';
+      await fetch(url)
+        .then(res => res.json())
+        .then(json => {
+          console.log(json.message);
+          var data = json.message; //gets data in string
+          // console.log(typeof data);
+          data = JSON.parse(data);
+          // console.log(typeof data);
+          this.setState({ userNames: data });
         });
     } catch (error) {
       // console.log(error);
