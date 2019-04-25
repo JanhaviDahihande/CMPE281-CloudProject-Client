@@ -27,11 +27,26 @@ class ManageSensor extends PureComponent {
     data: [],
   };
 
-  componentWillMount() {
+  async componentWillMount() {
     const {
       actions: { enterTabPanel },
     } = this.props;
     enterTabPanel();
+    try {
+      var url = 'http://localhost:3002/api/manageinfrastruture/sensor/view';
+      await fetch(url)
+        .then(res => res.json())
+        .then(json => {
+          console.log(json.message);
+          var data = json.message; //gets data in string
+          // console.log(typeof data);
+          data = JSON.parse(data);
+          // console.log(typeof data);
+          this.setState({ data: data });
+        });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   componentWillUnmount() {
@@ -50,6 +65,10 @@ class ManageSensor extends PureComponent {
       sensor_status,
       sensor_type,
     } = this.state;
+
+    let rows = this.state.data.map(request => {
+      return <RequestRow key={request.cluster_id} data={request} />;
+    });
 
     return (
       <AnimatedView>
@@ -171,7 +190,27 @@ class ManageSensor extends PureComponent {
                     </div>
                   </TabPanelBodyContentComponent>
                   <TabPanelBodyContentComponent id="view">
-                    <h3>View</h3>
+                    <div className="row">
+                      <div className="col-xs-12">
+                        <div className="panel">
+                          <header className="panel-heading">Nodes</header>
+                          <div className="panel-body table-responsive">
+                            <table className="table table-hover">
+                              <thead>
+                                <tr>
+                                  <th>Cluster ID</th>
+                                  <th>Node ID</th>
+                                  <th>Sensor ID</th>
+                                  <th>Sensor Type</th>
+                                  <th>Status</th>
+                                </tr>
+                              </thead>
+                              <tbody>{rows}</tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </TabPanelBodyContentComponent>
 
                   <TabPanelBodyContentComponent id="delete">
@@ -335,6 +374,18 @@ ManageSensor.propTypes = {
     enterTabPanel: PropTypes.func.isRequired,
     leaveTabPanel: PropTypes.func.isRequired,
   }),
+};
+
+const RequestRow = props => {
+  return (
+    <tr>
+      <td>{props.data.cluster_id}</td>
+      <td>{props.data.node_id}</td>
+      <td>{props.data.sensor_id}</td>
+      <td>{props.data.sensor_type}</td>
+      <td>{props.data.status ? 'Active' : 'Inactive'}</td>
+    </tr>
+  );
 };
 
 export default ManageSensor;
