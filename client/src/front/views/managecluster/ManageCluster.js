@@ -21,12 +21,12 @@ class ManageCluster extends PureComponent {
       { name: 'Update Cluster', tablink: 'update', isActive: false },
       { name: 'Delete Cluster', tablink: 'delete', isActive: false },
     ],
-    areaCode:'', 
-    ipAddr:'', 
-    cluster_name:'',
+    areaCode: '',
+    ipAddr: '',
+    cluster_name: '',
     cluster_id: '',
     current_cluster_id: '',
-    data:[],
+    data: [],
   };
 
   async componentWillMount() {
@@ -60,7 +60,14 @@ class ManageCluster extends PureComponent {
   }
 
   render() {
-    const { mockHeader, areaCode, ipAddr,  cluster_name, cluster_id, current_cluster_id} = this.state;
+    const {
+      mockHeader,
+      areaCode,
+      ipAddr,
+      cluster_name,
+      cluster_id,
+      current_cluster_id,
+    } = this.state;
     let rows = this.state.data.map(request => {
       return <RequestRow key={request.cluster_id} data={request} />;
     });
@@ -125,42 +132,54 @@ class ManageCluster extends PureComponent {
                       <br />
                       <form className="form-horizontal tasi-form" method="get">
                         <div className="form-group">
-                          <label className="col-sm-2 col-sm-2 control-label">
+                          <label className="col-sm-3 control-label">
                             Area Code:
                           </label>
                           <div className="col-md-6">
-                            <input type="text" className="form-control" 
-                            id="area_code"
-                            value={areaCode}
-                            onChange={this.handlesOnCodeChange}/>
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="area_code"
+                              value={areaCode}
+                              onChange={this.handlesOnCodeChange}
+                            />
                           </div>
                         </div>
                         <div className="form-group">
-                          <label className="col-sm-2 col-sm-2 control-label">
+                          <label className="col-sm-3 control-label">
                             IP Address:
                           </label>
                           <div className="col-md-6">
-                            <input type="text" className="form-control" 
-                            id="area_code"
-                            value={ipAddr}
-                            onChange={this.handlesOnIPChange}/>
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="area_code"
+                              value={ipAddr}
+                              onChange={this.handlesOnIPChange}
+                            />
                           </div>
                         </div>
                         <div className="form-group">
-                          <label className="col-sm-2 col-sm-2 control-label">
+                          <label className="col-sm-3 control-label">
                             Name:
                           </label>
                           <div className="col-md-6">
-                            <input type="text" className="form-control" 
-                            id="name"
-                            value={cluster_name}
-                            onChange={this.handlesOnNameChange}/>
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="name"
+                              value={cluster_name}
+                              onChange={this.handlesOnNameChange}
+                            />
                           </div>
                         </div>
                         <div className="form-group">
                           <div className="col-lg-offset-2 col-lg-10">
-                            <button type="submit" className="btn btn-success"
-                            onClick={this.handlesAddCluster}>
+                            <button
+                              type="submit"
+                              className="btn btn-success"
+                              onClick={this.handlesAddCluster}
+                            >
                               Add
                             </button>
                             <button type="reset" className="btn btn-danger">
@@ -172,7 +191,6 @@ class ManageCluster extends PureComponent {
                     </div>
                   </TabPanelBodyContentComponent>
                   <TabPanelBodyContentComponent id="view">
-                    <h3>View</h3>
                     <AnimatedView>
                       <div className="row">
                         <div className="col-xs-12">
@@ -217,40 +235,52 @@ class ManageCluster extends PureComponent {
                     <div>
                       <br />
                       <form className="form-horizontal tasi-form" method="get">
-                      <div className="form-group">
-                          <label className="col-sm-2 col-sm-2 control-label">
+                        <div className="form-group">
+                          <label className="col-sm-4 control-label">
                             Current Cluster Id:
                           </label>
                           <div className="col-md-6">
-                            <input type="text" className="form-control" 
-                            value={current_cluster_id}
-                            onChange={this.handlesOnUpdate_CurrentIDChange}/>
+                            <input
+                              type="text"
+                              className="form-control"
+                              value={current_cluster_id}
+                              onChange={this.handlesOnUpdate_CurrentIDChange}
+                            />
                           </div>
                         </div>
                         <div className="form-group">
-                          <label className="col-sm-2 col-sm-2 control-label">
+                          <label className="col-sm-4 control-label">
                             New Cluster Id:
                           </label>
                           <div className="col-md-6">
-                            <input type="text" className="form-control" 
-                            value={cluster_id}
-                            onChange={this.handlesOnUpdate_IDChange}/>
+                            <input
+                              type="text"
+                              className="form-control"
+                              value={cluster_id}
+                              onChange={this.handlesOnUpdate_IDChange}
+                            />
                           </div>
                         </div>
                         <div className="form-group">
-                          <label className="col-sm-2 col-sm-2 control-label">
+                          <label className="col-sm-4 control-label">
                             New Cluster Name:
                           </label>
                           <div className="col-md-6">
-                            <input type="text" className="form-control" 
-                            value={cluster_name}
-                            onChange={this.handlesOnUpdate_NameChange}/>
+                            <input
+                              type="text"
+                              className="form-control"
+                              value={cluster_name}
+                              onChange={this.handlesOnUpdate_NameChange}
+                            />
                           </div>
                         </div>
                         <div className="form-group">
                           <div className="col-lg-offset-2 col-lg-10">
-                            <button type="submit" className="btn btn-success"
-                            onClick={this.handlesUpdateCluster}>
+                            <button
+                              type="submit"
+                              className="btn btn-success"
+                              onClick={this.handlesUpdateCluster}
+                            >
                               Update
                             </button>
                             <button type="reset" className="btn btn-danger">
@@ -266,19 +296,25 @@ class ManageCluster extends PureComponent {
                       <br />
                       <form className="form-horizontal tasi-form" method="get">
                         <div className="form-group">
-                          <label className="col-sm-2 col-sm-2 control-label">
+                          <label className="col-sm-3 control-label">
                             Cluster Id:
                           </label>
                           <div className="col-md-6">
-                            <input type="text" className="form-control" 
-                            value={cluster_id}
-                            onChange={this.handlesOnDelete_ID}/>
+                            <input
+                              type="text"
+                              className="form-control"
+                              value={cluster_id}
+                              onChange={this.handlesOnDelete_ID}
+                            />
                           </div>
                         </div>
                         <div className="form-group">
                           <div className="col-lg-offset-2 col-lg-10">
-                            <button type="submit" className="btn btn-success"
-                            onClick={this.handlesDeleteCluster}>
+                            <button
+                              type="submit"
+                              className="btn btn-success"
+                              onClick={this.handlesDeleteCluster}
+                            >
                               Delete
                             </button>
                             <button type="reset" className="btn btn-danger">
@@ -298,144 +334,139 @@ class ManageCluster extends PureComponent {
     );
   }
 
+  // #region form inputs change callbacks
+  handlesOnCodeChange = (event: SyntheticEvent<>) => {
+    if (event) {
+      event.preventDefault();
+      // should add some validator before setState in real use cases
+      this.setState({ areaCode: event.target.value.trim() });
+    }
+  };
 
-// #region form inputs change callbacks
-handlesOnCodeChange = (event: SyntheticEvent<>) => {
-  if (event) {
-    event.preventDefault();
-    // should add some validator before setState in real use cases
-    this.setState({ areaCode: event.target.value.trim() });
-  }
-};
+  handlesOnIPChange = (event: SyntheticEvent<>) => {
+    if (event) {
+      event.preventDefault();
+      // should add some validator before setState in real use cases
+      this.setState({ ipAddr: event.target.value.trim() });
+    }
+  };
 
-handlesOnIPChange = (event: SyntheticEvent<>) => {
-  if (event) {
-    event.preventDefault();
-    // should add some validator before setState in real use cases
-    this.setState({ ipAddr: event.target.value.trim() });
-  }
-};
+  handlesOnNameChange = (event: SyntheticEvent<>) => {
+    if (event) {
+      event.preventDefault();
+      // should add some validator before setState in real use cases
+      this.setState({ cluster_name: event.target.value.trim() });
+    }
+  };
 
-handlesOnNameChange = (event: SyntheticEvent<>) => {
-  if (event) {
-    event.preventDefault();
-    // should add some validator before setState in real use cases
-    this.setState({ cluster_name: event.target.value.trim() });
-  }
-};
+  handlesOnUpdate_CurrentIDChange = (event: SyntheticEvent<>) => {
+    if (event) {
+      event.preventDefault();
+      // should add some validator before setState in real use cases
+      this.setState({ current_cluster_id: event.target.value.trim() });
+    }
+  };
 
-handlesOnUpdate_CurrentIDChange = (event: SyntheticEvent<>) => {
-  if (event) {
-    event.preventDefault();
-    // should add some validator before setState in real use cases
-    this.setState({ current_cluster_id: event.target.value.trim() });
-  }
-};
+  handlesOnUpdate_IDChange = (event: SyntheticEvent<>) => {
+    if (event) {
+      event.preventDefault();
+      // should add some validator before setState in real use cases
+      this.setState({ cluster_id: event.target.value.trim() });
+    }
+  };
 
-handlesOnUpdate_IDChange = (event: SyntheticEvent<>) => {
-  if (event) {
-    event.preventDefault();
-    // should add some validator before setState in real use cases
-    this.setState({ cluster_id: event.target.value.trim() });
-  }
-};
+  handlesOnUpdate_NameChange = (event: SyntheticEvent<>) => {
+    if (event) {
+      event.preventDefault();
+      // should add some validator before setState in real use cases
+      this.setState({ cluster_name: event.target.value.trim() });
+    }
+  };
 
-handlesOnUpdate_NameChange = (event: SyntheticEvent<>) => {
-  if (event) {
-    event.preventDefault();
-    // should add some validator before setState in real use cases
-    this.setState({ cluster_name: event.target.value.trim() });
-  }
-};
+  handlesOnDelete_ID = (event: SyntheticEvent<>) => {
+    if (event) {
+      event.preventDefault();
+      // should add some validator before setState in real use cases
+      this.setState({ cluster_id: event.target.value.trim() });
+    }
+  };
 
-handlesOnDelete_ID = (event: SyntheticEvent<>) => {
-  if (event) {
-    event.preventDefault();
-    // should add some validator before setState in real use cases
-    this.setState({ cluster_id: event.target.value.trim() });
-  }
-};
+  handlesAddCluster = (event: SyntheticEvent<>) => {
+    console.log('Inside on code change');
+    const { areaCode, ipAddr, cluster_name } = this.state;
+    // Post request to backend
+    fetch('http://localhost:3002/api/manageinfrastruture/cluster/add', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        areaCode: areaCode,
+        ipAddr: ipAddr,
+        cluster_name: cluster_name,
+      }),
+    })
+      .then(res => res.json())
+      .then(json => {
+        console.log('json', json);
+        console.log('json role: ' + json['role']);
+        if (json.success) {
+          this.setState({
+            code: '',
+            ipAddr: '',
+            name: '',
+          });
+        }
+      });
+  };
 
-handlesAddCluster = (event: SyntheticEvent<>) => {
-  console.log("Inside on code change");
-  const { areaCode, ipAddr, cluster_name } = this.state;
-  // Post request to backend
-  fetch('http://localhost:3002/api/manageinfrastruture/cluster/add', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      areaCode: areaCode,
-      ipAddr: ipAddr,
-      cluster_name: cluster_name
-    }),
-  })
-    .then(res => res.json())
-    .then(json => {
-      console.log('json', json);
-      console.log('json role: ' + json['role']);
-      if (json.success) {
+  handlesUpdateCluster = (event: SyntheticEvent<>) => {
+    const { current_cluster_id, cluster_id, cluster_name } = this.state;
+    // Post request to backend
+    fetch('http://localhost:3002/api/manageinfrastruture/cluster/update', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        current_cluster_id: current_cluster_id,
+        cluster_id: cluster_id,
+        cluster_name: cluster_name,
+      }),
+    })
+      .then(res => res.json())
+      .then(json => {
+        if (json.success) {
+          this.setState({
+            current_cluster_id: '',
+            cluster_id: '',
+            cluster_name: '',
+          });
+        }
+      });
+  };
 
-        this.setState({
-          code: '',
-          ipAddr: '',
-          name: '',
-        });
-      } 
-    });
-};
-
-handlesUpdateCluster = (event: SyntheticEvent<>) => {
-  const { current_cluster_id, cluster_id, cluster_name } = this.state;
-  // Post request to backend
-  fetch('http://localhost:3002/api/manageinfrastruture/cluster/update', {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      current_cluster_id: current_cluster_id,
-      cluster_id: cluster_id,
-      cluster_name: cluster_name,
-    }),
-  })
-    .then(res => res.json())
-    .then(json => {
-      if (json.success) {
-
-        this.setState({
-          current_cluster_id: '',
-          cluster_id: '',
-          cluster_name: '',
-        });
-      } 
-    });
-};
-
-handlesDeleteCluster = (event: SyntheticEvent<>) => {
-  const { cluster_id} = this.state;
-  // Post request to backend
-  fetch('http://localhost:3002/api/manageinfrastruture/cluster/delete', {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      cluster_id: cluster_id,
-    }),
-  })
-    .then(res => res.json())
-    .then(json => {
-      if (json.success) {
-
-        this.setState({
-          cluster_id: '',
-        });
-      } 
-    });
-};
-
+  handlesDeleteCluster = (event: SyntheticEvent<>) => {
+    const { cluster_id } = this.state;
+    // Post request to backend
+    fetch('http://localhost:3002/api/manageinfrastruture/cluster/delete', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        cluster_id: cluster_id,
+      }),
+    })
+      .then(res => res.json())
+      .then(json => {
+        if (json.success) {
+          this.setState({
+            cluster_id: '',
+          });
+        }
+      });
+  };
 }
 ManageCluster.propTypes = {
   actions: PropTypes.shape({
@@ -444,7 +475,6 @@ ManageCluster.propTypes = {
   }),
 };
 
-
 const RequestRow = props => {
   return (
     <tr>
@@ -452,7 +482,7 @@ const RequestRow = props => {
       <td>{props.data.ipAddr}</td>
       <td>{props.data.areaCode}</td>
       <td>{props.data.cluster_name}</td>
-      <td>{props.data.status? "Active" : "Inactive"}</td>
+      <td>{props.data.status ? 'Active' : 'Inactive'}</td>
     </tr>
   );
 };
