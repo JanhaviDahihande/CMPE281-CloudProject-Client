@@ -4,13 +4,18 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Highlight from 'react-highlight';
 import { AnimatedView, Panel } from '../../components';
+import {UserComponent} from './UserComponent';
 
 class DataView extends PureComponent {
   constructor() {
     super();
     this.state = {
-      data: [],
+      data:[],
+      userNames: [],
+
     };
+    this.handleOnZipCodeChange = this.handleOnZipCodeChange.bind(this);
+    this.handleOnClusterNameChange = this.handleOnClusterNameChange.bind(this);
   }
 
   async componentDidMount() {
@@ -21,16 +26,57 @@ class DataView extends PureComponent {
     let user_id = JSON.parse(localStorage.getItem('user_id'));
     // console.log('User_id' + user_id);
     try {
-      var url = 'http://localhost:3002/api/farmerrequests/';
+      var url = 'http://localhost:3002/api/users';
       await fetch(url)
         .then(res => res.json())
         .then(json => {
-          // console.log(json.message);
+          console.log(json.message);
           var data = json.message; //gets data in string
           // console.log(typeof data);
           data = JSON.parse(data);
           // console.log(typeof data);
-          this.setState({ data: data });
+          this.setState({ userNames: data });
+        });
+    } catch (error) {
+      // console.log(error);
+    }
+  }
+
+async handleOnZipCodeChange (event: SyntheticEvent<>) {
+    let user_name = document.getElementById('user_name').value;
+    let zip_code = document.getElementById('zip_code').value;
+
+    try {
+      var url = 'http://localhost:3002/api/users/:user_name/zip/:zip_code';
+      await fetch(url)
+        .then(res => res.json())
+        .then(json => {
+          console.log(json.message);
+          var data = json.message; //gets data in string
+          // console.log(typeof data);
+          data = JSON.parse(data);
+          // console.log(typeof data);
+          this.setState({ userNames: data });
+        });
+    } catch (error) {
+      // console.log(error);
+    }
+  }
+
+  async handleOnClusterNameChange (event: SyntheticEvent<>) {
+    let cluster_name = document.getElementById('cluster_name').value;
+
+    try {
+      var url = 'http://localhost:3002/api/cluster/:cluster_name';
+      await fetch(url)
+        .then(res => res.json())
+        .then(json => {
+          console.log(json.message);
+          var data = json.message; //gets data in string
+          // console.log(typeof data);
+          data = JSON.parse(data);
+          // console.log(typeof data);
+          this.setState({ userNames: data });
         });
     } catch (error) {
       // console.log(error);
@@ -62,9 +108,9 @@ class DataView extends PureComponent {
   };
 
   render() {
-    let rows = this.state.data.map(request => {
-      return <RequestRow key={request.user_id} data={request} />;
-    });
+    // let rows = this.state.data.map(request => {
+    //   return <RequestRow key={request.user_id} data={request} />;
+    // });
 
     return (
       <AnimatedView>
@@ -75,10 +121,18 @@ class DataView extends PureComponent {
             bodyBackGndColor={'#FFF'}
           >
             <form className="form-horizontal tasi-form" method="get">
+            <div className="form-group">
+                <label className="col-sm-2 col-sm-2 control-label">
+                  User Name:
+                </label>
+                <div className="col-md-2">
+                <UserComponent id="user_name" state={this.state} onChange={this.handleOnUserNameChange}/>
+                </div>
+              </div>
               <div className="form-group">
                 <label className="col-sm-2 control-label">Zip Code:</label>
                 <div className="col-md-2">
-                  <input type="text" id="zip_code" className="form-control" />
+                  <input type="text" id="zip_code" className="form-control" onChange={this.handleOnZipCodeChange}/>
                 </div>
               </div>
               <div className="form-group">
@@ -86,10 +140,10 @@ class DataView extends PureComponent {
                   Cluster Name:
                 </label>
                 <div className="col-md-2">
-                  <select id="newstatus" className="form-control m-b-10">
+                  <select id="cluster_name" className="form-control m-b-10" 
+                  value={this.state.clusterNames}
+                  onChange={this.handleOnClusterNameChange}>
                     <option value="Approved">Approve</option>
-                    <option value="Declined">Decline</option>
-                    <option value="Pending">Pending</option>
                   </select>
                 </div>
               </div>
@@ -98,10 +152,10 @@ class DataView extends PureComponent {
                   Node:
                 </label>
                 <div className="col-md-2">
-                  <select id="newstatus" className="form-control m-b-10">
+                  <select id="node" className="form-control m-b-10" 
+                  value={this.state.nodes}
+                  onChange={this.handleOnNodeChange}>
                     <option value="Approved">Approve</option>
-                    <option value="Declined">Decline</option>
-                    <option value="Pending">Pending</option>
                   </select>
                 </div>
               </div>
@@ -110,7 +164,7 @@ class DataView extends PureComponent {
                   Sensor Type:
                 </label>
                 <div className="col-md-2">
-                  <select id="newstatus" className="form-control m-b-10">
+                  <select id="sensor_type" className="form-control m-b-10" onChange={this.handleOnSensorTypeChange} multiple>
                     <option value="pH">pH</option>
                     <option value="temp">Temperature</option>
                     <option value="airflow">Airflow</option>

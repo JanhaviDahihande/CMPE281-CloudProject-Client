@@ -68,74 +68,74 @@ class DataViewUser extends PureComponent {
 
     return (
       <AnimatedView>
-        <div>
-          <Panel
-            title="Request Actions"
-            hasTitle={true}
-            bodyBackGndColor={'#FFF'}
-          >
-            <form className="form-horizontal tasi-form" method="get">
-              <div className="form-group">
-                <label className="col-sm-2 control-label">Zip Code:</label>
-                <div className="col-md-2">
-                  <input type="text" id="zip_code" className="form-control" />
-                </div>
+      <div>
+        <Panel
+          title="Request Actions"
+          hasTitle={true}
+          bodyBackGndColor={'#FFF'}
+        >
+          <form className="form-horizontal tasi-form" method="get">
+            <div className="form-group">
+              <label className="col-sm-2 control-label">Zip Code:</label>
+              <div className="col-md-2">
+                <input type="text" id="zip_code" className="form-control" onChange={this.handleOnZipCodeChange}/>
               </div>
-              <div className="form-group">
-                <label className="col-sm-2 col-sm-2 control-label">
-                  Cluster Name:
-                </label>
-                <div className="col-md-2">
-                  <select id="newstatus" className="form-control m-b-10">
-                    <option value="Approved">Approve</option>
-                    <option value="Declined">Decline</option>
-                    <option value="Pending">Pending</option>
-                  </select>
-                </div>
+            </div>
+            <div className="form-group">
+              <label className="col-sm-2 col-sm-2 control-label">
+                Cluster Name:
+              </label>
+              <div className="col-md-2">
+                <select id="cluster_name" className="form-control m-b-10" 
+                value={this.state.clusterNames}
+                onChange={this.handleOnClusterNameChange}>
+                  <option value="Approved">Approve</option>
+                </select>
               </div>
-              <div className="form-group">
-                <label className="col-sm-2 col-sm-2 control-label">
-                  Node:
-                </label>
-                <div className="col-md-2">
-                  <select id="newstatus" className="form-control m-b-10">
-                    <option value="Approved">Approve</option>
-                    <option value="Declined">Decline</option>
-                    <option value="Pending">Pending</option>
-                  </select>
-                </div>
+            </div>
+            <div className="form-group">
+              <label className="col-sm-2 col-sm-2 control-label">
+                Node:
+              </label>
+              <div className="col-md-2">
+                <select id="node" className="form-control m-b-10" 
+                value={this.state.nodes}
+                onChange={this.handleOnNodeChange}>
+                  <option value="Approved">Approve</option>
+                </select>
               </div>
-              <div className="form-group">
-                <label className="col-sm-2 col-sm-2 control-label">
-                  Sensor Type:
-                </label>
-                <div className="col-md-2">
-                  <select id="newstatus" className="form-control m-b-10">
-                    <option value="pH">pH</option>
-                    <option value="temp">Temperature</option>
-                    <option value="airflow">Airflow</option>
-                    <option value="humidity">Humidity</option>
-                  </select>
-                </div>
+            </div>
+            <div className="form-group">
+              <label className="col-sm-2 col-sm-2 control-label">
+                Sensor Type:
+              </label>
+              <div className="col-md-2">
+                <select id="sensor_type" className="form-control m-b-10" onChange={this.handleOnSensorTypeChange} multiple>
+                  <option value="pH">pH</option>
+                  <option value="temp">Temperature</option>
+                  <option value="airflow">Airflow</option>
+                  <option value="humidity">Humidity</option>
+                </select>
               </div>
-              <div className="form-group">
-                <div className="col-lg-offset-2 col-lg-10">
-                  <button
-                    type="submit"
-                    onClick={this.handleOnSubmit}
-                    className="btn btn-success"
-                  >
-                    Submit
-                  </button>
-                  <button type="reset" className="btn btn-danger">
-                    Reset
-                  </button>
-                </div>
+            </div>
+            <div className="form-group">
+              <div className="col-lg-offset-2 col-lg-10">
+                <button
+                  type="submit"
+                  onClick={this.handleOnSubmit}
+                  className="btn btn-success"
+                >
+                  Submit
+                </button>
+                <button type="reset" className="btn btn-danger">
+                  Reset
+                </button>
               </div>
-            </form>
-          </Panel>
-        </div>
-      </AnimatedView>
+            </div>
+          </form>
+        </Panel>
+      </div>
+    </AnimatedView>
     );
   }
 }

@@ -30,7 +30,7 @@ export const navigation = Object.freeze({
         },
         {
           name: 'Data View',
-          linkTo: '/Dashboard/dataView',
+          linkTo: '/Dashboard/dataViewUser',
           faIconName: 'fa-database',
         },
         {

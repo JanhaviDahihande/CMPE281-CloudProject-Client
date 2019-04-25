@@ -26,6 +26,7 @@ class ManageCluster extends PureComponent {
     cluster_name: '',
     cluster_id: '',
     current_cluster_id: '',
+    user_id:'',
     data: [],
   };
 
@@ -67,6 +68,7 @@ class ManageCluster extends PureComponent {
       cluster_name,
       cluster_id,
       current_cluster_id,
+      user_id,
     } = this.state;
     let rows = this.state.data.map(request => {
       return <RequestRow key={request.cluster_id} data={request} />;
@@ -191,6 +193,7 @@ class ManageCluster extends PureComponent {
                     </div>
                   </TabPanelBodyContentComponent>
                   <TabPanelBodyContentComponent id="view">
+                  <h3>View</h3>
                     <AnimatedView>
                       <div className="row">
                         <div className="col-xs-12">
@@ -335,6 +338,14 @@ class ManageCluster extends PureComponent {
   }
 
   // #region form inputs change callbacks
+  handlesOnUserIDChange = (event: SyntheticEvent<>) => {
+    if (event) {
+      event.preventDefault();
+      // should add some validator before setState in real use cases
+      this.setState({ user_id: event.target.value.trim() });
+    }
+  };
+  
   handlesOnCodeChange = (event: SyntheticEvent<>) => {
     if (event) {
       event.preventDefault();
