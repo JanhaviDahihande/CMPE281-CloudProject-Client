@@ -8,7 +8,7 @@ export default class BarChart extends React.Component {
     return (
       <div className="App">
        <Chart
-  width={'500px'}
+  width={'580px'}
   height={'685px'}
   chartType="Bar"
   loader={<div>Loading Chart</div>}
