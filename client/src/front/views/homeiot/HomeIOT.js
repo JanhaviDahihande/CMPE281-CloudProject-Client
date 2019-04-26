@@ -1,6 +1,6 @@
 // flow
 
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Button } from 'react';
 import PropTypes from 'prop-types';
 import {
   AnimatedView,
@@ -125,8 +125,8 @@ class HomeIOT extends PureComponent {
             />
           </div>
         </div>
-        <div className="row">
-          <div className="col-xs-6">
+        <div>
+          <div className="col-xs-12">
             <div className="panel">
               <header className="panel-heading">Infrastructure Status</header>
               <div className="panel-body table-responsive">
@@ -163,10 +163,16 @@ const RequestRow = props => {
     <tr>
       <td>{props.data.cluster_id}</td>
       <td>{props.data.node_id}</td>
-      <td>{props.data.sensor_id}</td>
+      <td>{props.data.cluster_id}</td>
       <td>{props.data.sensor_type}</td>
       <td>{props.data.status ? 'Active' : 'Inactive'}</td>
       <td>{props.data.updatedAt}</td>
+      <td>
+      <form name="f2">
+                <input id="edit" type="submit" name="edit" value="Delete"  className="form-group"/>
+                <input id="edit" type="submit" name="edit" value="Modify"  className="form-group"/>
+               </form>
+      </td>
     </tr>
   );
 };
