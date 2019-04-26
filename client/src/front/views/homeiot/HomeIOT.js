@@ -35,6 +35,8 @@ class HomeIOT extends PureComponent {
     }),
   };
 
+  state = { data: [] };
+
   componentDidMount() {
     const {
       actions: {
@@ -47,6 +49,25 @@ class HomeIOT extends PureComponent {
     enterHome();
     fetchEarningGraphDataIfNeeded();
     fetchTeamMatesDataIfNeeded();
+  }
+
+  async componentWillMount() {
+    try {
+      var url =
+        'http://localhost:3002/api/manageinfrastruture/sensorstatus/view';
+      await fetch(url)
+        .then(res => res.json())
+        .then(json => {
+          console.log(json.message);
+          var data = json.message; //gets data in string
+          // console.log(typeof data);
+          data = JSON.parse(data);
+          console.log(data);
+          this.setState({ data: data });
+        });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   componentWillUnmount() {
@@ -63,6 +84,10 @@ class HomeIOT extends PureComponent {
       earningGraphLabels,
       earningGraphDatasets,
     } = this.props;
+
+    let rows = this.state.data.map(request => {
+      return <RequestRow key={request.cluster_id} data={request} />;
+    });
 
     return (
       <AnimatedView>
@@ -116,16 +141,7 @@ class HomeIOT extends PureComponent {
                       <th>Last Online</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
-                      <th>1</th>
-                      <th>1</th>
-                      <th>1</th>
-                      <th>Temperature</th>
-                      <th>Active</th>
-                      <th>2019-04-25</th>
-                    </tr>
-                  </tbody>
+                  <tbody>{rows}</tbody>
                 </table>
               </div>
             </div>
@@ -141,5 +157,18 @@ class HomeIOT extends PureComponent {
     );
   }
 }
+
+const RequestRow = props => {
+  return (
+    <tr>
+      <td>{props.data.cluster_id}</td>
+      <td>{props.data.node_id}</td>
+      <td>{props.data.sensor_id}</td>
+      <td>{props.data.sensor_type}</td>
+      <td>{props.data.status ? 'Active' : 'Inactive'}</td>
+      <td>{props.data.updatedAt}</td>
+    </tr>
+  );
+};
 
 export default HomeIOT;

@@ -35,6 +35,61 @@ const Notifications = () => (
       </span>
     </Notification>
 
+    <Notification type={'warning'}>
+      <span>
+        <strong>Warning!</strong>
+        Best check yo self, you're not looking too good.
+      </span>
+    </Notification>
+    <Notification type={'warning'}>
+      <span>
+        <strong>Warning!</strong>
+        Best check yo self, you're not looking too good.
+      </span>
+    </Notification>
+    <Notification type={'warning'}>
+      <span>
+        <strong>Warning!</strong>
+        Best check yo self, you're not looking too good.
+      </span>
+    </Notification>
+    <Notification type={'warning'}>
+      <span>
+        <strong>Warning!</strong>
+        Best check yo self, you're not looking too good.
+      </span>
+    </Notification>
+    <Notification type={'warning'}>
+      <span>
+        <strong>Warning!</strong>
+        Best check yo self, you're not looking too good.
+      </span>
+    </Notification>
+    <Notification type={'warning'}>
+      <span>
+        <strong>Warning!</strong>
+        Best check yo self, you're not looking too good.
+      </span>
+    </Notification>
+    <Notification type={'warning'}>
+      <span>
+        <strong>Warning!</strong>
+        Best check yo self, you're not looking too good.
+      </span>
+    </Notification>
+    <Notification type={'warning'}>
+      <span>
+        <strong>Warning!</strong>
+        Best check yo self, you're not looking too good.
+      </span>
+    </Notification>
+    <Notification type={'warning'}>
+      <span>
+        <strong>Warning!</strong>
+        Best check yo self, you're not looking too good.
+      </span>
+    </Notification>
+
     <Notification type={'danger'}>
       <span>
         <strong>Oh snap!</strong>

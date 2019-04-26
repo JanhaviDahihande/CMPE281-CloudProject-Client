@@ -51,7 +51,7 @@ export const navigation2 = Object.freeze({
 
         // {
         //   name: 'Sensor View',
-        //   linkTo: '/Dashboard/workProgress',
+        //   linkTo: '/basicElements',
         //   faIconName: 'fa-briefcase',
         // },
         // {

@@ -12,9 +12,9 @@ import {
   TodoListDemo,
   TeamMatesDemo,
 } from '../../components';
-import BarChart from "../../models/BarChart";
-import PieChart from "../../models/PieChart";
-import MapChart from "../../models/MapChart";
+import BarChart from '../../models/BarChart';
+import PieChart from '../../models/PieChart';
+import MapChart from '../../models/MapChart';
 
 class Home extends PureComponent {
   static propTypes = {
@@ -133,7 +133,7 @@ class Home extends PureComponent {
         <div style={{margin: 10}}>
         <MapChart/>
         </div> */}
-        
+
         {/* <div className="row">
           <div className="col-md-5">
             <TeamMatesDemo
