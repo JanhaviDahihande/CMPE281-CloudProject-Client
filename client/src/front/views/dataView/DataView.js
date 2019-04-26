@@ -14,12 +14,15 @@ class DataView extends PureComponent {
       userNames: [],
       clusterNames: [],
       nodeNames: [],
+      sensor_data: [],
     };
     this.handleOnZipCodeChange = this.handleOnZipCodeChange.bind(this);
     this.handleOnClusterNameChange = this.handleOnClusterNameChange.bind(this);
+    this.handleOnSubmit = this.handleOnSubmit.bind(this);
   }
 
   async componentDidMount() {
+    
     // const response = await fetch(`http://localhost:3002/api/myrequests/5cbd62b6a090d8249f70a016`);
     // const json = await response.json();
     // this.setState({ data: json });
@@ -44,6 +47,7 @@ class DataView extends PureComponent {
   }
 
 async handleOnZipCodeChange (event: SyntheticEvent<>) {
+  event.preventDefault();
     let user_name = document.getElementById('user_name').value;
     let zipcode = document.getElementById('zip_code').value;
 
@@ -85,28 +89,28 @@ async handleOnZipCodeChange (event: SyntheticEvent<>) {
     }
   }
 
-  handleOnSubmit = (event: SyntheticEvent<>) => {
+  async handleOnSubmit (event: SyntheticEvent<>) {
+    event.preventDefault();
     console.log('in handleonsubmit');
-    let reqid = document.getElementById('reqid').value;
-
-    let status = document.getElementById('newstatus').value;
-
-    fetch('http://localhost:3002/api/request/update', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        req_id: reqid,
-        status: status,
-      }),
-    })
-      .then(res => res.json())
-      .then(json => {
-        if (json.success) {
-          // console.log('update successfull');
-        }
-      });
+    let node_id = document.getElementById('node').value;
+    console.log("node_id: " + node_id);
+    try {
+    var url = "http://localhost:3002/api/dataview/sensor/" + node_id;
+    console.log(url);
+      await fetch(url)
+        .then(res => res.json())
+        .then(json => {
+          console.log(json.message);
+          var data = json.message; //gets data in string
+          console.log(data);
+          data = JSON.parse(data);
+          console.log(data);
+          this.setState({ sensor_data: data });
+          console.log(this.state.sensor_data);
+        });
+      } catch (error) {
+        console.log(error);
+      }
   };
 
   render() {
@@ -116,6 +120,10 @@ async handleOnZipCodeChange (event: SyntheticEvent<>) {
 
     let nodes = this.state.nodeNames.map(request => {
       return <RequestNodeNames key={request.user_id} nodeNames={request} />;
+    });
+
+    let sensors = this.state.sensor_data.map(request => {
+      return <RequestSensorData key={request.node_id} sensor_data={request} />;
     });
 
     return (
@@ -182,7 +190,6 @@ async handleOnZipCodeChange (event: SyntheticEvent<>) {
               <div className="form-group">
                 <div className="col-lg-offset-2 col-lg-10">
                   <button
-                    type="submit"
                     onClick={this.handleOnSubmit}
                     className="btn btn-success"
                   >
@@ -195,6 +202,44 @@ async handleOnZipCodeChange (event: SyntheticEvent<>) {
               </div>
             </form>
           </Panel>
+        </div>
+        <div className="row">
+          <div className="col-xs-12">
+            <div className="panel">
+              <header className="panel-heading">Sensor Data</header>
+              <div className="panel-body table-responsive">
+                <div className="box-tools m-b-15">
+                  <div className="input-group">
+                    <input
+                      type="text"
+                      name="table_search"
+                      className="form-control input-sm pull-right"
+                      style={{ width: '150px' }}
+                      placeholder="Search"
+                    />
+                    <div className="input-group-btn">
+                      <button className="btn btn-sm btn-default">
+                        <i className="fa fa-search" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <table className="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Sensor ID</th>
+                      <th>Node ID</th>
+                      <th>Cluster ID</th>
+                      <th>Sensor Type</th>
+                      <th>Value</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>{sensors}</tbody>
+                </table>
+              </div>
+            </div>
+          </div>
         </div>
       </AnimatedView>
     );
@@ -211,6 +256,19 @@ const RequestClusterNames = props => {
 const RequestNodeNames = props => {
   return (
     <option key={props.nodeNames.node_id}>{props.nodeNames.node_id}</option>
+  );
+};
+
+const RequestSensorData = props => {
+  return (
+    <tr>
+      <td>{props.sensor_data.sensor_id}</td>
+      <td>{props.sensor_data.node_id}</td>
+      <td>{props.sensor_data.cluster_id}</td>
+      <td>{props.sensor_data.type}</td>
+      <td>{props.sensor_data.value}</td>
+      <td>{props.sensor_data.status? "Active" : "Inactive"}</td>
+    </tr>
   );
 };
 
