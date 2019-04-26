@@ -135,6 +135,18 @@ async handleOnZipCodeChange (event: SyntheticEvent<>) {
             bodyBackGndColor={'#FFF'}
           >
             <form className="form-horizontal tasi-form" method="get">
+            <div className="row">
+              <div className="form-group">
+                <label className="col-sm-2 control-label">Start Date:</label>
+                <div className="col-md-2">
+                  <input type="date" id="start_date" className="form-control"/>
+                </div>
+                <label className="col-sm-2 control-label">End Date:</label>
+                <div className="col-md-2">
+                  <input type="date" id="end_date" className="form-control"/>
+                </div>
+              </div>
+            </div>
             <div className="form-group">
                 <label className="col-sm-2 col-sm-2 control-label">
                   User Name:

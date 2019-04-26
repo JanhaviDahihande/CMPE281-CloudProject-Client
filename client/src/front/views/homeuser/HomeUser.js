@@ -12,6 +12,9 @@ import {
   TodoListDemo,
   TeamMatesDemo,
 } from '../../components';
+import BarChart from "../../models/BarChart";
+import PieChart from "../../models/PieChart";
+import MapChart from "../../models/MapChart";
 
 class HomeUser extends PureComponent {
   static propTypes = {
@@ -101,7 +104,26 @@ class HomeUser extends PureComponent {
           </div>
         </div>
 
-        <div className="row">
+        <div>
+          <div className="col-md-6">
+            <EarningGraph
+              labels={earningGraphLabels}
+              datasets={earningGraphDatasets}
+            />
+            <div className="row">
+              <div className="col-md-6">
+                <MapChart />
+              </div>
+              <div className="col-md-6">
+                <PieChart />
+              </div>
+            </div>
+          </div>
+          <div className="col-md-6">
+            <BarChart />
+          </div>
+        </div>
+        {/* <div className="row">
           <div className="col-md-8">
             <EarningGraph
               labels={earningGraphLabels}
@@ -132,7 +154,7 @@ class HomeUser extends PureComponent {
           <div className="col-md-7">
             <TodoListDemo />
           </div>
-        </div>
+        </div> */}
       </AnimatedView>
     );
   }
