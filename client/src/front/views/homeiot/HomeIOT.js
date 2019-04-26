@@ -12,6 +12,7 @@ import {
   TodoListDemo,
   TeamMatesDemo,
 } from '../../components';
+import BarChart from '../../models/BarChart';
 
 class HomeIOT extends PureComponent {
   static propTypes = {
@@ -152,6 +153,9 @@ class HomeIOT extends PureComponent {
               datasets={earningGraphDatasets}
             />
           </div>
+          <div className="col-md-6">
+            <BarChart />
+          </div>
         </div>
       </AnimatedView>
     );
@@ -168,10 +172,22 @@ const RequestRow = props => {
       <td>{props.data.status ? 'Active' : 'Inactive'}</td>
       <td>{props.data.updatedAt}</td>
       <td>
-      <form name="f2">
-                <input id="edit" type="submit" name="edit" value="Delete"  className="form-group"/>
-                <input id="edit" type="submit" name="edit" value="Modify"  className="form-group"/>
-               </form>
+        <form name="f2">
+          <input
+            id="edit"
+            type="submit"
+            name="edit"
+            value="Delete"
+            className="form-group"
+          />
+          <input
+            id="edit"
+            type="submit"
+            name="edit"
+            value="Modify"
+            className="form-group"
+          />
+        </form>
       </td>
     </tr>
   );
