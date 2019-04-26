@@ -62,7 +62,7 @@ function EarningGraph({ labels, datasets }: Props) {
   }, [labels, datasets]);
 
   return (
-    <Panel hasTitle title={'Usage'}>
+    <Panel hasTitle title={'Infrastructure Statistics'}>
       <canvas ref={linechart} id="linechart" width="600" height="330" />
     </Panel>
   );

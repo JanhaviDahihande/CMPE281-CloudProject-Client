@@ -102,7 +102,7 @@ class Home extends PureComponent {
         </div>
 
         <div className="row">
-          <div className="col-md-8">
+          <div className="col-md-6">
             <EarningGraph
               labels={earningGraphLabels}
               datasets={earningGraphDatasets}
@@ -122,7 +122,7 @@ class Home extends PureComponent {
           </div>
         </div>
 
-        <div className="row">
+        {/* <div className="row">
           <div className="col-md-5">
             <TeamMatesDemo
               isFetching={teamMatesIsFetching}
@@ -132,7 +132,7 @@ class Home extends PureComponent {
           <div className="col-md-7">
             <TodoListDemo />
           </div>
-        </div>
+        </div> */}
       </AnimatedView>
     );
   }

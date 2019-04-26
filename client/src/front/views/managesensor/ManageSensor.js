@@ -162,7 +162,7 @@ class ManageSensor extends PureComponent {
                           </label>
                           <div className="col-md-6">
                             <select
-                             value={sensor_type}
+                              value={sensor_type}
                               onChange={this.handlesOnSensorTypeChange}
                               className="form-control m-b-10"
                             >
@@ -227,6 +227,7 @@ class ManageSensor extends PureComponent {
                           <div className="col-md-6">
                             <input
                               type="text"
+                              value={cluster_id}
                               onChange={this.handlesOnClusterIdChange}
                               className="form-control"
                             />
@@ -239,6 +240,7 @@ class ManageSensor extends PureComponent {
                           <div className="col-md-6">
                             <input
                               type="text"
+                              value={node_id}
                               onChange={this.handlesOnNodeIdChange}
                               className="form-control"
                             />
@@ -251,6 +253,7 @@ class ManageSensor extends PureComponent {
                           <div className="col-md-6">
                             <input
                               type="text"
+                              value={sensor_id}
                               onChange={this.handlesOnSensorIdChange}
                               className="form-control"
                             />

@@ -21,33 +21,33 @@ class BillingAdmin extends PureComponent {
 
   state = {
     labels: [
-      'Cluster A',
-      'Cluster B',
-      'Cluster C',
-      'Cluster D',
-      'Cluster E',
-      'Cluster F',
+      'Cluster 1',
+      'Cluster 2',
+      'Cluster 3',
+      'Cluster 4',
+      'Cluster 5',
+      'Cluster 6',
     ],
     datasets: [
       {
-        label: 'Number of Nodes per Cluster',
+        label: 'Nodes per cluster',
         fillColor: 'rgba(220,220,220,0.2)',
         strokeColor: 'rgba(220,220,220,1)',
         pointColor: 'rgba(220,220,220,1)',
         pointStrokeColor: '#fff',
         pointHighlightFill: '#fff',
         pointHighlightStroke: 'rgba(220,220,220,1)',
-        data: [4, 7, 5, 10, 4, 2],
+        data: [4, 6, 3, 5, 2, 3],
       },
       {
-        label: 'Number of Sensors per Cluster',
+        label: 'Sensors per Cluster',
         fillColor: 'rgba(151,187,205,0.2)',
         strokeColor: 'rgba(151,187,205,1)',
         pointColor: 'rgba(151,187,205,1)',
         pointStrokeColor: '#fff',
         pointHighlightFill: '#fff',
         pointHighlightStroke: 'rgba(151,187,205,1)',
-        data: [15, 25, 20, 23, 10, 5],
+        data: [16, 12, 18, 22, 8, 12],
       },
     ],
   };
@@ -102,6 +102,14 @@ class BillingAdmin extends PureComponent {
                     backColor={'blue'}
                   />
                 </div>
+                <div className="col-md-3">
+                  <StatsCardComponent
+                    statValue={'23'}
+                    statLabel={'Registered Farmers'}
+                    icon={<i className="fa fa-users" />}
+                    backColor={'green'}
+                  />
+                </div>
                 {/* <div className="col-md-3">
                   <StatsCardComponent
                     statValue={'5'}
@@ -135,8 +143,9 @@ class BillingAdmin extends PureComponent {
                       <label htmlFor="billing">Total farmers registered:</label>
                     </td>
                     <td>
-                      <label htmlFor="billing" id="billing_selected" />
-                      13
+                      <label htmlFor="billing" id="billing_selected">
+                        23
+                      </label>
                     </td>
                   </tr>
                   <tr>
@@ -144,7 +153,9 @@ class BillingAdmin extends PureComponent {
                       <label htmlFor="billing">Total earnings:</label>
                     </td>
                     <td>
-                      <label htmlFor="billing" id="billing_cost" />$ 1,500
+                      <label htmlFor="billing" id="billing_cost">
+                        $ 150,500
+                      </label>
                     </td>
                   </tr>
                 </table>

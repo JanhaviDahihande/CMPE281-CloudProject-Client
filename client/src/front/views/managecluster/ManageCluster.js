@@ -26,7 +26,7 @@ class ManageCluster extends PureComponent {
     cluster_name: '',
     cluster_id: '',
     current_cluster_id: '',
-    user_id:'',
+    user_id: '',
     data: [],
   };
 
@@ -193,7 +193,7 @@ class ManageCluster extends PureComponent {
                     </div>
                   </TabPanelBodyContentComponent>
                   <TabPanelBodyContentComponent id="view">
-                  <h3>View</h3>
+                    <h3>View</h3>
                     <AnimatedView>
                       <div className="row">
                         <div className="col-xs-12">
@@ -345,7 +345,7 @@ class ManageCluster extends PureComponent {
       this.setState({ user_id: event.target.value.trim() });
     }
   };
-  
+
   handlesOnCodeChange = (event: SyntheticEvent<>) => {
     if (event) {
       event.preventDefault();

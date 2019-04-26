@@ -215,6 +215,7 @@ class ManageNode extends PureComponent {
                           <div className="col-md-6">
                             <input
                               type="text"
+                              value={cluster_id}
                               onChange={this.handlesOnClusterIdChange}
                               className="form-control"
                             />
@@ -227,6 +228,7 @@ class ManageNode extends PureComponent {
                           <div className="col-md-6">
                             <input
                               type="text"
+                              value={node_id}
                               onChange={this.handlesOnNodeIdChange}
                               className="form-control"
                             />
@@ -239,6 +241,7 @@ class ManageNode extends PureComponent {
                           <div className="col-md-6">
                             <input
                               type="text"
+                              value={latitude}
                               onChange={this.handlesOnLatitudeChange}
                               className="form-control"
                             />
@@ -251,6 +254,7 @@ class ManageNode extends PureComponent {
                           <div className="col-md-6">
                             <input
                               type="text"
+                              value={longitude}
                               onChange={this.handlesOnLongitudeChange}
                               className="form-control"
                             />

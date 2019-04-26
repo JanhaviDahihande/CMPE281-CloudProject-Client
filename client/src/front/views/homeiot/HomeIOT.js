@@ -100,37 +100,41 @@ class HomeIOT extends PureComponent {
             />
           </div>
         </div>
-
         <div className="row">
-          <div className="col-md-8">
+          <div className="col-xs-6">
+            <div className="panel">
+              <header className="panel-heading">Infrastructure Status</header>
+              <div className="panel-body table-responsive">
+                <table className="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Cluster ID</th>
+                      <th>Node ID</th>
+                      <th>Sensor ID</th>
+                      <th>Sensor Type</th>
+                      <th>Status</th>
+                      <th>Last Online</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th>1</th>
+                      <th>1</th>
+                      <th>1</th>
+                      <th>Temperature</th>
+                      <th>Active</th>
+                      <th>2019-04-25</th>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div className="col-xs-6">
             <EarningGraph
               labels={earningGraphLabels}
               datasets={earningGraphDatasets}
             />
-          </div>
-          <div className="col-lg-4">
-            <Notifications />
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="col-md-8">
-            <WorkProgress />
-          </div>
-          <div className="col-md-4">
-            <TwitterFeed />
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="col-md-5">
-            <TeamMatesDemo
-              isFetching={teamMatesIsFetching}
-              members={teamMates}
-            />
-          </div>
-          <div className="col-md-7">
-            <TodoListDemo />
           </div>
         </div>
       </AnimatedView>
