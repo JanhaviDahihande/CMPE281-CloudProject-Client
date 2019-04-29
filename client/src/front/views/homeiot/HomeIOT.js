@@ -165,12 +165,12 @@ class HomeIOT extends PureComponent {
 const RequestRow = props => {
   return (
     <tr>
-      <td>{props.data.cluster_id}</td>
-      <td>{props.data.node_id}</td>
-      <td>{props.data.cluster_id}</td>
-      <td>{props.data.sensor_type}</td>
+      <td>{props.data.clusterId}</td>
+      <td>{props.data.nodeId}</td>
+      <td>{props.data.sensorId}</td>
+      <td>{props.data.sensorType}</td>
       <td>{props.data.status ? 'Active' : 'Inactive'}</td>
-      <td>{props.data.updatedAt}</td>
+      <td>{props.data.last_online}</td>
       <td>
         <form name="f2">
           <input
