@@ -269,7 +269,7 @@ class Notifications extends React.Component {
     const { zip_code, no_of_nodes, latlong, new_cluster, status } = this.state;
     let user_id = JSON.parse(localStorage.getItem('user_id'));
     console.log(user_id + ' & ' + zip_code + ' ' + no_of_nodes);
-    fetch('http://localhost:3002/api/request/newRequest', {
+    fetch(process.env.REACT_APP_SERVER_URL + '/api/request/newRequest', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

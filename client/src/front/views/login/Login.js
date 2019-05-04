@@ -191,7 +191,7 @@ class Login extends PureComponent<Props, State> {
     const { email, password } = this.state;
     const { history } = this.props;
     // Post request to backend
-    fetch('http://localhost:3002/api/account/signin', {
+    fetch(process.env.REACT_APP_SERVER_URL + '/api/account/signin', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

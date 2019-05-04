@@ -37,7 +37,7 @@ class ManageCluster extends PureComponent {
     enterTabPanel();
     console.log('Heyy');
     try {
-      var url = 'http://localhost:3002/api/manageinfrastruture/cluster/view';
+      var url = process.env.REACT_APP_SERVER_URL + '/api/manageinfrastruture/cluster/view';
       await fetch(url)
         .then(res => res.json())
         .then(json => {
@@ -406,7 +406,7 @@ class ManageCluster extends PureComponent {
     console.log('Inside on code change');
     const { areaCode, ipAddr, cluster_name } = this.state;
     // Post request to backend
-    fetch('http://localhost:3002/api/manageinfrastruture/cluster/add', {
+    fetch(process.env.REACT_APP_SERVER_URL + '/api/manageinfrastruture/cluster/add', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -434,7 +434,7 @@ class ManageCluster extends PureComponent {
   handlesUpdateCluster = (event: SyntheticEvent<>) => {
     const { current_cluster_id, cluster_id, cluster_name } = this.state;
     // Post request to backend
-    fetch('http://localhost:3002/api/manageinfrastruture/cluster/update', {
+    fetch(process.env.REACT_APP_SERVER_URL + '/api/manageinfrastruture/cluster/update', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -460,7 +460,7 @@ class ManageCluster extends PureComponent {
   handlesDeleteCluster = (event: SyntheticEvent<>) => {
     const { cluster_id } = this.state;
     // Post request to backend
-    fetch('http://localhost:3002/api/manageinfrastruture/cluster/delete', {
+    fetch(process.env.REACT_APP_SERVER_URL + '/api/manageinfrastruture/cluster/delete', {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

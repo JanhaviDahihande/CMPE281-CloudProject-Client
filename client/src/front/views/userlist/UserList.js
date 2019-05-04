@@ -15,11 +15,11 @@ class UserList extends PureComponent {
   }
 
   async componentDidMount() {
-    // const response = await fetch(`http://localhost:3002/api/myrequests/5cbd62b6a090d8249f70a016`);
+    // const response = await fetch(`process.env.REACT_APP_SERVER_URL + '/api/myrequests/5cbd62b6a090d8249f70a016`);
     // const json = await response.json();
     // this.setState({ data: json });
     try {
-      var url = "http://localhost:3002/api/users/";
+      var url = process.env.REACT_APP_SERVER_URL + '/api/users/';
       await fetch(url)
       .then(res => res.json())
       .then(json => { 

@@ -24,7 +24,7 @@ class FarmerRequests extends PureComponent {
   }
 
   async componentDidMount() {
-    // const response = await fetch(`http://localhost:3002/api/myrequests/5cbd62b6a090d8249f70a016`);
+    // const response = await fetch(`process.env.REACT_APP_SERVER_URL + '/api/myrequests/5cbd62b6a090d8249f70a016`);
     // const json = await response.json();
     // this.setState({ data: json });
     //console.log('Heyy');
@@ -32,7 +32,7 @@ class FarmerRequests extends PureComponent {
     let user_id = JSON.parse(localStorage.getItem('user_id'));
     // console.log('User_id' + user_id);
     try {
-      var url = 'http://localhost:3002/api/farmerrequests/';
+      var url = process.env.REACT_APP_SERVER_URL + '/api/farmerrequests/';
       await fetch(url)
         .then(res => res.json())
         .then(json => {
@@ -103,7 +103,7 @@ class FarmerRequests extends PureComponent {
 
     let status = document.getElementById('newstatus').value;
 
-    fetch('http://localhost:3002/api/request/update', {
+    fetch(process.env.REACT_APP_SERVER_URL + '/api/request/update', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

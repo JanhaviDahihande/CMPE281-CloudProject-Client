@@ -33,7 +33,7 @@ class ManageSensor extends PureComponent {
     } = this.props;
     enterTabPanel();
     try {
-      var url = 'http://localhost:3002/api/manageinfrastruture/sensor/view';
+      var url = process.env.REACT_APP_SERVER_URL + '/api/manageinfrastruture/sensor/view';
       await fetch(url)
         .then(res => res.json())
         .then(json => {
@@ -322,7 +322,7 @@ class ManageSensor extends PureComponent {
     const { cluster_id, node_id, sensor_type } = this.state;
 
     // Post request to backend
-    fetch('http://localhost:3002/api/manageinfrastruture/sensor/add', {
+    fetch(process.env.REACT_APP_SERVER_URL + '/api/manageinfrastruture/sensor/add', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -351,7 +351,7 @@ class ManageSensor extends PureComponent {
   handlesOnDeleteClick = (event: SyntheticEvent<>) => {
     const { cluster_id, node_id, sensor_id } = this.state;
     // Post request to backend
-    fetch('http://localhost:3002/api/manageinfrastruture/sensor/delete', {
+    fetch(process.env.REACT_APP_SERVER_URL + '/api/manageinfrastruture/sensor/delete', {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

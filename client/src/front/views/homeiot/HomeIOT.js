@@ -55,7 +55,7 @@ class HomeIOT extends PureComponent {
   async componentWillMount() {
     try {
       var url =
-        'http://localhost:3002/api/manageinfrastruture/sensorstatus/view';
+        process.env.REACT_APP_SERVER_URL + '/api/manageinfrastruture/sensorstatus/view';
       await fetch(url)
         .then(res => res.json())
         .then(json => {

@@ -330,7 +330,7 @@ class Register extends PureComponent<Props, State> {
     } = this.state;
     const { history } = this.props;
     // Post request to backend
-    fetch('http://localhost:3002/api/account/signup', {
+    fetch(process.env.REACT_APP_SERVER_URL + '/api/account/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

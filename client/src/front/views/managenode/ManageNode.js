@@ -34,7 +34,7 @@ class ManageNode extends PureComponent {
     } = this.props;
     enterTabPanel();
     try {
-      var url = 'http://localhost:3002/api/manageinfrastruture/node/view';
+      var url = process.env.REACT_APP_SERVER_URL + '/api/manageinfrastruture/node/view';
       await fetch(url)
         .then(res => res.json())
         .then(json => {
@@ -366,7 +366,7 @@ class ManageNode extends PureComponent {
   handlesOnAddClick = (event: SyntheticEvent<>) => {
     const { cluster_id, latitude, longitude } = this.state;
     // Post request to backend
-    fetch('http://localhost:3002/api/manageinfrastruture/node/add', {
+    fetch(process.env.REACT_APP_SERVER_URL + '/api/manageinfrastruture/node/add', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -394,7 +394,7 @@ class ManageNode extends PureComponent {
   handlesOnUpdateClick = (event: SyntheticEvent<>) => {
     const { cluster_id, node_id, latitude, longitude } = this.state;
     // Post request to backend
-    fetch('http://localhost:3002/api/manageinfrastruture/node/update', {
+    fetch(process.env.REACT_APP_SERVER_URL + '/api/manageinfrastruture/node/update', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -422,7 +422,7 @@ class ManageNode extends PureComponent {
   handlesDeleteNode = (event: SyntheticEvent<>) => {
     const { cluster_id, node_id } = this.state;
     // Post request to backend
-    fetch('http://localhost:3002/api/manageinfrastruture/node/delete', {
+    fetch(process.env.REACT_APP_SERVER_URL + '/api/manageinfrastruture/node/delete', {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

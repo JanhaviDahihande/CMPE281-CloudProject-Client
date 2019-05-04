@@ -23,14 +23,14 @@ class DataView extends PureComponent {
 
   async componentDidMount() {
     
-    // const response = await fetch(`http://localhost:3002/api/myrequests/5cbd62b6a090d8249f70a016`);
+    // const response = await fetch(`process.env.REACT_APP_SERVER_URL + '/api/myrequests/5cbd62b6a090d8249f70a016`);
     // const json = await response.json();
     // this.setState({ data: json });
     //console.log('Heyy');
     let user_id = JSON.parse(localStorage.getItem('user_id'));
     // console.log('User_id' + user_id);
     try {
-      var url = 'http://localhost:3002/api/users';
+      var url = process.env.REACT_APP_SERVER_URL + '/api/users';
       await fetch(url)
         .then(res => res.json())
         .then(json => {
@@ -52,7 +52,7 @@ async handleOnZipCodeChange (event: SyntheticEvent<>) {
     let zipcode = document.getElementById('zip_code').value;
 
     try {
-      var url = 'http://localhost:3002/api/users/'+ user_name +'/zip/' + zipcode;
+      var url = process.env.REACT_APP_SERVER_URL + '/api/users/'+ user_name +'/zip/' + zipcode;
       console.log(url);
       await fetch(url)
         .then(res => res.json())
@@ -73,7 +73,7 @@ async handleOnZipCodeChange (event: SyntheticEvent<>) {
     let cluster_name = document.getElementById('cluster_name').value;
 
     try {
-      var url = 'http://localhost:3002/api/cluster/' + cluster_name;
+      var url = process.env.REACT_APP_SERVER_URL + '/api/cluster/' + cluster_name;
       await fetch(url)
         .then(res => res.json())
         .then(json => {
@@ -95,7 +95,7 @@ async handleOnZipCodeChange (event: SyntheticEvent<>) {
     let node_id = document.getElementById('node').value;
     console.log("node_id: " + node_id);
     try {
-    var url = "http://localhost:3002/api/dataview/sensor/" + node_id;
+    var url = process.env.REACT_APP_SERVER_URL + "/api/dataview/sensor/" + node_id;
     console.log(url);
       await fetch(url)
         .then(res => res.json())
