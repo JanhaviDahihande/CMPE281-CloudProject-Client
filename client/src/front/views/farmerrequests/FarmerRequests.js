@@ -157,6 +157,23 @@ class FarmerRequests extends PureComponent {
 }
 
 const RequestRow = props => {
+  console.log(props.data.latlong.length);
+  function location_data(){
+    var a ="";
+    for (var i = 0; i < props.data.latlong.length; i++) {
+      if(props.data.latlong[i]){
+        var lat_data = props.data.latlong[i].lat;
+        var long_data = props.data.latlong[i].long;
+        a+=lat_data+','+long_data+"\n";
+      }
+
+        console.log(props.data.latlong[i].lat);
+        
+  
+     // $(".panel-title").append('<h3>'+mysubject+'</h3>');
+  } 
+  return a;
+  }
   return (
     <tr>
       <td>{props.data._id}</td>
@@ -165,11 +182,7 @@ const RequestRow = props => {
       <td>{props.data.zip_code}</td>
       <td id="node_row">{props.data.no_of_nodes}</td>
       <td>{props.data.new_cluster}</td>
-      <td>
-        <pre>
-          {props.data.latlong[0].lat},{props.data.latlong[0].long}
-        </pre>
-      </td>
+      {location_data()}
       {/* <td>{props.data.updatedAt}</td> */}
       <td>{props.data.status}</td>
     </tr>
