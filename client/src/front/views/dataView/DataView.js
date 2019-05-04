@@ -167,7 +167,7 @@ async handleOnZipCodeChange (event: SyntheticEvent<>) {
                 </label>
                 <div className="col-md-2">
                   <select id="cluster_name" className="form-control m-b-10" 
-                  value={this.state.clusterNames}
+                  // value={this.state.clusterNames}
                   onClick = {this.handleOnZipCodeChange}>
                     {rows}
                   </select>
@@ -179,7 +179,7 @@ async handleOnZipCodeChange (event: SyntheticEvent<>) {
                 </label>
                 <div className="col-md-2">
                   <select id="node" className="form-control m-b-10" 
-                  value={this.state.nodes}
+                  // value={this.state.nodes}
                   onClick = {this.handleOnClusterNameChange}
                   onChange={this.handleOnNodeChange}>
                     {nodes}
