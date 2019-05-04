@@ -89,6 +89,7 @@ class Notifications extends React.Component {
     };
   }
   addMarker = (location, map) => {
+    console.log("Location: " + location);
     console.log('Latitude: ' + location.lat());
     console.log('Longitude: ' + location.lng());
     var node_selected = document.getElementsByName('node_radio');

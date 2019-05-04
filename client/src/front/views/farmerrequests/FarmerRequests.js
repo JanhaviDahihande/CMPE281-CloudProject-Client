@@ -4,12 +4,22 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Highlight from 'react-highlight';
 import { AnimatedView, Panel } from '../../components';
+import '../../style/map_view.css';
 
+import {
+  InfoWindow,
+  Marker,
+  Map,
+  GoogleApiWrapper,
+  Polygon,
+} from 'google-maps-react';
+import { Row } from 'react-bootstrap';
 class FarmerRequests extends PureComponent {
   constructor() {
     super();
     this.state = {
       data: [],
+      markers: [],
     };
   }
 
@@ -18,6 +28,7 @@ class FarmerRequests extends PureComponent {
     // const json = await response.json();
     // this.setState({ data: json });
     //console.log('Heyy');
+    const { lat, lng } = await this.getcurrentLocation();
     let user_id = JSON.parse(localStorage.getItem('user_id'));
     // console.log('User_id' + user_id);
     try {
@@ -27,14 +38,63 @@ class FarmerRequests extends PureComponent {
         .then(json => {
           // console.log(json.message);
           var data = json.message; //gets data in string
-          // console.log(typeof data);
+          console.log("Here:::::");
+          console.log(data);
           data = JSON.parse(data);
+          console.log("Here2222:::::");
+          console.log(data);
           // console.log(typeof data);
           this.setState({ data: data });
         });
     } catch (error) {
       // console.log(error);
     }
+
+    this.setState(prev => ({
+      fields: {
+        ...prev.fields,
+        location: {
+          lat,
+          lng,
+        },
+      },
+      currentLocation: {
+        lat,
+        lng,
+      },
+    }));
+  }
+
+  getcurrentLocation() {
+    if (navigator && navigator.geolocation) {
+      return new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(pos => {
+          const coords = pos.coords;
+          resolve({
+            lat: coords.latitude,
+            lng: coords.longitude,
+          });
+        });
+      });
+    }
+    return {
+      lat: 0,
+      lng: 0,
+    };
+  }
+
+  appendMarker(map) {
+    console.log("Inside map: " + map);
+    var pos = [];
+    for(var i=0; i<this.state.data.length;i++){
+      for(var j=0;j<this.state.data[i].latlong.length;j++){
+        pos.push({lat: this.state.data[i].latlong[j].lat, lng: this.state.data[i].latlong[j].long});
+      }
+    }
+    console.log("Pos: " + pos);
+    this.setState({
+      markers: pos
+    })
   }
 
   handleOnSubmit = (event: SyntheticEvent<>) => {
@@ -62,13 +122,47 @@ class FarmerRequests extends PureComponent {
   };
 
   render() {
+    // for(var i=0; i<this.state.data.length;i++){
+    //   for(var j=0;j<this.state.data[i].latlong.length;j++){
+    //     console.log(this.state.data[i].latlong[j].lat);
+    //     // this.appendMarker(this.map, this.state.data[i].latlong[j].lat, this.state.data[i].latlong[j].long, "Marker");
+        
+    //   }
+      
+    // }
     let rows = this.state.data.map(request => {
       return <RequestRow key={request.user_id} data={request} />;
     });
 
     return (
       <AnimatedView>
-        <div>
+        <Row>
+
+        <div id="google-map-holder">
+              <Map
+                google={this.props.google}
+                id="map_holder"
+                ref="map_holder"
+                style={{
+                  width: '50%',
+                  height: '30%',
+                  zIndex: 2,
+                  left: 500,
+                }}
+                className={'map'}
+                zoom={14}
+                onClick={(t, map, c) => this.appendMarker(map)}
+              >
+               {this.state.markers.map((marker, index)=> {
+                  return (
+                    <Marker
+                      position={marker}
+                      title="Click to zoom"
+                    />
+                  )
+                })}
+              </Map>
+            </div>
           <Panel
             title="Request Actions"
             hasTitle={true}
@@ -108,8 +202,8 @@ class FarmerRequests extends PureComponent {
                 </div>
               </div>
             </form>
-          </Panel>
-        </div>
+            </Panel>
+        </Row>
         <div className="row">
           <div className="col-xs-12">
             <div className="panel">
@@ -189,7 +283,9 @@ const RequestRow = props => {
   );
 };
 
-export default FarmerRequests;
+export default GoogleApiWrapper({
+  apiKey: 'AIzaSyC7v62nZ5JExkxD3KOkJByZ9SZVjPb9YE8',
+})(FarmerRequests);
 
 // <tr>
 // <td>183</td>
