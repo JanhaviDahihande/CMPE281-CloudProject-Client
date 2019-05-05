@@ -36,6 +36,7 @@ class FarmerRequests extends PureComponent {
     // console.log('User_id' + user_id);
     try {
       console.log("Inside req444");
+      console.log("Inside req");
       var url = process.env.REACT_APP_SERVER_URL + '/api/farmerrequests';
       console.log("URL: " + url);
       await fetch(url)
