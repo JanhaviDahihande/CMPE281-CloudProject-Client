@@ -98,6 +98,8 @@ const config = {
     port: 3001,
     hot: true,
     historyApiFallback: true,
+    compress: true,
+    disableHostCheck: true,
   },
 };
 
