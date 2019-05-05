@@ -32,7 +32,9 @@ class FarmerRequests extends PureComponent {
     let user_id = JSON.parse(localStorage.getItem('user_id'));
     // console.log('User_id' + user_id);
     try {
+      console.log("Inside req");
       var url = process.env.REACT_APP_SERVER_URL + '/api/farmerrequests/';
+      console.log("URL: " + url);
       await fetch(url)
         .then(res => res.json())
         .then(json => {
@@ -192,13 +194,23 @@ class FarmerRequests extends PureComponent {
                 height: '30%',
                 zIndex: 2,
                 left: 500,
+                center: {lat: -25.363882, lng: 131.044922}
               }}
               className={'map'}
-              zoom={13}
+              zoom={14}
               onClick={(t, map, c) => this.appendMarker(map)}
             >
               {this.state.markers.map((marker, index) => {
-                return <Marker position={marker} title="Click to zoom" />;
+                return <Marker 
+                position={marker} 
+                title="Click to zoom"
+                center={marker}
+                icon= {{
+                  path: google.maps.SymbolPath.CIRCLE,
+                  size: 50
+                }}
+                // animation= {google.maps.Animation.DROP} 
+                />;
               })}
             </Map>
           </div>
