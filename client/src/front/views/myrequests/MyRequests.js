@@ -114,8 +114,29 @@ class MyRequests extends PureComponent {
 }
 
 const RequestRow = props => {
-  console.log('Here');
-  console.log(props);
+  // console.log('Here');
+  // console.log(props);
+  function status_format() {
+    if (props.data.status == 'Approved') {
+      return (
+        <div>
+          <label className="btn btn-xs btn-success">{props.data.status}</label>
+        </div>
+      );
+    } else if (props.data.status == 'Declined') {
+      return (
+        <div>
+          <label className="btn btn-xs btn-danger">{props.data.status}</label>
+        </div>
+      );
+    } else if (props.data.status == 'Pending') {
+      return (
+        <div>
+          <label className="btn btn-xs btn-warning">{props.data.status}</label>
+        </div>
+      );
+    }
+  }
   return (
     <tr>
       <td>{props.data.zip_code}</td>
@@ -123,7 +144,7 @@ const RequestRow = props => {
       <td>{props.data.new_cluster}</td>
       <td>{props.data.updatedAt}</td>
       <td>{props.data.updatedAt}</td>
-      <td>{props.data.status}</td>
+      <td>{status_format()}</td>
     </tr>
   );
 };
