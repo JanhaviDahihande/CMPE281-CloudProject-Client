@@ -28,17 +28,17 @@ class FarmerRequests extends PureComponent {
     // const json = await response.json();
     // this.setState({ data: json });
     //console.log('Heyy');
-    console.log("Inside req");
+    console.log('Inside req');
     // const { lat, lng } = await this.getcurrentLocation();
-    console.log("Inside req2222");
+    console.log('Inside req2222');
     let user_id = JSON.parse(localStorage.getItem('user_id'));
-    console.log("Inside req3333");
+    console.log('Inside req3333');
     // console.log('User_id' + user_id);
     try {
-      console.log("Inside req444");
-      console.log("Inside req");
+      console.log('Inside req444');
+      console.log('Inside req');
       var url = process.env.REACT_APP_SERVER_URL + '/api/farmerrequests';
-      console.log("URL: " + url);
+      console.log('URL: ' + url);
       await fetch(url)
         .then(res => res.json())
         .then(json => {
@@ -146,6 +146,34 @@ class FarmerRequests extends PureComponent {
     return (
       <AnimatedView>
         <div className="row">
+          <div>
+            <Map
+              google={this.props.google}
+              id="map_holder"
+              ref="map_holder"
+              style={{
+                width: '51%',
+                height: '30%',
+                zIndex: 2,
+                left: 500,
+                center: { lat: -25.363882, lng: 131.044922 },
+              }}
+              className={'map'}
+              zoom={14}
+              onClick={(t, map, c) => this.appendMarker(map)}
+            >
+              {this.state.markers.map((marker, index) => {
+                return (
+                  <Marker
+                    position={marker}
+                    title="Click to zoom"
+                    center={marker}
+                    // animation= {google.maps.Animation.DROP}
+                  />
+                );
+              })}
+            </Map>
+          </div>
           <div className="col-xs-8">
             <Panel
               title="Request Actions"
@@ -187,32 +215,6 @@ class FarmerRequests extends PureComponent {
                 </div>
               </form>
             </Panel>
-          </div>
-          <div>
-            <Map
-              google={this.props.google}
-              id="map_holder"
-              ref="map_holder"
-              style={{
-                width: '51%',
-                height: '30%',
-                zIndex: 2,
-                left: 500,
-                center: {lat: -25.363882, lng: 131.044922}
-              }}
-              className={'map'}
-              zoom={14}
-              onClick={(t, map, c) => this.appendMarker(map)}
-            >
-              {this.state.markers.map((marker, index) => {
-                return <Marker 
-                position={marker} 
-                title="Click to zoom"
-                center={marker}
-                // animation= {google.maps.Animation.DROP} 
-                />;
-              })}
-            </Map>
           </div>
         </div>
         <div className="row">

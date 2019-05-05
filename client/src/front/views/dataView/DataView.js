@@ -4,13 +4,13 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Highlight from 'react-highlight';
 import { AnimatedView, Panel } from '../../components';
-import {UserComponent} from './UserComponent';
+import { UserComponent } from './UserComponent';
 
 class DataView extends PureComponent {
   constructor() {
     super();
     this.state = {
-      data:[],
+      data: [],
       userNames: [],
       clusterNames: [],
       nodeNames: [],
@@ -22,7 +22,6 @@ class DataView extends PureComponent {
   }
 
   async componentDidMount() {
-    
     // const response = await fetch(`process.env.REACT_APP_SERVER_URL + '/api/myrequests/5cbd62b6a090d8249f70a016`);
     // const json = await response.json();
     // this.setState({ data: json });
@@ -46,13 +45,18 @@ class DataView extends PureComponent {
     }
   }
 
-async handleOnZipCodeChange (event: SyntheticEvent<>) {
-  event.preventDefault();
+  async handleOnZipCodeChange(event: SyntheticEvent<>) {
+    event.preventDefault();
     let user_name = document.getElementById('user_name').value;
     let zipcode = document.getElementById('zip_code').value;
 
     try {
-      var url = process.env.REACT_APP_SERVER_URL + '/api/users/'+ user_name +'/zip/' + zipcode;
+      var url =
+        process.env.REACT_APP_SERVER_URL +
+        '/api/users/' +
+        user_name +
+        '/zip/' +
+        zipcode;
       console.log(url);
       await fetch(url)
         .then(res => res.json())
@@ -69,11 +73,12 @@ async handleOnZipCodeChange (event: SyntheticEvent<>) {
     }
   }
 
-  async handleOnClusterNameChange (event: SyntheticEvent<>) {
+  async handleOnClusterNameChange(event: SyntheticEvent<>) {
     let cluster_name = document.getElementById('cluster_name').value;
 
     try {
-      var url = process.env.REACT_APP_SERVER_URL + '/api/cluster/' + cluster_name;
+      var url =
+        process.env.REACT_APP_SERVER_URL + '/api/cluster/' + cluster_name;
       await fetch(url)
         .then(res => res.json())
         .then(json => {
@@ -89,14 +94,15 @@ async handleOnZipCodeChange (event: SyntheticEvent<>) {
     }
   }
 
-  async handleOnSubmit (event: SyntheticEvent<>) {
+  async handleOnSubmit(event: SyntheticEvent<>) {
     event.preventDefault();
     console.log('in handleonsubmit');
     let node_id = document.getElementById('node').value;
-    console.log("node_id: " + node_id);
+    console.log('node_id: ' + node_id);
     try {
-    var url = process.env.REACT_APP_SERVER_URL + "/api/dataview/sensor/" + node_id;
-    console.log(url);
+      var url =
+        process.env.REACT_APP_SERVER_URL + '/api/dataview/sensor/' + node_id;
+      console.log(url);
       await fetch(url)
         .then(res => res.json())
         .then(json => {
@@ -108,14 +114,16 @@ async handleOnZipCodeChange (event: SyntheticEvent<>) {
           this.setState({ sensor_data: data });
           console.log(this.state.sensor_data);
         });
-      } catch (error) {
-        console.log(error);
-      }
-  };
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   render() {
     let rows = this.state.clusterNames.map(request => {
-      return <RequestClusterNames key={request.user_id} clusterNames={request} />;
+      return (
+        <RequestClusterNames key={request.user_id} clusterNames={request} />
+      );
     });
 
     let nodes = this.state.nodeNames.map(request => {
@@ -135,30 +143,34 @@ async handleOnZipCodeChange (event: SyntheticEvent<>) {
             bodyBackGndColor={'#FFF'}
           >
             <form className="form-horizontal tasi-form" method="get">
-            <div className="row">
               <div className="form-group">
                 <label className="col-sm-2 control-label">Start Date:</label>
                 <div className="col-md-2">
-                  <input type="date" id="start_date" className="form-control"/>
-                </div>
-                <label className="col-sm-2 control-label">End Date:</label>
-                <div className="col-md-2">
-                  <input type="date" id="end_date" className="form-control"/>
+                  <input type="date" id="start_date" className="form-control" />
                 </div>
               </div>
-            </div>
-            <div className="form-group">
+              <div className="form-group">
+                <label className="col-sm-2 control-label">End Date:</label>
+                <div className="col-md-2">
+                  <input type="date" id="end_date" className="form-control" />
+                </div>
+              </div>
+              <div className="form-group">
                 <label className="col-sm-2 col-sm-2 control-label">
                   User Name:
                 </label>
                 <div className="col-md-2">
-                <UserComponent id="user_name" state={this.state} onChange={this.handleOnUserNameChange}/>
+                  <UserComponent
+                    id="user_name"
+                    state={this.state}
+                    onChange={this.handleOnUserNameChange}
+                  />
                 </div>
               </div>
               <div className="form-group">
                 <label className="col-sm-2 control-label">Zip Code:</label>
                 <div className="col-md-2">
-                  <input type="text" id="zip_code" className="form-control"/>
+                  <input type="text" id="zip_code" className="form-control" />
                 </div>
               </div>
               <div className="form-group">
@@ -166,22 +178,26 @@ async handleOnZipCodeChange (event: SyntheticEvent<>) {
                   Cluster Name:
                 </label>
                 <div className="col-md-2">
-                  <select id="cluster_name" className="form-control m-b-10" 
-                  // value={this.state.clusterNames}
-                  onClick = {this.handleOnZipCodeChange}>
+                  <select
+                    id="cluster_name"
+                    className="form-control m-b-10"
+                    // value={this.state.clusterNames}
+                    onClick={this.handleOnZipCodeChange}
+                  >
                     {rows}
                   </select>
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-2 col-sm-2 control-label">
-                  Node:
-                </label>
+                <label className="col-sm-2 col-sm-2 control-label">Node:</label>
                 <div className="col-md-2">
-                  <select id="node" className="form-control m-b-10" 
-                  // value={this.state.nodes}
-                  onClick = {this.handleOnClusterNameChange}
-                  onChange={this.handleOnNodeChange}>
+                  <select
+                    id="node"
+                    className="form-control m-b-10"
+                    // value={this.state.nodes}
+                    onClick={this.handleOnClusterNameChange}
+                    onChange={this.handleOnNodeChange}
+                  >
                     {nodes}
                   </select>
                 </div>
@@ -191,7 +207,12 @@ async handleOnZipCodeChange (event: SyntheticEvent<>) {
                   Sensor Type:
                 </label>
                 <div className="col-md-2">
-                  <select id="sensor_type" className="form-control m-b-10" onChange={this.handleOnSensorTypeChange} multiple>
+                  <select
+                    id="sensor_type"
+                    className="form-control m-b-10"
+                    onChange={this.handleOnSensorTypeChange}
+                    multiple
+                  >
                     <option value="pH">pH</option>
                     <option value="temp">Temperature</option>
                     <option value="airflow">Airflow</option>
@@ -219,23 +240,7 @@ async handleOnZipCodeChange (event: SyntheticEvent<>) {
           <div className="col-xs-12">
             <div className="panel">
               <header className="panel-heading">Sensor Data</header>
-              <div className="panel-body table-responsive">
-                <div className="box-tools m-b-15">
-                  <div className="input-group">
-                    <input
-                      type="text"
-                      name="table_search"
-                      className="form-control input-sm pull-right"
-                      style={{ width: '150px' }}
-                      placeholder="Search"
-                    />
-                    <div className="input-group-btn">
-                      <button className="btn btn-sm btn-default">
-                        <i className="fa fa-search" />
-                      </button>
-                    </div>
-                  </div>
-                </div>
+              <div className="panel-body table-responsive ">
                 <table className="table table-hover">
                   <thead>
                     <tr>
@@ -260,10 +265,11 @@ async handleOnZipCodeChange (event: SyntheticEvent<>) {
 
 const RequestClusterNames = props => {
   return (
-    <option key={props.clusterNames.cluster_name}>{props.clusterNames.cluster_name}</option>
+    <option key={props.clusterNames.cluster_name}>
+      {props.clusterNames.cluster_name}
+    </option>
   );
 };
-
 
 const RequestNodeNames = props => {
   return (
@@ -279,7 +285,7 @@ const RequestSensorData = props => {
       <td>{props.sensor_data.cluster_id}</td>
       <td>{props.sensor_data.type}</td>
       <td>{props.sensor_data.value}</td>
-      <td>{props.sensor_data.status? "Active" : "Inactive"}</td>
+      <td>{props.sensor_data.status ? 'Active' : 'Inactive'}</td>
     </tr>
   );
 };
