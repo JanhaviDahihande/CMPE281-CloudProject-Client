@@ -28,12 +28,15 @@ class FarmerRequests extends PureComponent {
     // const json = await response.json();
     // this.setState({ data: json });
     //console.log('Heyy');
+    console.log("Inside req");
     const { lat, lng } = await this.getcurrentLocation();
+    console.log("Inside req2222");
     let user_id = JSON.parse(localStorage.getItem('user_id'));
+    console.log("Inside req3333");
     // console.log('User_id' + user_id);
     try {
-      console.log("Inside req");
-      var url = process.env.REACT_APP_SERVER_URL + '/api/farmerrequests/';
+      console.log("Inside req444");
+      var url = process.env.REACT_APP_SERVER_URL + '/api/farmerrequests';
       console.log("URL: " + url);
       await fetch(url)
         .then(res => res.json())
