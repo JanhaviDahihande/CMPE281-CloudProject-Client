@@ -183,7 +183,7 @@ class FarmerRequests extends PureComponent {
               <form className="form-horizontal tasi-form" method="get">
                 <div className="form-group">
                   <label className="col-sm-2 control-label">Request ID:</label>
-                  <div className="col-md-3">
+                  <div className="col-md-4">
                     <input type="text" id="reqid" className="form-control" />
                   </div>
                 </div>
@@ -191,7 +191,7 @@ class FarmerRequests extends PureComponent {
                   <label className="col-sm-2 col-sm-2 control-label">
                     Action:
                   </label>
-                  <div className="col-md-2">
+                  <div className="col-md-4">
                     <select id="newstatus" className="form-control m-b-10">
                       <option value="Approved">Approve</option>
                       <option value="Declined">Decline</option>
