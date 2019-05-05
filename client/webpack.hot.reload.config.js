@@ -95,6 +95,7 @@ const config = {
   ],
   devServer: {
     contentBase: devServerRootPath,
+    host: 'localhost',
     port: 3001,
     hot: true,
     historyApiFallback: true,
