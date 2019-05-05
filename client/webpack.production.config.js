@@ -99,7 +99,7 @@ const config = {
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('production'),
-        REACT_APP_SERVER_URL: JSON.stringify('http://127.0.0.1:3002')
+        REACT_APP_SERVER_URL: JSON.stringify('http://13.56.155.89:3002')
       },
     }),
     new CompressionWebpackPlugin({
