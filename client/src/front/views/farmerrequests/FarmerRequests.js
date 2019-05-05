@@ -29,7 +29,7 @@ class FarmerRequests extends PureComponent {
     // this.setState({ data: json });
     //console.log('Heyy');
     console.log("Inside req");
-    const { lat, lng } = await this.getcurrentLocation();
+    // const { lat, lng } = await this.getcurrentLocation();
     console.log("Inside req2222");
     let user_id = JSON.parse(localStorage.getItem('user_id'));
     console.log("Inside req3333");
@@ -56,19 +56,19 @@ class FarmerRequests extends PureComponent {
       // console.log(error);
     }
 
-    this.setState(prev => ({
-      fields: {
-        ...prev.fields,
-        location: {
-          lat,
-          lng,
-        },
-      },
-      currentLocation: {
-        lat,
-        lng,
-      },
-    }));
+    // this.setState(prev => ({
+    //   fields: {
+    //     ...prev.fields,
+    //     location: {
+    //       lat,
+    //       lng,
+    //     },
+    //   },
+    //   currentLocation: {
+    //     lat,
+    //     lng,
+    //   },
+    // }));
   }
 
   getcurrentLocation() {
