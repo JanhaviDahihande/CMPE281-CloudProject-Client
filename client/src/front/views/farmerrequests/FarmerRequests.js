@@ -209,10 +209,6 @@ class FarmerRequests extends PureComponent {
                 position={marker} 
                 title="Click to zoom"
                 center={marker}
-                icon= {{
-                  path: google.maps.SymbolPath.CIRCLE,
-                  size: 50
-                }}
                 // animation= {google.maps.Animation.DROP} 
                 />;
               })}
