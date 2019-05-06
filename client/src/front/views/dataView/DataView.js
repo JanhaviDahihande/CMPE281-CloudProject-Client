@@ -114,7 +114,7 @@ class DataView extends PureComponent {
       data.push(i);
       a.push(data);
     }
-    alert('Date range: ' + a);
+    // alert('Date range: ' + a);
     this.setState({ sensor_chart_data: a });
   }
 
@@ -143,10 +143,21 @@ class DataView extends PureComponent {
     event.preventDefault();
     console.log('in handleonsubmit');
     let node_id = document.getElementById('node').value;
-    console.log('node_id: ' + node_id);
+    let start_date = document.getElementById('start_date').value;
+    let end_date = document.getElementById('end_date').value;
+    let end_date2 = new Date(end_date);
+    end_date2.setDate(end_date2.getDate() + 1);
+
+    // console.log('node_id: ' + node_id);
     try {
       var url =
-        process.env.REACT_APP_SERVER_URL + '/api/dataview/sensor/' + node_id;
+        process.env.REACT_APP_SERVER_URL +
+        '/api/dataview/sensor/' +
+        node_id +
+        '/' +
+        start_date +
+        '/' +
+        end_date2;
       console.log(url);
       await fetch(url)
         .then(res => res.json())
