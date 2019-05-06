@@ -16,7 +16,7 @@ class DataView extends PureComponent {
       clusterNames: [],
       nodeNames: [],
       sensor_data: [],
-      sensor_chart_data: []
+      sensor_chart_data: [],
     };
     this.handleOnZipCodeChange = this.handleOnZipCodeChange.bind(this);
     this.handleOnClusterNameChange = this.handleOnClusterNameChange.bind(this);
@@ -97,19 +97,25 @@ class DataView extends PureComponent {
     }
   }
 
+  function(days) {
+    var date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
+  }
+
   async handleOnEndDateChange(event: SyntheticEvent<>) {
     let start_date = document.getElementById('start_date').value;
     let end_date = document.getElementById('end_date').value;
-    var s = start_date.split("-")[2];
-    var e = end_date.split("-")[2];
-    var a =[];
-    for(var i=s;i<=e;i++){
+    var s = start_date.split('-')[2];
+    var e = end_date.split('-')[2];
+    var a = [];
+    for (var i = s; i <= e; i++) {
       var data = [];
       data.push(i);
       a.push(data);
     }
-    alert("Date range: " + a);
-    this.setState({sensor_chart_data: a});
+    alert('Date range: ' + a);
+    this.setState({ sensor_chart_data: a });
   }
 
   async handleOnSensorTypeChange(event: SyntheticEvent<>) {
@@ -175,105 +181,150 @@ class DataView extends PureComponent {
 
     return (
       <AnimatedView>
-        <div>
-          <Panel
-            title="Request Actions"
-            hasTitle={true}
-            bodyBackGndColor={'#FFF'}
-          >
-            <form className="form-horizontal tasi-form" method="get">
-              <div className="form-group">
-                <label className="col-sm-2 control-label">Start Date:</label>
-                <div className="col-md-2">
-                  <input type="date" id="start_date" className="form-control" />
+        <div className="row">
+          <div className="col-xs-6">
+            <Panel
+              title="Filter Data View"
+              hasTitle={true}
+              bodyBackGndColor={'#FFF'}
+            >
+              <form className="form-horizontal tasi-form" method="get">
+                <div className="form-group">
+                  <label className="col-sm-3 control-label">Start Date:</label>
+                  <div className="col-md-4">
+                    <input
+                      type="date"
+                      id="start_date"
+                      className="form-control"
+                    />
+                  </div>
                 </div>
-              </div>
-              <div className="form-group">
-                <label className="col-sm-2 control-label">End Date:</label>
-                <div className="col-md-2">
-                  <input type="date" id="end_date" className="form-control" onChange={this.handleOnEndDateChange}/>
+                <div className="form-group">
+                  <label className="col-sm-3 control-label">End Date:</label>
+                  <div className="col-md-4">
+                    <input
+                      type="date"
+                      id="end_date"
+                      className="form-control"
+                      onChange={this.handleOnEndDateChange}
+                    />
+                  </div>
                 </div>
-              </div>
-              <div className="form-group">
-                <label className="col-sm-2 col-sm-2 control-label">
-                  User Name:
-                </label>
-                <div className="col-md-2">
-                  <UserComponent
-                    id="user_name"
-                    state={this.state}
-                    onChange={this.handleOnUserNameChange}
-                  />
+                <div className="form-group">
+                  <label className="col-sm-3 control-label">User Name:</label>
+                  <div className="col-md-4">
+                    <UserComponent
+                      id="user_name"
+                      state={this.state}
+                      onChange={this.handleOnUserNameChange}
+                    />
+                  </div>
                 </div>
-              </div>
-              <div className="form-group">
-                <label className="col-sm-2 control-label">Zip Code:</label>
-                <div className="col-md-2">
-                  <input type="text" id="zip_code" className="form-control" />
+                <div className="form-group">
+                  <label className="col-sm-3 control-label">Zip Code:</label>
+                  <div className="col-md-4">
+                    <input type="text" id="zip_code" className="form-control" />
+                  </div>
                 </div>
-              </div>
-              <div className="form-group">
-                <label className="col-sm-2 col-sm-2 control-label">
-                  Cluster Name:
-                </label>
-                <div className="col-md-2">
-                  <select
-                    id="cluster_name"
-                    className="form-control m-b-10"
-                    // value={this.state.clusterNames}
-                    onClick={this.handleOnZipCodeChange}
-                  >
-                    {rows}
-                  </select>
+                <div className="form-group">
+                  <label className="col-sm-3 control-label">
+                    Cluster Name:
+                  </label>
+                  <div className="col-md-4">
+                    <select
+                      id="cluster_name"
+                      className="form-control m-b-10"
+                      // value={this.state.clusterNames}
+                      onClick={this.handleOnZipCodeChange}
+                    >
+                      {rows}
+                    </select>
+                  </div>
                 </div>
-              </div>
-              <div className="form-group">
-                <label className="col-sm-2 col-sm-2 control-label">Node:</label>
-                <div className="col-md-2">
-                  <select
-                    id="node"
-                    className="form-control m-b-10"
-                    // value={this.state.nodes}
-                    onClick={this.handleOnClusterNameChange}
-                    onChange={this.handleOnNodeChange}
-                  >
-                    {nodes}
-                  </select>
+                <div className="form-group">
+                  <label className="col-sm-3 control-label">Node:</label>
+                  <div className="col-md-4">
+                    <select
+                      id="node"
+                      className="form-control m-b-10"
+                      // value={this.state.nodes}
+                      onClick={this.handleOnClusterNameChange}
+                      onChange={this.handleOnNodeChange}
+                    >
+                      {nodes}
+                    </select>
+                  </div>
                 </div>
-              </div>
-              <div className="form-group">
-                <label className="col-sm-2 col-sm-2 control-label">
-                  Sensor Type:
-                </label>
-                <div className="col-md-2">
-                  <select
-                    id="sensor_type"
-                    className="form-control m-b-10"
-                    onChange={this.handleOnSensorTypeChange}
-                    // multiple
-                  >
-                    <option value="ph">pH</option>
-                    <option value="temperature">Temperature</option>
-                    <option value="airflow">Airflow</option>
-                    <option value="humidity">Humidity</option>
-                  </select>
+                <div className="form-group">
+                  <label className="col-sm-3 control-label">Sensor Type:</label>
+                  <div className="col-md-4">
+                    <select
+                      id="sensor_type"
+                      className="form-control m-b-10"
+                      onChange={this.handleOnSensorTypeChange}
+                      // multiple
+                    >
+                      <option value="ph">pH</option>
+                      <option value="temperature">Temperature</option>
+                      <option value="airflow">Airflow</option>
+                      <option value="humidity">Humidity</option>
+                    </select>
+                  </div>
                 </div>
-              </div>
-              <div className="form-group">
-                <div className="col-lg-offset-2 col-lg-10">
-                  <button
-                    onClick={this.handleOnSubmit}
-                    className="btn btn-success"
-                  >
-                    Submit
-                  </button>
-                  <button type="reset" className="btn btn-danger">
-                    Reset
-                  </button>
+                <div className="form-group">
+                  <div className="col-lg-offset-2 col-lg-10">
+                    <button
+                      onClick={this.handleOnSubmit}
+                      className="btn btn-success"
+                    >
+                      Submit
+                    </button>
+                    <button type="reset" className="btn btn-danger">
+                      Reset
+                    </button>
+                  </div>
                 </div>
-              </div>
-            </form>
-          </Panel>
+              </form>
+            </Panel>
+          </div>
+          <div className="col-xs-6">
+            <Panel
+              title="Sensor Values Analysis"
+              hasTitle={true}
+              bodyBackGndColor={'#FFF'}
+            >
+              <Chart
+                width={'600px'}
+                height={'430px'}
+                chartType="LineChart"
+                loader={<div>Loading Chart</div>}
+                data={[
+                  ['x', 'sensor data'],
+                  [0, 0],
+                  [1, 10],
+                  [2, 23],
+                  [3, 17],
+                  [4, 18],
+                  [5, 9],
+                  [6, 11],
+                  [7, 27],
+                  [8, 33],
+                  [9, 40],
+                  [10, 32],
+                  [11, 35],
+                ]}
+                options={{
+                  hAxis: {
+                    title: 'Time',
+                  },
+                  vAxis: {
+                    title: 'Sensor values',
+                  },
+                }}
+                rootProps={{ 'data-testid': '1' }}
+              />
+            </Panel>
+          </div>
         </div>
         <div className="row">
           <div className="col-xs-12">
@@ -289,49 +340,11 @@ class DataView extends PureComponent {
                       <th>Sensor Type</th>
                       <th>Value</th>
                       <th>Status</th>
+                      <th>Timestamp</th>
                     </tr>
                   </thead>
                   <tbody>{sensors}</tbody>
                 </table>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-xs-12">
-            <div className="panel">
-              <header className="panel-heading">Sensor Chart</header>
-              <div className="panel-body ">
-              <Chart
-  width={'600px'}
-  height={'400px'}
-  chartType="LineChart"
-  loader={<div>Loading Chart</div>}
-  data={[
-    ['x', 'sensor data'],
-    [0, 0],
-    [1, 10],
-    [2, 23],
-    [3, 17],
-    [4, 18],
-    [5, 9],
-    [6, 11],
-    [7, 27],
-    [8, 33],
-    [9, 40],
-    [10, 32],
-    [11, 35],
-  ]}
-  options={{
-    hAxis: {
-      title: 'Time',
-    },
-    vAxis: {
-      title: 'Sensor values',
-    },
-  }}
-  rootProps={{ 'data-testid': '1' }}
-/>
               </div>
             </div>
           </div>
@@ -356,7 +369,7 @@ const RequestNodeNames = props => {
 };
 
 const RequestSensorData = props => {
-  if(props.sensor_data.type == document.getElementById('sensor_type').value){
+  if (props.sensor_data.type == document.getElementById('sensor_type').value) {
     // var a =[];
     // if(props.sensor_data.type=="ph"){
     //   this.state.sensor_chart_data.array.forEach(element => {
@@ -367,6 +380,16 @@ const RequestSensorData = props => {
     //   });
     //   console.log(a);
     // }
+
+    function format_time() {
+      var timestamp = props.sensor_data.createdAt;
+      var dot = timestamp.indexOf('.');
+      timestamp = timestamp.substring(0, dot != -1 ? dot : timestamp.length);
+      timestamp = timestamp.replace(/T/g, '  ');
+
+      return timestamp;
+    }
+
     return (
       <tr>
         <td>{props.sensor_data.sensor_id}</td>
@@ -375,11 +398,11 @@ const RequestSensorData = props => {
         <td>{props.sensor_data.type}</td>
         <td>{props.sensor_data.value}</td>
         <td>{props.sensor_data.status ? 'Active' : 'Inactive'}</td>
+        <td>{format_time()}</td>
       </tr>
     );
-  }
-  else{
-    return("");
+  } else {
+    return '';
   }
 };
 
