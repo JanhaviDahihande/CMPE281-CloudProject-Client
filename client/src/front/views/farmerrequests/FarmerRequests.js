@@ -160,7 +160,7 @@ class FarmerRequests extends PureComponent {
               }}
               className={'map'}
               zoom={14}
-              onClick={(t, map, c) => this.appendMarker(map)}
+              onIdle={(t, map, c) => this.appendMarker(map)}
             >
               {this.state.markers.map((marker, index) => {
                 return (

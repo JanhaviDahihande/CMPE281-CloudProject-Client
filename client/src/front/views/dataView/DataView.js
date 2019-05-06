@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import Highlight from 'react-highlight';
 import { AnimatedView, Panel } from '../../components';
 import { UserComponent } from './UserComponent';
+import Chart from 'react-google-charts';
 
 class DataView extends PureComponent {
   constructor() {
@@ -15,9 +16,11 @@ class DataView extends PureComponent {
       clusterNames: [],
       nodeNames: [],
       sensor_data: [],
+      sensor_chart_data: []
     };
     this.handleOnZipCodeChange = this.handleOnZipCodeChange.bind(this);
     this.handleOnClusterNameChange = this.handleOnClusterNameChange.bind(this);
+    this.handleOnEndDateChange = this.handleOnEndDateChange.bind(this);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
   }
 
@@ -75,6 +78,42 @@ class DataView extends PureComponent {
 
   async handleOnClusterNameChange(event: SyntheticEvent<>) {
     let cluster_name = document.getElementById('cluster_name').value;
+
+    try {
+      var url =
+        process.env.REACT_APP_SERVER_URL + '/api/cluster/' + cluster_name;
+      await fetch(url)
+        .then(res => res.json())
+        .then(json => {
+          console.log(json.message);
+          var data = json.message; //gets data in string
+          // console.log(typeof data);
+          data = JSON.parse(data);
+          // console.log(typeof data);
+          this.setState({ nodeNames: data });
+        });
+    } catch (error) {
+      // console.log(error);
+    }
+  }
+
+  async handleOnEndDateChange(event: SyntheticEvent<>) {
+    let start_date = document.getElementById('start_date').value;
+    let end_date = document.getElementById('end_date').value;
+    var s = start_date.split("-")[2];
+    var e = end_date.split("-")[2];
+    var a =[];
+    for(var i=s;i<=e;i++){
+      var data = [];
+      data.push(i);
+      a.push(data);
+    }
+    alert("Date range: " + a);
+    this.setState({sensor_chart_data: a});
+  }
+
+  async handleOnSensorTypeChange(event: SyntheticEvent<>) {
+    let sensor_type = document.getElementById('sensor_type').value;
 
     try {
       var url =
@@ -152,7 +191,7 @@ class DataView extends PureComponent {
               <div className="form-group">
                 <label className="col-sm-2 control-label">End Date:</label>
                 <div className="col-md-2">
-                  <input type="date" id="end_date" className="form-control" />
+                  <input type="date" id="end_date" className="form-control" onChange={this.handleOnEndDateChange}/>
                 </div>
               </div>
               <div className="form-group">
@@ -211,10 +250,10 @@ class DataView extends PureComponent {
                     id="sensor_type"
                     className="form-control m-b-10"
                     onChange={this.handleOnSensorTypeChange}
-                    multiple
+                    // multiple
                   >
-                    <option value="pH">pH</option>
-                    <option value="temp">Temperature</option>
+                    <option value="ph">pH</option>
+                    <option value="temperature">Temperature</option>
                     <option value="airflow">Airflow</option>
                     <option value="humidity">Humidity</option>
                   </select>
@@ -258,6 +297,45 @@ class DataView extends PureComponent {
             </div>
           </div>
         </div>
+        <div className="row">
+          <div className="col-xs-12">
+            <div className="panel">
+              <header className="panel-heading">Sensor Chart</header>
+              <div className="panel-body ">
+              <Chart
+  width={'600px'}
+  height={'400px'}
+  chartType="LineChart"
+  loader={<div>Loading Chart</div>}
+  data={[
+    ['x', 'sensor data'],
+    [0, 0],
+    [1, 10],
+    [2, 23],
+    [3, 17],
+    [4, 18],
+    [5, 9],
+    [6, 11],
+    [7, 27],
+    [8, 33],
+    [9, 40],
+    [10, 32],
+    [11, 35],
+  ]}
+  options={{
+    hAxis: {
+      title: 'Time',
+    },
+    vAxis: {
+      title: 'Sensor values',
+    },
+  }}
+  rootProps={{ 'data-testid': '1' }}
+/>
+              </div>
+            </div>
+          </div>
+        </div>
       </AnimatedView>
     );
   }
@@ -278,16 +356,31 @@ const RequestNodeNames = props => {
 };
 
 const RequestSensorData = props => {
-  return (
-    <tr>
-      <td>{props.sensor_data.sensor_id}</td>
-      <td>{props.sensor_data.node_id}</td>
-      <td>{props.sensor_data.cluster_id}</td>
-      <td>{props.sensor_data.type}</td>
-      <td>{props.sensor_data.value}</td>
-      <td>{props.sensor_data.status ? 'Active' : 'Inactive'}</td>
-    </tr>
-  );
+  if(props.sensor_data.type == document.getElementById('sensor_type').value){
+    // var a =[];
+    // if(props.sensor_data.type=="ph"){
+    //   this.state.sensor_chart_data.array.forEach(element => {
+    //     var data =[];
+    //     data.push(element);
+    //     data.push("6.5");
+    //     a.push(data);
+    //   });
+    //   console.log(a);
+    // }
+    return (
+      <tr>
+        <td>{props.sensor_data.sensor_id}</td>
+        <td>{props.sensor_data.node_id}</td>
+        <td>{props.sensor_data.cluster_id}</td>
+        <td>{props.sensor_data.type}</td>
+        <td>{props.sensor_data.value}</td>
+        <td>{props.sensor_data.status ? 'Active' : 'Inactive'}</td>
+      </tr>
+    );
+  }
+  else{
+    return("");
+  }
 };
 
 export default DataView;
