@@ -18,7 +18,7 @@ import {
 } from '../../components';
 import Highlight from 'react-highlight';
 import '../../style/map_view.css';
-
+import Geocode from "react-geocode";
 // const AnyReactComponent = ({ text }) => <div>{text}</div>;
 type State = {
   zip_code: string,
@@ -27,10 +27,12 @@ type State = {
   latlong: Array,
   new_cluster: string,
   status: string,
+  
 };
 class Notifications extends React.Component {
   constructor(props) {
     super(props);
+    
     this.state = {
       showingInfoWindow: false,
       activeMarker: {},
@@ -50,6 +52,10 @@ class Notifications extends React.Component {
       no_of_nodes: 0,
       latlong: [],
       status: 'Pending',
+      initial_center: {
+        lat: -1.2884,
+        lng: 36.8233
+       }
     };
     this.addFields = this.addFields.bind(this);
   }
@@ -69,6 +75,7 @@ class Notifications extends React.Component {
         lng,
       },
     }));
+    this.geocoder = new google.maps.Geocoder();
   }
 
   getcurrentLocation() {
@@ -251,13 +258,38 @@ class Notifications extends React.Component {
   };
 
   handlesOnZipCodeChange = (event: SyntheticEvent<>) => {
+    //alert("Here");
     if (event) {
       event.preventDefault();
-      // should add some validator before setState in real use cases
-      this.setState({ zip_code: event.target.value.trim() });
-    }
+      //Geocode.setApiKey("AIzaSyDA4flhFYUHU9vGI07L2LVZpnbY7QFqSMs");
+     // this.geocodeAddress(event.target.value.trim());
+     var lat = '';
+    var lng = '';
+    var initC  = {};
+    var address = event.target.value.trim();
+    this.geocoder.geocode( { 'address': address}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+         lat = results[0].geometry.location.lat();
+         lng = results[0].geometry.location.lng();
+         console.log(lat + "_" + lng);
+         
+        initC.lat = lat;
+        initC.lng = lng;
+        console.log(initC);
+        }
+        else {
+          alert("Geocode was not successful for the following reason: " + status);
+        }
+      });
+    
+    };
+      this.setState({ zip_code: event.target.value.trim() , initial_center:initC});
+      console.log("Akshay22222");
+      console.log(this.state.initial_center);
+    
   };
 
+  
   handleOptionChange = changeEvent => {
     console.log('Radio : ' + changeEvent.target.value);
     this.setState({
@@ -407,6 +439,7 @@ class Notifications extends React.Component {
                   height: '50%',
                 }}
                 className={'map'}
+                initialCenter={this.state.initial_center}
                 zoom={14}
                 onClick={(t, map, c) => this.addMarker(c.latLng, map)}
               >
@@ -472,5 +505,5 @@ class Notifications extends React.Component {
 
 //export default Notifications;
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyC7v62nZ5JExkxD3KOkJByZ9SZVjPb9YE8',
+  apiKey: 'AIzaSyDA4flhFYUHU9vGI07L2LVZpnbY7QFqSMs',
 })(Notifications);
