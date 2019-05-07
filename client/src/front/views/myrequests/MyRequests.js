@@ -18,7 +18,7 @@ class MyRequests extends PureComponent {
     // const response = await fetch(`process.env.REACT_APP_SERVER_URL + '/api/myrequests/5cbd62b6a090d8249f70a016`);
     // const json = await response.json();
     // this.setState({ data: json });
-    console.log('Heyy');
+    // console.log('Heyy');
     let user_id = JSON.parse(localStorage.getItem('user_id'));
     console.log('User_id' + user_id);
     try {
@@ -26,7 +26,7 @@ class MyRequests extends PureComponent {
       await fetch(url)
         .then(res => res.json())
         .then(json => {
-          console.log(json.message);
+          // console.log(json.message);
           var data = json.message; //gets data in string
           // console.log(typeof data);
           data = JSON.parse(data);

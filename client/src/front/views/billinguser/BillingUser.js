@@ -1,8 +1,6 @@
 // @flow weak
 
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import Highlight from 'react-highlight';
 import { AnimatedView, Panel } from '../../components';
 
 type state = {
@@ -17,8 +15,8 @@ class BillingUser extends PureComponent {
     super(props);
     this.state = {
       bill_type: 'Bill Daily',
-      no_of_nodes: 5,
-      price: 75,
+      no_of_nodes: 0,
+      price: 0,
       new_bill_type: '',
     };
   }
@@ -49,6 +47,31 @@ class BillingUser extends PureComponent {
 
     this.setState({ price: pricing, bill_type: billing });
   };
+
+  async componentDidMount() {
+    let user_id = JSON.parse(localStorage.getItem('user_id'));
+    // console.log('User_id' + user_id);
+    try {
+      var url =
+        process.env.REACT_APP_SERVER_URL +
+        '/api/infrastructure/getdetails/user/totalnodes/' +
+        user_id;
+
+      console.log(url);
+      await fetch(url)
+        .then(res => res.json())
+        .then(json => {
+          var data = json.message;
+          data = JSON.parse(data);
+          var nodes = data;
+          var cost = nodes * 15;
+          console.log(nodes);
+          this.setState({ no_of_nodes: nodes, price: cost });
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   render() {
     return (
