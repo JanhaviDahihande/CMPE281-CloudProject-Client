@@ -26,6 +26,10 @@ class ManageNode extends PureComponent {
     longitude: '',
     node_id: '',
     data: [],
+    no_of_nodes: 0,
+    no_of_clusters: 0,
+    no_of_sensors: 0,
+    no_of_farmers: 0,
   };
 
   async componentWillMount() {
@@ -33,8 +37,55 @@ class ManageNode extends PureComponent {
       actions: { enterTabPanel },
     } = this.props;
     enterTabPanel();
+
     try {
-      var url = process.env.REACT_APP_SERVER_URL + '/api/manageinfrastruture/node/view';
+      var url =
+        process.env.REACT_APP_SERVER_URL +
+        '/api/infrastructure/getdetails/registeredfarmers';
+      console.log('url: ' + url);
+      await fetch(url)
+        .then(res => res.json())
+        .then(json => {
+          console.log('Here');
+          console.log(json.message);
+          var data = json.message; //gets data in string
+          data = JSON.parse(data);
+          // console.log('farmers ' + data);
+          this.setState({ no_of_farmers: data });
+        });
+
+      url =
+        process.env.REACT_APP_SERVER_URL +
+        '/api/infrastructure/getdetails/totalclusters';
+      await fetch(url)
+        .then(res => res.json())
+        .then(json => {
+          console.log('Here');
+          console.log(json.message);
+          var data = json.message; //gets data in string
+          data = JSON.parse(data);
+          this.setState({ no_of_clusters: data });
+        });
+
+      url =
+        process.env.REACT_APP_SERVER_URL +
+        '/api/infrastructure/getdetails/totalnodes';
+      await fetch(url)
+        .then(res => res.json())
+        .then(json => {
+          console.log('Here');
+          console.log(json.message);
+          var data = json.message; //gets data in string
+          data = JSON.parse(data);
+          this.setState({ no_of_nodes: data, no_of_sensors: data * 4 });
+        });
+    } catch (error) {
+      console.log('Error');
+    }
+
+    try {
+      var url =
+        process.env.REACT_APP_SERVER_URL + '/api/manageinfrastruture/node/view';
       await fetch(url)
         .then(res => res.json())
         .then(json => {
@@ -76,7 +127,7 @@ class ManageNode extends PureComponent {
               <div className="row">
                 <div className="col-md-3">
                   <StatsCardComponent
-                    statValue={'6'}
+                    statValue={this.state.no_of_clusters}
                     statLabel={'Total Clusters'}
                     icon={<i className="fa fa-check-square-o" />}
                     backColor={'red'}
@@ -84,7 +135,7 @@ class ManageNode extends PureComponent {
                 </div>
                 <div className="col-md-3">
                   <StatsCardComponent
-                    statValue={'32'}
+                    statValue={this.state.no_of_nodes}
                     statLabel={'Total Nodes'}
                     icon={<i className="fa fa-envelope-o" />}
                     backColor={'violet'}
@@ -92,20 +143,20 @@ class ManageNode extends PureComponent {
                 </div>
                 <div className="col-md-3">
                   <StatsCardComponent
-                    statValue={'98'}
+                    statValue={this.state.no_of_sensors}
                     statLabel={'Total Sensors'}
                     icon={<i className="fa fa-dollar" />}
                     backColor={'blue'}
                   />
                 </div>
-                {/* <div className="col-md-3">
+                <div className="col-md-3">
                   <StatsCardComponent
-                    statValue={'5'}
+                    statValue={this.state.no_of_farmers}
                     statLabel={'Total Farmers'}
                     icon={<i className="fa fa-paperclip" />}
                     backColor={'green'}
                   />
-                </div> */}
+                </div>
               </div>
             </Panel>
           </div>
@@ -366,17 +417,20 @@ class ManageNode extends PureComponent {
   handlesOnAddClick = (event: SyntheticEvent<>) => {
     const { cluster_id, latitude, longitude } = this.state;
     // Post request to backend
-    fetch(process.env.REACT_APP_SERVER_URL + '/api/manageinfrastruture/node/add', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
+    fetch(
+      process.env.REACT_APP_SERVER_URL + '/api/manageinfrastruture/node/add',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          cluster_id: cluster_id,
+          latitude: latitude,
+          longitude: longitude,
+        }),
       },
-      body: JSON.stringify({
-        cluster_id: cluster_id,
-        latitude: latitude,
-        longitude: longitude,
-      }),
-    })
+    )
       .then(res => res.json())
       .then(json => {
         console.log('json', json);
@@ -394,18 +448,21 @@ class ManageNode extends PureComponent {
   handlesOnUpdateClick = (event: SyntheticEvent<>) => {
     const { cluster_id, node_id, latitude, longitude } = this.state;
     // Post request to backend
-    fetch(process.env.REACT_APP_SERVER_URL + '/api/manageinfrastruture/node/update', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
+    fetch(
+      process.env.REACT_APP_SERVER_URL + '/api/manageinfrastruture/node/update',
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          cluster_id: cluster_id,
+          node_id: node_id,
+          latitude: latitude,
+          longitude: longitude,
+        }),
       },
-      body: JSON.stringify({
-        cluster_id: cluster_id,
-        node_id: node_id,
-        latitude: latitude,
-        longitude: longitude,
-      }),
-    })
+    )
       .then(res => res.json())
       .then(json => {
         if (json.success) {
@@ -422,16 +479,19 @@ class ManageNode extends PureComponent {
   handlesDeleteNode = (event: SyntheticEvent<>) => {
     const { cluster_id, node_id } = this.state;
     // Post request to backend
-    fetch(process.env.REACT_APP_SERVER_URL + '/api/manageinfrastruture/node/delete', {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
+    fetch(
+      process.env.REACT_APP_SERVER_URL + '/api/manageinfrastruture/node/delete',
+      {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          cluster_id: cluster_id,
+          node_id: node_id,
+        }),
       },
-      body: JSON.stringify({
-        cluster_id: cluster_id,
-        node_id: node_id,
-      }),
-    })
+    )
       .then(res => res.json())
       .then(json => {
         if (json.success) {

@@ -20,6 +20,10 @@ class BillingAdmin extends PureComponent {
   };
 
   state = {
+    no_of_nodes: 0,
+    no_of_clusters: 0,
+    no_of_sensors: 0,
+    no_of_farmers: 0,
     labels: [
       'Cluster 1',
       'Cluster 2',
@@ -66,6 +70,51 @@ class BillingAdmin extends PureComponent {
     leaveEarningGraph();
   }
 
+  async componentDidMount() {
+    try {
+      var url =
+        process.env.REACT_APP_SERVER_URL +
+        '/api/infrastructure/getdetails/registeredfarmers';
+      await fetch(url)
+        .then(res => res.json())
+        .then(json => {
+          console.log('Here');
+          console.log(json.message);
+          var data = json.message; //gets data in string
+          data = JSON.parse(data);
+          this.setState({ no_of_farmers: data });
+        });
+
+      url =
+        process.env.REACT_APP_SERVER_URL +
+        '/api/infrastructure/getdetails/totalclusters';
+      await fetch(url)
+        .then(res => res.json())
+        .then(json => {
+          console.log('Here');
+          console.log(json.message);
+          var data = json.message; //gets data in string
+          data = JSON.parse(data);
+          this.setState({ no_of_clusters: data });
+        });
+
+      url =
+        process.env.REACT_APP_SERVER_URL +
+        '/api/infrastructure/getdetails/totalnodes';
+      await fetch(url)
+        .then(res => res.json())
+        .then(json => {
+          console.log('Here');
+          console.log(json.message);
+          var data = json.message; //gets data in string
+          data = JSON.parse(data);
+          this.setState({ no_of_nodes: data, no_of_sensors: data * 4 });
+        });
+    } catch (error) {
+      console.log('Error');
+    }
+  }
+
   render() {
     const { labels, datasets } = this.state;
     return (
@@ -80,7 +129,7 @@ class BillingAdmin extends PureComponent {
               <div className="row">
                 <div className="col-md-3">
                   <StatsCardComponent
-                    statValue={'6'}
+                    statValue={this.state.no_of_clusters}
                     statLabel={'Total Clusters'}
                     icon={<i className="fa fa-check-square-o" />}
                     backColor={'red'}
@@ -88,7 +137,7 @@ class BillingAdmin extends PureComponent {
                 </div>
                 <div className="col-md-3">
                   <StatsCardComponent
-                    statValue={'32'}
+                    statValue={this.state.no_of_nodes}
                     statLabel={'Total Nodes'}
                     icon={<i className="fa fa-envelope-o" />}
                     backColor={'violet'}
@@ -96,7 +145,7 @@ class BillingAdmin extends PureComponent {
                 </div>
                 <div className="col-md-3">
                   <StatsCardComponent
-                    statValue={'98'}
+                    statValue={this.state.no_of_sensors}
                     statLabel={'Total Sensors'}
                     icon={<i className="fa fa-dollar" />}
                     backColor={'blue'}
@@ -104,7 +153,7 @@ class BillingAdmin extends PureComponent {
                 </div>
                 <div className="col-md-3">
                   <StatsCardComponent
-                    statValue={'23'}
+                    statValue={this.state.no_of_farmers}
                     statLabel={'Registered Farmers'}
                     icon={<i className="fa fa-users" />}
                     backColor={'green'}
