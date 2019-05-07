@@ -53,8 +53,8 @@ class Notifications extends React.Component {
       latlong: [],
       status: 'Pending',
       initial_center: {
-        lat: -1.2884,
-        lng: 36.8233
+        lat: 37.77,
+        lng: -122.41
        }
     };
     this.addFields = this.addFields.bind(this);
@@ -263,30 +263,30 @@ class Notifications extends React.Component {
       event.preventDefault();
       //Geocode.setApiKey("AIzaSyDA4flhFYUHU9vGI07L2LVZpnbY7QFqSMs");
      // this.geocodeAddress(event.target.value.trim());
-     var lat = '';
-    var lng = '';
-    var initC  = {};
-    var address = event.target.value.trim();
-    this.geocoder.geocode( { 'address': address}, function(results, status) {
-      if (status == google.maps.GeocoderStatus.OK) {
-         lat = results[0].geometry.location.lat();
-         lng = results[0].geometry.location.lng();
-         console.log(lat + "_" + lng);
+    //  var lat = '';
+    // var lng = '';
+    // var initC  = {};
+    // var address = event.target.value.trim();
+    // this.geocoder.geocode( { 'address': address}, function(results, status) {
+    //   if (status == google.maps.GeocoderStatus.OK) {
+    //      lat = results[0].geometry.location.lat();
+    //      lng = results[0].geometry.location.lng();
+    //      console.log(lat + "_" + lng);
          
-        initC.lat = lat;
-        initC.lng = lng;
-        console.log(initC);
-        }
-        else {
-          alert("Geocode was not successful for the following reason: " + status);
-        }
-      });
-    
-    };
-      this.setState({ zip_code: event.target.value.trim() , initial_center:initC});
-      console.log("Akshay22222");
-      console.log(this.state.initial_center);
-    
+    //     initC.lat = lat;
+    //     initC.lng = lng;
+    //     console.log(initC);
+    //     }
+    //     else {
+    //       alert("Geocode was not successful for the following reason: " + status);
+    //     }
+    //   });
+    this.setState({ zip_code: event.target.value.trim()});
+   };
+      // this.setState({ zip_code: event.target.value.trim() , initial_center:initC});
+      // console.log("Akshay22222");
+      // console.log(this.state.initial_center);
+      
   };
 
   
@@ -360,6 +360,7 @@ class Notifications extends React.Component {
                       className="form-control"
                       id="zip_code"
                       type="text"
+                      value={zip_code}
                       onChange={this.handlesOnZipCodeChange}
                     />
                   </div>
