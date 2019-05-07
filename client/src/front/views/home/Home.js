@@ -17,6 +17,16 @@ import PieChart from '../../models/PieChart';
 import MapChart from '../../models/MapChart';
 
 class Home extends PureComponent {
+  constructor() {
+    super();
+    this.state = {
+      no_of_nodes: 0,
+      no_of_clusters: 0,
+      no_of_sensors: 0,
+      no_of_farmers: 0,
+    };
+  }
+
   static propTypes = {
     earningGraphLabels: PropTypes.array,
     earningGraphDatasets: PropTypes.array,
@@ -38,7 +48,29 @@ class Home extends PureComponent {
     }),
   };
 
-  componentDidMount() {
+  async componentWillMount() {
+    try {
+      console.log('vjon pagal ahe');
+      var url =
+        process.env.REACT_APP_SERVER_URL + '/api/infrastructure/getdetails';
+      await fetch(url)
+        .then(console.log('kuch to ho re bawa'))
+        .then(json => {
+          console.log('Janhavi pagal ahe');
+          console.log(JSON.stringify(json));
+          var data = json.message; //gets data in string
+          data = JSON.parse(data);
+          console.log('stats card data');
+          console.log(data);
+          this.setState({
+            no_of_clusters: data.clusters,
+            no_of_nodes: data.nodes,
+          });
+        });
+    } catch (error) {}
+  }
+
+  async componentDidMount() {
     const {
       actions: {
         enterHome,
@@ -72,7 +104,7 @@ class Home extends PureComponent {
         <div className="row" style={{ marginBottom: '5px' }}>
           <div className="col-md-3">
             <StatsCard
-              statValue={'6'}
+              statValue={this.state.no_of_clusters}
               statLabel={'Total Clusters  '}
               icon={<i className="fa fa-wifi" />}
               backColor={'red'}
@@ -80,7 +112,7 @@ class Home extends PureComponent {
           </div>
           <div className="col-md-3">
             <StatsCard
-              statValue={'23'}
+              statValue={this.state.no_of_nodes}
               statLabel={'Total Nodes'}
               icon={<i className="fa fa-map-marker" />}
               backColor={'violet'}
@@ -88,7 +120,7 @@ class Home extends PureComponent {
           </div>
           <div className="col-md-3">
             <StatsCard
-              statValue={'88'}
+              statValue={this.state.no_of_sensors}
               statLabel={'Total Sensors'}
               icon={<i className="fa fa-dot-circle-o" />}
               backColor={'blue'}
@@ -96,7 +128,7 @@ class Home extends PureComponent {
           </div>
           <div className="col-md-3">
             <StatsCard
-              statValue={'23'}
+              statValue={this.state.no_of_farmers}
               statLabel={'Registered Farmers'}
               icon={<i className="fa fa-users" />}
               backColor={'green'}
