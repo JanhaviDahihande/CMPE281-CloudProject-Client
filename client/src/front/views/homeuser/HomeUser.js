@@ -17,6 +17,15 @@ import PieChart from "../../models/PieChart";
 import MapChart from "../../models/MapChart";
 
 class HomeUser extends PureComponent {
+  constructor() {
+    super();
+    this.state = {
+      no_of_nodes: 0,
+      no_of_clusters: 0,
+      no_of_sensors: 0,
+    };
+  }
+
   static propTypes = {
     earningGraphLabels: PropTypes.array,
     earningGraphDatasets: PropTypes.array,
@@ -38,7 +47,7 @@ class HomeUser extends PureComponent {
     }),
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     const {
       actions: {
         enterHome,
@@ -46,7 +55,38 @@ class HomeUser extends PureComponent {
         fetchTeamMatesDataIfNeeded,
       },
     } = this.props;
+    let user_id = JSON.parse(localStorage.getItem('user_id'));
+  try {
+       var url = process.env.REACT_APP_SERVER_URL + '/api/infrastructure/getdetails/user/totalnodes/' + user_id;
+        console.log(url);
+        await fetch(url)
+          .then(res => res.json())
+          .then(json => {
+            console.log("Here");
+            console.log(json.message);
+            var data = json.message; //gets data in string
+            data = JSON.parse(data);
+            this.setState({ no_of_nodes: data, no_of_sensors: data*4 });
+          });
+    } catch (error) {
+      console.log("Error");
+    }
 
+    try {
+      url = process.env.REACT_APP_SERVER_URL + '/api/infrastructure/getdetails/user/totalclusters/' + user_id;
+       console.log(url);
+       await fetch(url)
+         .then(res => res.json())
+         .then(json => {
+           console.log("Here");
+           console.log(json.message);
+           var data = json.message; //gets data in string
+           data = JSON.parse(data);
+           this.setState({ no_of_clusters: data });
+         });
+   } catch (error) {
+     console.log("Error");
+   }
     enterHome();
     fetchEarningGraphDataIfNeeded();
     fetchTeamMatesDataIfNeeded();
@@ -72,7 +112,7 @@ class HomeUser extends PureComponent {
         <div className="row" style={{ marginBottom: '5px' }}>
           <div className="col-md-3">
             <StatsCard
-              statValue={'6'}
+              statValue={this.state.no_of_clusters}
               statLabel={'Total Clusters  '}
               icon={<i className="fa fa-wifi" />}
               backColor={'red'}
@@ -80,7 +120,7 @@ class HomeUser extends PureComponent {
           </div>
           <div className="col-md-3">
             <StatsCard
-              statValue={'23'}
+              statValue={this.state.no_of_nodes}
               statLabel={'Total Nodes'}
               icon={<i className="fa fa-map-marker" />}
               backColor={'violet'}
@@ -88,18 +128,10 @@ class HomeUser extends PureComponent {
           </div>
           <div className="col-md-3">
             <StatsCard
-              statValue={'88'}
+              statValue={this.state.no_of_sensors}
               statLabel={'Total Sensors'}
               icon={<i className="fa fa-dot-circle-o" />}
               backColor={'blue'}
-            />
-          </div>
-          <div className="col-md-3">
-            <StatsCard
-              statValue={'23'}
-              statLabel={'Registered Farmers'}
-              icon={<i className="fa fa-users" />}
-              backColor={'green'}
             />
           </div>
         </div>

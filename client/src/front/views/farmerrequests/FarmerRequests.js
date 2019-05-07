@@ -20,6 +20,10 @@ class FarmerRequests extends PureComponent {
     this.state = {
       data: [],
       markers: [],
+      center:{
+        lat: 37.78281527707425,
+        lng: -122.42396502648927
+      },
     };
   }
 
@@ -115,6 +119,7 @@ class FarmerRequests extends PureComponent {
           <div>
             <Map
               google={this.props.google}
+              defaultCenter={this.state.center}
               id="map_holder"
               ref="map_holder"
               style={{
@@ -122,7 +127,7 @@ class FarmerRequests extends PureComponent {
                 height: '30%',
                 zIndex: 2,
                 left: 500,
-                center: { lat: -25.363882, lng: 131.044922 },
+                //center: { lat: -25.363882, lng: 131.044922 },
               }}
               className={'map'}
               zoom={14}

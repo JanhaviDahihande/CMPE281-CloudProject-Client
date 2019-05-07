@@ -36,9 +36,12 @@ class HomeIOT extends PureComponent {
     }),
   };
 
-  state = { data: [] };
+  state = { data: [], no_of_nodes: 0,
+    no_of_clusters: 0,
+    no_of_sensors: 0,
+    no_of_farmers: 0};
 
-  componentDidMount() {
+ async componentDidMount() {
     const {
       actions: {
         enterHome,
@@ -46,6 +49,44 @@ class HomeIOT extends PureComponent {
         fetchTeamMatesDataIfNeeded,
       },
     } = this.props;
+    try {
+      var url = process.env.REACT_APP_SERVER_URL + '/api/infrastructure/getdetails/registeredfarmers';
+      await fetch(url)
+        .then(res => res.json())
+        .then(json => {
+          console.log("Here");
+          console.log(json.message);
+          var data = json.message; //gets data in string
+          data = JSON.parse(data);
+          this.setState({ no_of_farmers: data });
+        });
+
+        url = process.env.REACT_APP_SERVER_URL + '/api/infrastructure/getdetails/totalclusters';
+        await fetch(url)
+          .then(res => res.json())
+          .then(json => {
+            console.log("Here");
+            console.log(json.message);
+            var data = json.message; //gets data in string
+            data = JSON.parse(data);
+            this.setState({ no_of_clusters: data });
+          });
+        
+        url = process.env.REACT_APP_SERVER_URL + '/api/infrastructure/getdetails/totalnodes';
+          await fetch(url)
+            .then(res => res.json())
+            .then(json => {
+              console.log("Here");
+              console.log(json.message);
+              var data = json.message; //gets data in string
+              data = JSON.parse(data);
+              this.setState({ no_of_nodes: data , no_of_sensors: data*4});
+            });
+       
+
+    } catch (error) {
+      console.log("Error");
+    }
 
     enterHome();
     fetchEarningGraphDataIfNeeded();
@@ -95,7 +136,7 @@ class HomeIOT extends PureComponent {
         <div className="row" style={{ marginBottom: '5px' }}>
           <div className="col-md-3">
             <StatsCard
-              statValue={'6'}
+              statValue={this.state.no_of_clusters}
               statLabel={'Total Clusters  '}
               icon={<i className="fa fa-wifi" />}
               backColor={'red'}
@@ -103,7 +144,7 @@ class HomeIOT extends PureComponent {
           </div>
           <div className="col-md-3">
             <StatsCard
-              statValue={'23'}
+             statValue={this.state.no_of_nodes}
               statLabel={'Total Nodes'}
               icon={<i className="fa fa-map-marker" />}
               backColor={'violet'}
@@ -111,7 +152,7 @@ class HomeIOT extends PureComponent {
           </div>
           <div className="col-md-3">
             <StatsCard
-              statValue={'88'}
+              statValue={this.state.no_of_sensors}
               statLabel={'Total Sensors'}
               icon={<i className="fa fa-dot-circle-o" />}
               backColor={'blue'}
@@ -119,7 +160,7 @@ class HomeIOT extends PureComponent {
           </div>
           <div className="col-md-3">
             <StatsCard
-              statValue={'23'}
+              statValue={this.state.no_of_farmers}
               statLabel={'Registered Farmers'}
               icon={<i className="fa fa-users" />}
               backColor={'green'}

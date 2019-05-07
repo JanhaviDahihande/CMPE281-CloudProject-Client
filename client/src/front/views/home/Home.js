@@ -48,41 +48,60 @@ class Home extends PureComponent {
     }),
   };
 
-  async componentWillMount() {
+  async componentDidMount() {
     try {
-      console.log('vjon pagal ahe');
-      var url =
-        process.env.REACT_APP_SERVER_URL + '/api/infrastructure/getdetails';
+      var url = process.env.REACT_APP_SERVER_URL + '/api/infrastructure/getdetails/registeredfarmers';
       await fetch(url)
-        .then(console.log('kuch to ho re bawa'))
+        .then(res => res.json())
         .then(json => {
-          console.log('Janhavi pagal ahe');
-          console.log(JSON.stringify(json));
+          console.log("Here");
+          console.log(json.message);
           var data = json.message; //gets data in string
           data = JSON.parse(data);
-          console.log('stats card data');
-          console.log(data);
-          this.setState({
-            no_of_clusters: data.clusters,
-            no_of_nodes: data.nodes,
-          });
+          this.setState({ no_of_farmers: data });
         });
-    } catch (error) {}
+
+        url = process.env.REACT_APP_SERVER_URL + '/api/infrastructure/getdetails/totalclusters';
+        await fetch(url)
+          .then(res => res.json())
+          .then(json => {
+            console.log("Here");
+            console.log(json.message);
+            var data = json.message; //gets data in string
+            data = JSON.parse(data);
+            this.setState({ no_of_clusters: data });
+          });
+        
+        url = process.env.REACT_APP_SERVER_URL + '/api/infrastructure/getdetails/totalnodes';
+          await fetch(url)
+            .then(res => res.json())
+            .then(json => {
+              console.log("Here");
+              console.log(json.message);
+              var data = json.message; //gets data in string
+              data = JSON.parse(data);
+              this.setState({ no_of_nodes: data , no_of_sensors: data*4});
+            });
+       
+
+    } catch (error) {
+      console.log("Error");
+    }
   }
 
-  async componentDidMount() {
-    const {
-      actions: {
-        enterHome,
-        fetchEarningGraphDataIfNeeded,
-        fetchTeamMatesDataIfNeeded,
-      },
-    } = this.props;
+  // async componentDidMount() {
+  //   const {
+  //     actions: {
+  //       enterHome,
+  //       fetchEarningGraphDataIfNeeded,
+  //       fetchTeamMatesDataIfNeeded,
+  //     },
+  //   } = this.props;
 
-    enterHome();
-    fetchEarningGraphDataIfNeeded();
-    fetchTeamMatesDataIfNeeded();
-  }
+  //   enterHome();
+  //   fetchEarningGraphDataIfNeeded();
+  //   fetchTeamMatesDataIfNeeded();
+  // }
 
   componentWillUnmount() {
     const {
