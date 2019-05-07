@@ -2,12 +2,12 @@
 
 export const earningGraphMockData = {
   labels: [
-    'Cluster 1',
-    'Cluster 2',
-    'Cluster 3',
-    'Cluster 4',
-    'Cluster 5',
-    'Cluster 6',
+    'Cluster3',
+    'Cluster4',
+    'Cluster5',
+    'Cluster6',
+    'Cluster7',
+    'Cluster8',
   ],
   datasets: [
     {

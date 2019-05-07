@@ -72,25 +72,6 @@ class MyRequests extends PureComponent {
             <div className="panel">
               <header className="panel-heading">My Requests</header>
               <div className="panel-body table-responsive">
-                <div className="box-tools m-b-15">
-                  <div className="input-group">
-                    <input
-                      type="text"
-                      name="table_search"
-                      className="form-control input-sm pull-right"
-                      style={{ width: '150px' }}
-                      placeholder="Search"
-                    />
-                    <div className="input-group-btn">
-                      <button className="btn btn-sm btn-default">
-                        <i className="fa fa-search" />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                {/* <button className="btn btn-sm btn-default" onClick={this.handleCLick} >
-                      <i className="fa fa-search" />Get data
-                    </button> */}
                 <table className="table table-hover">
                   <thead>
                     <tr>
@@ -98,7 +79,7 @@ class MyRequests extends PureComponent {
                       <th>Number of nodes</th>
                       <th>New Cluster</th>
                       <th>Location</th>
-                      <th>Created At</th>
+                      <th>Request Time</th>
                       <th>Status</th>
                     </tr>
                   </thead>
@@ -116,6 +97,31 @@ class MyRequests extends PureComponent {
 const RequestRow = props => {
   // console.log('Here');
   // console.log(props);
+  function location_data() {
+    var a = '';
+    for (var i = 0; i < props.data.latlong.length; i++) {
+      if (props.data.latlong[i]) {
+        var lat_data = props.data.latlong[i].lat;
+        var long_data = props.data.latlong[i].long;
+        a += lat_data + ',' + long_data + '\n';
+      }
+
+      // console.log(props.data.latlong[i].lat);
+
+      // $(".panel-title").append('<h3>'+mysubject+'</h3>');
+    }
+    return <pre>{a}</pre>;
+  }
+
+  function format_time() {
+    var timestamp = props.data.updatedAt;
+    var dot = timestamp.indexOf('.');
+    timestamp = timestamp.substring(0, dot != -1 ? dot : timestamp.length);
+    timestamp = timestamp.replace(/T/g, '  ');
+
+    return timestamp;
+  }
+
   function status_format() {
     if (props.data.status == 'Approved') {
       return (
@@ -142,8 +148,8 @@ const RequestRow = props => {
       <td>{props.data.zip_code}</td>
       <td>{props.data.no_of_nodes}</td>
       <td>{props.data.new_cluster}</td>
-      <td>{props.data.updatedAt}</td>
-      <td>{props.data.updatedAt}</td>
+      <td>{location_data()}</td>
+      <td>{format_time()}</td>
       <td>{status_format()}</td>
     </tr>
   );

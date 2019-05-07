@@ -193,7 +193,7 @@ class BillingAdmin extends PureComponent {
                     </td>
                     <td>
                       <label htmlFor="billing" id="billing_selected">
-                        23
+                        {this.state.no_of_farmers}
                       </label>
                     </td>
                   </tr>
@@ -203,7 +203,7 @@ class BillingAdmin extends PureComponent {
                     </td>
                     <td>
                       <label htmlFor="billing" id="billing_cost">
-                        $ 150,500
+                        $ 50,500
                       </label>
                     </td>
                   </tr>
