@@ -144,35 +144,91 @@ class DataView extends PureComponent {
     console.log('in handleonsubmit');
     let node_id = document.getElementById('node').value;
 
-    var s = document.getElementById('start_date').value.split("-")[2];
-    var e = document.getElementById('end_date').value.split("-")[2];
+    var s = document.getElementById('start_date').value.split('-')[2];
+    var e = document.getElementById('end_date').value.split('-')[2];
 
     var sensor_data = [];
-    if(document.getElementById('sensor_type').value=="ph"){
-      sensor_data = [6.5,7.28,7.14,6.5,6.34,6.78,7.23,7.4,7.43,6.12,6.32,7.43];
-    }
-    else if(document.getElementById('sensor_type').value=="temperature"){
-      sensor_data = [25.4, 26.7, 25.1, 28.5, 27.4, 26.7, 29.5, 29.3, 28.4, 24.6];
-    }
-    else if(document.getElementById('sensor_type').value=="airflow"){
-      sensor_data = [6.5,7.28,7.14,6.5,6.34,6.78,7.23,7.4,7.43,6.12,6.32,7.43];
-    }
-    else if(document.getElementById('sensor_type').value=="humidity"){
-      sensor_data = [68.4, 69.7, 68.1, 69.5, 72.4, 69.7, 70.5, 75.3, 70.4, 74.6];
+    if (document.getElementById('sensor_type').value == 'ph') {
+      sensor_data = [
+        6.5,
+        7.28,
+        7.14,
+        6.5,
+        6.34,
+        6.78,
+        7.23,
+        7.4,
+        7.43,
+        6.12,
+        6.32,
+        7.43,
+      ];
+    } else if (document.getElementById('sensor_type').value == 'temperature') {
+      sensor_data = [
+        25.4,
+        26.7,
+        25.1,
+        28.5,
+        27.4,
+        26.7,
+        29.5,
+        29.3,
+        28.4,
+        24.6,
+      ];
+    } else if (document.getElementById('sensor_type').value == 'airflow') {
+      sensor_data = [
+        6.5,
+        7.28,
+        7.14,
+        6.5,
+        6.34,
+        6.78,
+        7.23,
+        7.4,
+        7.43,
+        6.12,
+        6.32,
+        7.43,
+      ];
+    } else if (document.getElementById('sensor_type').value == 'humidity') {
+      sensor_data = [
+        68.4,
+        69.7,
+        68.1,
+        69.5,
+        72.4,
+        69.7,
+        70.5,
+        75.3,
+        70.4,
+        74.6,
+      ];
     }
     var final_data = [];
-    final_data.push(["X", "Sensor data"]);
-    for(var i=s ; i<= e ; i++){
+    final_data.push(['X', 'Sensor data']);
+    for (var i = s; i <= e; i++) {
       var chart_data = [];
       chart_data.push(i);
-      chart_data.push(sensor_data[i-s]);
+      chart_data.push(sensor_data[i - s]);
       final_data.push(chart_data);
     }
-    this.setState({sensor_chart_data: final_data});
-    console.log('node_id: ' + node_id);
+    this.setState({ sensor_chart_data: final_data });
+    // console.log('node_id: ' + node_id);
+    let start_date = document.getElementById('start_date').value;
+    let end_date = document.getElementById('end_date').value;
+    let end_date2 = new Date(end_date);
+    end_date2.setDate(end_date2.getDate() + 1);
+
     try {
       var url =
-        process.env.REACT_APP_SERVER_URL + '/api/dataview/sensor/' + node_id;
+        process.env.REACT_APP_SERVER_URL +
+        '/api/dataview/sensor/' +
+        node_id +
+        '/' +
+        start_date +
+        '/' +
+        end_date2;
       console.log(url);
       await fetch(url)
         .then(res => res.json())
@@ -319,7 +375,7 @@ class DataView extends PureComponent {
               hasTitle={true}
               bodyBackGndColor={'#FFF'}
             >
-               <Chart
+              <Chart
                 width={'600px'}
                 height={'430px'}
                 chartType="LineChart"
@@ -327,10 +383,10 @@ class DataView extends PureComponent {
                 data={this.state.sensor_chart_data}
                 options={{
                   hAxis: {
-                    title: 'Time',
+                    title: 'Dates',
                   },
                   vAxis: {
-                    title: 'Sensor values',
+                    title: 'Average Sensor Values',
                     // baseline: 0
                   },
                 }}
