@@ -506,5 +506,5 @@ class Notifications extends React.Component {
 
 //export default Notifications;
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyDA4flhFYUHU9vGI07L2LVZpnbY7QFqSMs',
+  apiKey: '',
 })(Notifications);
